@@ -1,0 +1,5 @@
+.gradient-custom {
+    background: linear-gradient(to top left,
+    rgb(125, 225, 243),
+    rgb(245, 213, 106))
+}

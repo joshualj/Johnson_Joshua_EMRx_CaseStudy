@@ -1,0 +1,96 @@
+.gradient-custom {
+    background: linear-gradient(to top left,
+    rgb(125, 225, 243),
+    rgb(245, 213, 106))
+}
+
+body {
+    /* background: url('../html/hand_medicalcross_logo.jpg') no-repeat center center fixed;
+    background-color: seashell;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover; */
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    background-color: seashell;
+    height: 100vh;
+}
+
+header {
+    font-family: "Raleway", sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    /*padding-left: 25px;*/
+    /* align-items: center; */
+}
+
+#emrx {
+    /* display: flex; */
+    padding-top: 20px;
+    padding-bottom: 10px;
+    font-size: 60px;
+}
+
+#video {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.btn {
+    width: 80px;
+    border-color: rgb(125, 225, 243);
+    color: #fffbfb;
+    background-color: rgb(125, 225, 243);
+}
+
+.btn:hover {
+    background-color: #46ff4a;
+    border-color: #46ff4a;
+}
+
+#form {
+    /* padding-left: 25px; */
+    padding-bottom: 50px;
+    padding-top: 40px;
+    height: 75vh;
+
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+form {
+    font-family: "Raleway", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: rgb(245, 213, 106);
+    width: 200px;
+    border-radius: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+
+#logo {
+    position: relative;
+    top: 16px;
+    border-radius: 50px;
+    height: 75px;
+    background-blend-mode: screen;
+}
+
+footer {
+    background: linear-gradient(to bottom left,
+    rgb(125, 225, 243),
+    rgb(245, 213, 106))
+}

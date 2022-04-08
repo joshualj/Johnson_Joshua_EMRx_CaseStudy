@@ -1,0 +1,29 @@
+.gradient-custom {
+    background: linear-gradient(to top left,
+    rgb(125, 225, 243),
+    rgb(245, 213, 106))
+}
+
+.navbar {
+    font-family: "Raleway", sans-serif;
+    background: linear-gradient(to bottom left,
+    rgb(125, 225, 243),
+    rgb(245, 213, 106))
+}
+
+form {
+    font-family: "Raleway", sans-serif;
+}
+
+footer {
+    background: linear-gradient(to bottom left,
+    rgb(125, 225, 243),
+    rgb(245, 213, 106))
+}
+
+.card-registration .select-input.form-control[readonly]:not([disabled]) {
+    font-size: 1rem;
+    line-height: 2.15;
+    padding-left: .75em;
+    padding-right: .75em;
+}
