@@ -10,6 +10,7 @@ import teksystems.casestudy.database.entity.User;
 
 import java.security.Timestamp;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public interface AppointmentDAO extends JpaRepository<Appointment, Long> {
 
     public Appointment findByPaqId(@Param("paqId") Integer paqId);
 
-    public List<Appointment> findByDateAndTime(@Param("date") Date date,
+    public List<Appointment> findByDateAndTime(@Param("date") LocalDate date,
                                                @Param("time") Time time);
 
     @Query(value = "select a.appointmentId from Appointment a where a.patient.patientId = :patientId AND a.date = :date")

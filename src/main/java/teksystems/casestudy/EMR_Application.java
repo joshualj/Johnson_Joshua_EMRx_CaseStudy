@@ -14,6 +14,7 @@ import java.sql.SQLOutput;
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 @SpringBootApplication
@@ -34,11 +35,11 @@ public class EMR_Application {
 //		createNewPatient("Harold", "Potter");
 //		seeAllUsers();
 
-		Date date = new Date( 1996, 01, 01, 8, 30);
-		Time time = new Time(8,30,0);
-		System.out.println("Time = " + time);
-		System.out.println("Date = " + date);
-		createNewAppointment(date, time);
+//		LocalDate date = new Date( 1996, 01, 01, 8, 30);
+//		Time time = new Time(8,30,0);
+//		System.out.println("Time = " + time);
+//		System.out.println("Date = " + date);
+//		createNewAppointment(date, time);
 
 	}
 
@@ -53,7 +54,7 @@ public class EMR_Application {
 		System.out.println("After save : " + patient);
 	}
 
-	public void createNewAppointment(Date date, Time time) {
+	public void createNewAppointment(LocalDate date, Time time) {
 		Appointment appointment = new Appointment();
 		System.out.println(appointment);
 		appointment.setDate(date);

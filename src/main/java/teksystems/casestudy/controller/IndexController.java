@@ -12,6 +12,10 @@ import teksystems.casestudy.database.entity.Appointment;
 import teksystems.casestudy.database.entity.Clinician;
 import teksystems.casestudy.database.entity.User;
 
+import java.sql.Time;
+import java.time.LocalDate;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Slf4j
@@ -41,15 +45,23 @@ public class IndexController {
 //            log.info(clinic.toString() + "First/Last Name");
 //        }
 
-        List <Appointment> appointments = appointmentDao.findByPatientPatientId(1);
+
 //        Appointment appointment = appointmentDao.findByAppointmentId(3);
 //        log.info(appointment.toString() + "by Id");
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        LocalDate day = LocalDate.of(2022,4,4);
+        Time time = new Time(12,0,0);
+        log.info(time.toString());
 
-        for (Appointment appointmente : appointments) {
-            log.info(appointmente.toString() + "by Id");
+        log.info(day.toString());
+        log.info("==================================");
+
+        List<Appointment> appointments = appointmentDao.findByDateAndTime(day, time);
+
+        for (Appointment appointment : appointments) {
+            log.info(appointment.toString() + " by Id");
         }
-
 
         response.setViewName("index");
         response.addObject("appointments", appointments);
@@ -57,9 +69,6 @@ public class IndexController {
 //        log.info(clinician.toString());
 //        log.info(clinicianById.toString());
 //        log.info(clinicianByEmail.toString());
-
-
-
 
         return response;
     }
