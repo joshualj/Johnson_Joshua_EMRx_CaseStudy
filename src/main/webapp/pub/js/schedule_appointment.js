@@ -95,7 +95,7 @@ $(document).ready(function() {
             )
         } else {
             //if a time slot already has a patient, add the time slot to the #appointments table row
-            //and include 'N/A' under the 'availibiility' column
+            //and include 'N/A' under the 'availibility' column
             $('#appointmentsTable').append (
                 `<tr height="50px">
                 <td><b>`+time+`</b></td>

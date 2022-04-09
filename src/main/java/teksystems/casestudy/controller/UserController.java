@@ -1,15 +1,13 @@
 package teksystems.casestudy.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import teksystems.casestudy.database.dao.UserDAO;
 import teksystems.casestudy.database.entity.User;
@@ -44,38 +42,36 @@ public class UserController{
     }
 
     @RequestMapping(value="/user/registerSubmit", method = {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView registerSubmit(@Valid RegisterFormBean form, BindingResult bindingResult) throws Exception {
+    public ModelAndView registerSubmit(@Valid RegisterFormBean form) throws Exception {
         ModelAndView response = new ModelAndView();
 
         log.info(form.toString());
 
-        //int i = 10/0; just testing to see if errors show
-
-        if (bindingResult.hasErrors()) {
-            List<String> errorMessages = new ArrayList<>();
-
-            bindingResult.getFieldErrorCount("firstName");
-
-            for(ObjectError error : bindingResult.getAllErrors()) {
-                errorMessages.add(error.getDefaultMessage());
-//                errors.put( ((FieldError) error).getField(), error.getDefaultMessage());
-                log.info( ((FieldError) error).getField() + " " + error.getDefaultMessage());
-            }
-
-            response.addObject("form", form);
-
-            response.addObject("bindingResult", bindingResult);
-
-            //add error list ot the model
-//            response.addObject("errorMessages", errorMessages);
-
-
-            //because there is 1 or more error, we do not want to process logic below
-            // that will create a new user in the database. We want to show the register.jsp
-
-            response.setViewName("user/register");
-            return response;
-        }
+//        if (bindingResult.hasErrors()) {
+//            List<String> errorMessages = new ArrayList<>();
+//
+//            bindingResult.getFieldErrorCount("firstName");
+//
+//            for(ObjectError error : bindingResult.getAllErrors()) {
+//                errorMessages.add(error.getDefaultMessage());
+////                errors.put( ((FieldError) error).getField(), error.getDefaultMessage());
+//                log.info( ((FieldError) error).getField() + " " + error.getDefaultMessage());
+//            }
+//
+//            response.addObject("form", form);
+//
+//            response.addObject("bindingResult", bindingResult);
+//
+//            //add error list ot the model
+////            response.addObject("errorMessages", errorMessages);
+//
+//
+//            //because there is 1 or more error, we do not want to process logic below
+//            // that will create a new user in the database. We want to show the register_clinician.jsp
+//
+//            response.setViewName("user/register");
+//            return response;
+//        }
 
 
         //we first assume we are going to do an edit by loading the user by loading the user from
@@ -92,7 +88,7 @@ public class UserController{
         user.setEmail(form.getEmail());
         user.setFirstName(form.getFirstName());
         user.setLastName(form.getLastName());
-        user.setUserType(form.getUserType());
+//        user.setUserType(form.getUserType());
         user.setPassword(form.getPassword());
 
         userDao.save(user);
@@ -108,6 +104,8 @@ public class UserController{
 
         return response;
     }
+
+
 }
 
 //@Slf4j
@@ -118,7 +116,7 @@ public class UserController{
 //    private UserDAO userDao;
 //    /*
 //    //This is the controller method for the entry point of the user registration page.
-//    //It does not do anything really other than provide a route to the register.jsp page.
+//    //It does not do anything really other than provide a route to the register_clinician.jsp page.
 //    */
 //    @RequestMapping(value="/user/register", method = RequestMethod.GET)
 //    public ModelAndView register() throws Exception {
