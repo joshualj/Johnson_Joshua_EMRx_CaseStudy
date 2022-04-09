@@ -24,7 +24,11 @@ public interface AppointmentDAO extends JpaRepository<Appointment, Long> {
     public List<Appointment> findByTime(@Param("time") Time time);
 
     @Query(value = "select a.appointmentId from Appointment a where a.clinician.clinicianId = :clinicianId")
-    public List<Appointment> getByClinicianId(@Param("clinicianId") Integer clinicianId);
+    public List<Appointment> findByClinicianId(@Param("clinicianId") Integer clinicianId);
+
+    public List<Appointment> findByPatientPatientId(@Param("patientId") Integer patientId);
+
+    public List<Appointment> findByClinicianClinicianId(@Param("clinicianId") Integer clinicianId);
 
     @Query(value = "select a from Appointment a where a.patient.patientId = :patientId")
     public List<Appointment> getByPatientId(@Param("patientId") Integer patientId);

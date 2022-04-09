@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @ToString
 public class RegisterFormBean {
-    private Integer id;
+//    private Integer id;
 
     private Integer userId;
 
