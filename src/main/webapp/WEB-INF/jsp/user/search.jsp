@@ -27,7 +27,7 @@
             <td>${clinician.firstName}</td>
             <td>${clinician.lastName}</td>
             <td>${clinician.title}</td>
-            <td>${clinician.departmentId}</td>
+            <td>${clinician.department}</td>
             <td><a href=/user/edit/${user.id}">Edit</td>
         </tr>
     </c:forEach>

@@ -28,6 +28,12 @@ public class Appointment {
     @Column(name = "time")
     private Time time;
 
+//    @Column(name = "clinician_id")
+//    private Integer clinicianId;
+//
+//    @Column(name = "patient_id")
+//    private Integer patientId;
+
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "clinician_id", nullable = false)

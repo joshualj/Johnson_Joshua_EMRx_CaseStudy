@@ -6,7 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import teksystems.casestudy.database.dao.UserDAO;
+import teksystems.casestudy.database.dao.ClinicianDAO;
+import teksystems.casestudy.database.entity.Clinician;
 import teksystems.casestudy.database.entity.User;
 
 import java.util.List;
@@ -16,20 +17,34 @@ import java.util.List;
 public class IndexController {
 
     @Autowired
-    private UserDAO userDao;
+    private ClinicianDAO clinicianDao;
 
     @RequestMapping(value= "/index", method = RequestMethod.GET)
     public ModelAndView index() throws Exception {
         ModelAndView response = new ModelAndView();
 
-        User user = userDao.findByEmail("rb2020@gmail.com");
-        List<User> users2 = userDao.findByUserType("patient");
+        List <Clinician> clinicians = clinicianDao.findByDepartment("Orthopedics");
+        List <Clinician> cliniciansByFirstName = clinicianDao.findByLanguagesContaining("English");
+        List <Clinician> cliniciansByLastName = clinicianDao.findByFirstNameAndLastName("Christina", "Sanchez");
 
         response.setViewName("index");
-        response.addObject("user", user);
+        response.addObject("clinicians", clinicians);
 
-        for (User individual : users2) {
-            log.info(individual.toString());
+//        log.info(clinician.toString());
+//        log.info(clinicianById.toString());
+//        log.info(clinicianByEmail.toString());
+
+
+        for (Clinician clinician : clinicians) {
+            log.info(clinician.toString() + "Department");
+        }
+
+        for (Clinician clin : cliniciansByFirstName) {
+            log.info(clin.toString() + "Language");
+        }
+
+        for (Clinician clinic : cliniciansByLastName) {
+            log.info(clinic.toString() + "First/Last Name");
         }
 
         return response;

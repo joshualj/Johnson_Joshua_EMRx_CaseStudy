@@ -19,6 +19,10 @@ public interface ClinicianDAO extends JpaRepository<Clinician, Long> {
 
     public Clinician findByUserId(@Param("userId") Integer userId);
 
+    public Clinician findByEmail(@Param("email") String email);
+
+    public List<Clinician> findByPassword(@Param("password") String password);
+
     public List<Clinician> findByFirstName(@Param("firstName") String firstName);
 
     public List<Clinician> findByLastName(@Param("lastName") String lastName);
@@ -29,11 +33,9 @@ public interface ClinicianDAO extends JpaRepository<Clinician, Long> {
 
     public List<Clinician> findByTitle(@Param("title") String title);
 
-    public List<Clinician> findByDepartmentId(@Param("departmentId") Integer departmentId);
+    public List<Clinician> findByDepartment(@Param("department") String department);
 
-    public List<Clinician> findByLanguages(@Param("languages") String languages);
-
-    public List<Clinician> findByFirstNameContainingIgnoreCase(@Param("firstName") String firstName);
+    public List<Clinician> findByLanguagesContaining(@Param("languages") String languages);
 
     public List<Clinician> findByFirstNameAndLastName(@Param("firstName") String firstName, @Param("lastName") String lastName);
 

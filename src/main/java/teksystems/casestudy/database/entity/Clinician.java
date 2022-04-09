@@ -23,6 +23,7 @@ public class Clinician {
 
     @Column(name = "user_id")
     private Integer userId;
+    //probably delete this
 
     @Column(name = "first_name")
     private String firstName;
@@ -33,12 +34,14 @@ public class Clinician {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "department_id")
-    private Integer departmentId;
+    @Column(name = "department")
+    private String department;
 
-//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-//    @JoinColumn(name = "movie_id", nullable = false)
-//    private String id;
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "password")
+    private String password;
 
     @Column(name = "languages")
     private String languages;

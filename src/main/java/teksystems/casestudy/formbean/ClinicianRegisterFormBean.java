@@ -12,10 +12,9 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 @ToString
-public class RegisterFormBean {
+public class ClinicianRegisterFormBean {
+    private Integer userId; //probably need to delete this, once table field is deleted
     private Integer id;
-
-    private Integer userId;
 
     @NotBlank(message="Email is required")
     @EmailUnique(message="Email is already in use.")
@@ -25,8 +24,17 @@ public class RegisterFormBean {
     @NotBlank(message="First name is required")
     private String firstName;
 
-    @NotBlank(message="Second name is required")
+    @NotBlank(message="Last name is required")
     private String lastName;
+
+    @NotBlank(message="Title is required")
+    private String title;
+
+    @NotBlank(message="Department is required")
+    private String department;
+
+    @NotBlank(message="Languages is required")
+    private String languages;
 
     @Length(min = 3, max = 15, message = "Password must contain between 3 and 15 characters.")
     @NotBlank(message="Password is required")
@@ -34,6 +42,4 @@ public class RegisterFormBean {
 
     @NotBlank(message="Confirming password is required")
     private String confirmPassword;
-
-    private String userType; //might delete
 }

@@ -85,8 +85,10 @@ public class ClinicianController {
             clinician = new Clinician();
         }
 
-//        clinician.setFirstName(form.getFirstName());
-//        clinician.setLastName(form.getLastName());
+        clinician.setFirstName(form.getFirstName());
+        clinician.setLastName(form.getLastName());
+        clinician.setEmail(form.getEmail());
+        clinician.setPassword(form.getPassword());
         clinician.setUserId(form.getUserId());
         clinician.setTitle(form.getTitle());
         clinician.setDepartment(form.getDepartment());

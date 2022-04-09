@@ -20,9 +20,9 @@
             <div class="col-5">
                 <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
                     <div class="card-body p-4 p-md-5">
-                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration</h3>
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">User Registration</h3>
                         <form id="registerForm" action="/user/registerSubmit" class="needs-validation" novalidate>
-
+                            <input type="hidden" name="id" value="${form.id}">
                             <div class="col-md-12 mb-4">
                                 <input type="text" id="firstName" class="form-control form-control-lg" name="firstName" value="${form.firstName}" required/>
                                 <label class="form-label" for="firstName">First Name</label>
@@ -64,31 +64,31 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-12 mb-4">
-                                <h6 class="mb-2 pb-1">User Type:</h6>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                           id="admin" value="option1"/>
-                                    <label class="form-check-label" for="admin">Admin</label>
-                                </div>
+<%--                            <div class="col-md-12 mb-4">--%>
+<%--                                <h6 class="mb-2 pb-1">User Type:</h6>--%>
+<%--                                <div class="form-check form-check-inline">--%>
+<%--                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"--%>
+<%--                                           id="admin" value="option1"/>--%>
+<%--                                    <label class="form-check-label" for="admin">Admin</label>--%>
+<%--                                </div>--%>
 
-                                <div class="form-check form-check-inline">
-                                    <input
-                                            class="form-check-input" type="radio" name="inlineRadioOptions"
-                                            id="user" value="option2" checked />
-                                    <label class="form-check-label" for="user">User</label>
-                                </div>
-                            </div>
+<%--                                <div class="form-check form-check-inline">--%>
+<%--                                    <input--%>
+<%--                                            class="form-check-input" type="radio" name="inlineRadioOptions"--%>
+<%--                                            id="user" value="option2" checked />--%>
+<%--                                    <label class="form-check-label" for="user">User</label>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
 
-                            <div class="col-6">
-                                <select class="select form-control-md">
-                                    <option value="1" disabled>Choose option</option>
-                                    <option value="2">Patient</option>
-                                    <option value="3">Clinician</option>
-                                    <option value="4">Administrator</option>
-                                </select>
-                                <label class="form-label select-label">Choose User Type</label>
-                            </div>
+<%--                            <div class="col-6">--%>
+<%--                                <select class="select form-control-md">--%>
+<%--                                    <option value="1" disabled>Choose option</option>--%>
+<%--                                    <option value="2">Patient</option>--%>
+<%--                                    <option value="3">Clinician</option>--%>
+<%--                                    <option value="4">Administrator</option>--%>
+<%--                                </select>--%>
+<%--                                <label class="form-label select-label">Choose User Type</label>--%>
+<%--                            </div>--%>
 
                             <div class="row">
                                 <div class="col-md-3 mt-4 pt-2">

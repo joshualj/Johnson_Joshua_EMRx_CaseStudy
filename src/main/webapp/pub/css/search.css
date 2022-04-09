@@ -3,3 +3,10 @@
     rgb(125, 225, 243),
     rgb(245, 213, 106))
 }
+
+.navbar {
+    font-family: "Raleway", sans-serif;
+    background: linear-gradient(to bottom left,
+    rgb(125, 225, 243),
+    rgb(245, 213, 106))
+}
