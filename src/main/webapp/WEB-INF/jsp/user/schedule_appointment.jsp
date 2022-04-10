@@ -1,8 +1,35 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../include/header.jsp"/>
 <jsp:include page="../include/navbar.jsp"/>
 <link href="../../../pub/css/schedule_appointment.css" rel="stylesheet">
 <body>
 <section class="vh-120 gradient-custom">
+    <div class="appointmentDaySelect">
+        <select class="selectDay form-control-md">--%>
+            <option value="0" disabled></option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">14</option>
+            <option value="21">15</option>
+        </select>
+    </div>
     <div class="row justify-content-center align-items-center h-100">
         <h1 id="date">Thursday, March 24</h1>
         <h5 id="clinicianName">Dr. Jackson Smith</h5>
@@ -15,6 +42,119 @@
                             <th style="border-top-left-radius: 15px"><b>Appointment Time</b></th>
                             <th style="border-top-right-radius: 15px"><b>Availability</b></th>
                         </tr>
+                        </thead>
+                        <tr>
+                            <td><b>8:00-8:30</b></td>
+                            <td>
+                                <c:if test="${scheduledTime.contains('8:00:00')}">N/A</c:if>
+                                <c:if test="${!scheduledTime.contains('8:00:00')}">Button</c:if>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>8:30-9:00</b></td>
+                            <td>
+                                <c:if test="${scheduledTime.contains('8:30:00')}">N/A</c:if>
+                                <c:if test="${!scheduledTime.contains('8:30:00')}">Button</c:if>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>9:00-9:30</b></td>
+                            <td>
+                                <c:if test="${scheduledTime.contains('9:00:00')}">N/A</c:if>
+                                <c:if test="${!scheduledTime.contains('9:00:00')}">Button</c:if>
+                            </td>
+                        </tr>
+                        <tr>
+                        <td><b>9:30-10:00</b></td>
+                        <td>
+                            <c:if test="${scheduledTime.contains('9:30:00')}">N/A</c:if>
+                            <c:if test="${!scheduledTime.contains('9:30:00')}">Button</c:if>
+                        </td>
+                        </tr>
+                        <tr>
+                            <td><b>10:00-10:30</b></td>
+                            <td>
+                                <c:if test="${scheduledTime.contains('10:00:00')}">N/A</c:if>
+                                <c:if test="${!scheduledTime.contains('10:00:00')}">Button</c:if>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>10:30-11:00</b></td>
+                            <td>
+                                <c:if test="${scheduledTime.contains('10:30:00')}">N/A</c:if>
+                                <c:if test="${!scheduledTime.contains('10:30:00')}">Button</c:if>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>11:00-11:30</td>
+                            <td><c:if test="${scheduledTime.contains('11:00:00')}">N/A</c:if>
+                                <c:if test="${!scheduledTime.contains('11:00:00')}">
+                                    <form action="user/appointmentSubmit" method="post">
+                                        <input type="hidden" name="date" value="${localDate}">
+                                        <input type="hidden" name="time" value="11:00">
+                                        <input type="hidden" name="clinicianId" value="${clinicianId}">
+                                        <button type="submit">Schedule</button>
+                                    </form>
+                                </c:if></td>
+                        </tr>
+                        <tr>
+                            <td><b>11:30-12:00</b></td>
+                            <td><c:if test="${scheduledTime.contains('11:30:00')}">N/A</c:if>
+                                <c:if test="${!scheduledTime.contains('11:30:00')}">Button</c:if>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>12:00-12:30</td>
+                            <td>
+                                <c:if test="${scheduledTime.contains('12:00:00')}">N/A</c:if>
+                                <c:if test="${!scheduledTime.contains('12:00:00')}">Button</c:if>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>12:30-1:00</b></td>
+                            <td><c:if test="${scheduledTime.contains('12:30:00')}">N/A</c:if>
+                                <c:if test="${!scheduledTime.contains('12:30:00')}">Button</c:if></td>
+                        </tr>
+                        <tr>
+                            <td><b>1:00-1:30</b></td>
+                            <td><c:if test="${scheduledTime.contains('1:00:00')}">N/A</c:if>
+                                <c:if test="${!scheduledTime.contains('1:00:00')}">Button</c:if></td>
+                        </tr>
+                        <tr>
+                            <td><b>1:30-2:00</b></td>
+                            <td><c:if test="${scheduledTime.contains('1:30:00')}">N/A</c:if>
+                                <c:if test="${!scheduledTime.contains('1:30:00')}">Button</c:if></td>
+                        </tr>
+                        <tr>
+                            <td><b>2:00-2:30</b></td>
+                            <td><c:if test="${scheduledTime.contains('2:00:00')}">N/A</c:if>
+                                <c:if test="${!scheduledTime.contains('2:00:00')}">Button</c:if></td>
+                        </tr>
+                        <tr>
+                            <td><b>2:30-3:00</b></td>
+                            <td><c:if test="${scheduledTime.contains('2:30:00')}">N/A</c:if>
+                                <c:if test="${!scheduledTime.contains('2:30:00')}">Button</c:if></td>
+                        </tr>
+                        <tr>
+                            <td><b>3:00-3:30</b></td>
+                            <td><c:if test="${scheduledTime.contains('3:00:00')}">N/A</c:if>
+                                <c:if test="${!scheduledTime.contains('3:00:00')}">Button</c:if></td>
+                        </tr>
+                        <tr>
+                            <td><b>3:30-4:00</b></td>
+                            <td><c:if test="${scheduledTime.contains('3:30:00')}">N/A</c:if>
+                                <c:if test="${!scheduledTime.contains('3:30:00')}">Button</c:if></td>
+                        </tr>
+                        <tr>
+                            <td><b>4:00-4:30</b></td>
+                            <td><c:if test="${scheduledTime.contains('4:00:00')}">N/A</c:if>
+                                <c:if test="${!scheduledTime.contains('4:00:00')}">Button</c:if></td>
+                        </tr>
+<%--                        <c:forEach var="scheduledTime" items="${appointments}">--%>
+<%--                        <div>--%>
+<%--                                ${user.email}--%>
+<%--                        </div>--%>
+<%--                        </c:forEach>--%>
                     </table>
                 </div>
             </div>
@@ -22,4 +162,4 @@
     </div>
 </section>
 </body>
-<script src= "../../../pub/js/schedule_appointment.js"></script>
+<%--<script src= "../../../pub/js/schedule_appointment.js"></script>--%>

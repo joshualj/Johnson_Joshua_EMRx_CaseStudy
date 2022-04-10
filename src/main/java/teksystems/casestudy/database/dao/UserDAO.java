@@ -33,7 +33,7 @@ public interface UserDAO extends JpaRepository<User, Long> {
 
     public User findByUserId(@Param("userId") Integer userId);
 
-    public List<User> findByUserType(@Param("userType") String userType);
+    public List<User> findByUserRole(@Param("userRole") String userType);
 
     @Query(value = "select u from User u where u.password = :password", nativeQuery = true)
     public List<User> getByPassword(@Param("password") String password);

@@ -16,7 +16,9 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @Controller
@@ -57,14 +59,18 @@ public class IndexController {
         log.info(day.toString());
         log.info("==================================");
 
-        List<Appointment> appointments = appointmentDao.findByDateAndTime(day, time);
+        List<Appointment> appointments = appointmentDao.findByClinicianClinicianIdAndDate(1, day);
+
+        Set<Time> scheduledTime = new HashSet<>();
 
         for (Appointment appointment : appointments) {
-            log.info(appointment.toString() + " by Id");
+            scheduledTime.add(appointment.getTime());
+//            log.info(appointment.toString() + " by Id");
         }
 
-        response.setViewName("index");
-        response.addObject("appointments", appointments);
+        response.setViewName("index"); //getting the jsp file
+        response.addObject("scheduledTime", scheduledTime);
+        //attributeName is object inside of jsp, and scheduledTime is the object that is being passed to that name
 
 //        log.info(clinician.toString());
 //        log.info(clinicianById.toString());

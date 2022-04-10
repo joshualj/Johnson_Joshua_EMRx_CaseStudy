@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 @ToString
 public class ClinicianRegisterFormBean {
     private Integer userId; //probably need to delete this, once table field is deleted
-    private Integer id;
+//    private Integer id;
 
     @NotBlank(message="Email is required")
     @EmailUnique(message="Email is already in use.")

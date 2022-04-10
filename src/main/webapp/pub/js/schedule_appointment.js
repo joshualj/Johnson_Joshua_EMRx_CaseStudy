@@ -82,7 +82,7 @@ $(document).ready(function() {
 
         //if an appointment slot has no patient_id, add the time slot to the #appointments table row
         //and include a green button for user to click on to schedule an appointment at that time
-        //under the 'availibiility' column
+        //under the 'availibility' column
         if(patient_id =="null") {
             console.log(time);
             $('#appointmentsTable').append (

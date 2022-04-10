@@ -88,7 +88,6 @@ public class UserController{
         user.setEmail(form.getEmail());
         user.setFirstName(form.getFirstName());
         user.setLastName(form.getLastName());
-//        user.setUserType(form.getUserType());
         user.setPassword(form.getPassword());
 
         userDao.save(user);

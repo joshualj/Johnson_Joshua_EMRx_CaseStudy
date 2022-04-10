@@ -31,6 +31,9 @@ public interface AppointmentDAO extends JpaRepository<Appointment, Long> {
 
     public List<Appointment> findByClinicianClinicianId(@Param("clinicianId") Integer clinicianId);
 
+    public List<Appointment> findByClinicianClinicianIdAndDate(@Param("clinicianId") Integer clinicianId,
+                                                                 @Param("date") LocalDate date);
+
     @Query(value = "select a from Appointment a where a.patient.patientId = :patientId")
     public List<Appointment> getByPatientId(@Param("patientId") Integer patientId);
 

@@ -4,18 +4,26 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import teksystems.casestudy.database.dao.AppointmentDAO;
+import teksystems.casestudy.database.dao.ClinicianDAO;
 import teksystems.casestudy.database.dao.UserDAO;
 import teksystems.casestudy.database.entity.Appointment;
+import teksystems.casestudy.database.entity.Clinician;
 import teksystems.casestudy.database.entity.User;
 import teksystems.casestudy.formbean.RegisterFormBean;
 
 import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @Controller
@@ -24,38 +32,99 @@ public class AppointmentController {
     @Autowired
     private AppointmentDAO appointmentDao;
 
-    @RequestMapping(value="/user/schedule_appointment", method = RequestMethod.GET)
-    public ModelAndView schedule() throws Exception {
+    @Autowired
+    private ClinicianDAO clinicianDao;
+
+
+//    @RequestMapping(value="/user/schedule_appointment", method = RequestMethod.GET)
+//    public ModelAndView schedule() throws Exception {
+//        ModelAndView response = new ModelAndView();
+//        response.setViewName("user/schedule_appointment");
+//
+////        Date day = new Date(2022, 04, 04);
+////        log.info(day.toString());
+//
+//        Time time = new Time(12, 30, 00);
+//
+//        List<Appointment> appointmentsByTime = appointmentDao.findByTime(time);
+//
+//        Appointment appointment = appointmentDao.findByAppointmentId(3);
+//        List<Appointment> appointments2 = appointmentDao.getByPatientId(1);
+//        Appointment apt = appointmentDao.findByPaqId(1);
+//
+//
+//        response.addObject("appointment", appointment);
+//
+//        log.info(appointment.toString() + "this was found by Appointment Id");
+//        log.info(apt.toString() + "this was found by Paq");
+//
+//
+//        for (Appointment appointmente : appointments2) {
+//            log.info(appointmente.toString() + "found by pt Id");
+//        }
+//
+//        for (Appointment appointmentT : appointmentsByTime) {
+//            log.info(appointmentT.toString() + "found by time");
+//        }
+//
+//        return response;
+//    }
+
+    //TO DO: Add drop-down with DATE and clinicianId
+    //TO DO: Update table after clicking submit button
+    //store all clinicianId in a list, pass to front-end to use in drop down
+    //store all dates in a drop-down (as strings), maybe have four drop downs?
+    //handle null entry, when page is loaded initially
+
+    @RequestMapping(value= "user/schedule_appointment", method = RequestMethod.GET)
+    public ModelAndView schedule(@RequestParam(required = false) Integer clinicianId,
+                                 @RequestParam(required = false) Integer year,
+                                 @RequestParam(required = false) Integer month,
+                                 @RequestParam(required = false) Integer day) throws Exception {
+
         ModelAndView response = new ModelAndView();
         response.setViewName("user/schedule_appointment");
 
-//        Date day = new Date(2022, 04, 04);
-//        log.info(day.toString());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        LocalDate date = LocalDate.of(year, month, day);
+        Time time = new Time(12,0,0);
+        log.info(time.toString());
 
-        Time time = new Time(12, 30, 00);
+        log.info(day.toString());
+        log.info("==================================");
 
-        List<Appointment> appointmentsByTime = appointmentDao.findByTime(time);
+        List<Appointment> appointments = appointmentDao.findByClinicianClinicianIdAndDate(clinicianId, date);
 
-        Appointment appointment = appointmentDao.findByAppointmentId(3);
-        List<Appointment> appointments2 = appointmentDao.getByPatientId(1);
-        Appointment apt = appointmentDao.findByPaqId(1);
+        Set<String> scheduledTime = new HashSet<>();
 
-
-        response.addObject("appointment", appointment);
-
-        log.info(appointment.toString() + "this was found by Appointment Id");
-        log.info(apt.toString() + "this was found by Paq");
-
-
-        for (Appointment appointmente : appointments2) {
-            log.info(appointmente.toString() + "found by pt Id");
+        for (Appointment appointment : appointments) {
+            scheduledTime.add(appointment.getTime().toString());
+            log.info(appointment.getTime().toString());
         }
 
-        for (Appointment appointmentT : appointmentsByTime) {
-            log.info(appointmentT.toString() + "found by time");
-        }
+
+        response.setViewName("user/schedule_appointment"); //getting the jsp file
+        response.addObject("scheduledTime", scheduledTime);
+        response.addObject("localDate", day);
+        response.addObject("clinicianId", clinicianId);
+
+        //attributeName is object inside of jsp, and scheduledTime is the object that is being passed to that name
 
         return response;
     }
 
+    @PostMapping(value= "user/appointmentSubmit")
+    public ModelAndView appointmentSubmit(@RequestParam String date,
+                                          @RequestParam String time,
+                                          @RequestParam Integer clinicianId) throws Exception {
+        ModelAndView response = new ModelAndView();
+
+        response.setViewName("redirect:/user/schedule_appointment");
+
+        return response;
+        //convert string to local date -->
+        //convert time to local time -->
+        //convert time localtime --> just in DAO, entity, and wherever... not in database
+
+    }
 }

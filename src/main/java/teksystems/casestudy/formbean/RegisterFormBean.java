@@ -35,5 +35,5 @@ public class RegisterFormBean {
     @NotBlank(message="Confirming password is required")
     private String confirmPassword;
 
-    private String userType; //might delete
+    private String userRole; //might delete
 }

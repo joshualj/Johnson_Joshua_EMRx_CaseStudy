@@ -22,7 +22,7 @@
                     <div class="card-body p-4 p-md-5">
                         <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">User Registration</h3>
                         <form id="registerForm" action="/user/registerSubmit" class="needs-validation" novalidate>
-                            <input type="hidden" name="id" value="${form.id}">
+<%--                            <input type="hidden" name="id" value="${form.id}">--%>
                             <div class="col-md-12 mb-4">
                                 <input type="text" id="firstName" class="form-control form-control-lg" name="firstName" value="${form.firstName}" required/>
                                 <label class="form-label" for="firstName">First Name</label>
