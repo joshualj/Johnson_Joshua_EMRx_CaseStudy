@@ -16,7 +16,9 @@ import teksystems.casestudy.database.entity.Appointment;
 import teksystems.casestudy.database.entity.Clinician;
 import teksystems.casestudy.database.entity.User;
 import teksystems.casestudy.formbean.RegisterFormBean;
+import teksystems.casestudy.formbean.SelectAppointmentScheduleFormBean;
 
+import javax.validation.Valid;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -28,6 +30,8 @@ import java.util.Set;
 @Slf4j
 @Controller
 public class AppointmentController {
+
+    private final String[] appointmentTimes = {"11:00:00", "11:30:00", "12:00:00"};
 
     @Autowired
     private AppointmentDAO appointmentDao;
@@ -85,28 +89,47 @@ public class AppointmentController {
         ModelAndView response = new ModelAndView();
         response.setViewName("user/schedule_appointment");
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        LocalDate date = LocalDate.of(year, month, day);
-        Time time = new Time(12,0,0);
-        log.info(time.toString());
+        log.info(clinicianId + "====" + year + "====" + month + "====" + day);
 
-        log.info(day.toString());
+        if(day == null) {
+            day = 4;
+        }
+        if(month == null) {
+            month = 4;
+        }
+        if(year == null) {
+            year = 2022;
+        }
+        if(clinicianId == null) {
+            clinicianId = 1;
+        }
+
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        LocalDate date = LocalDate.of(year, month, day);
+
         log.info("==================================");
 
         List<Appointment> appointments = appointmentDao.findByClinicianClinicianIdAndDate(clinicianId, date);
 
         Set<String> scheduledTime = new HashSet<>();
 
+        //prepare a List of times ["11:00:00","01:00:00"]
+
         for (Appointment appointment : appointments) {
             scheduledTime.add(appointment.getTime().toString());
             log.info(appointment.getTime().toString());
         }
 
+        log.info(scheduledTime.toString());
+
+        List<Clinician> clins = clinicianDao.findAll();
 
         response.setViewName("user/schedule_appointment"); //getting the jsp file
+        response.addObject("clinician", clins);
         response.addObject("scheduledTime", scheduledTime);
-        response.addObject("localDate", day);
+        response.addObject("localDate", date);
         response.addObject("clinicianId", clinicianId);
+        response.addObject("appointmentTimes", appointmentTimes);
 
         //attributeName is object inside of jsp, and scheduledTime is the object that is being passed to that name
 
@@ -114,12 +137,26 @@ public class AppointmentController {
     }
 
     @PostMapping(value= "user/appointmentSubmit")
-    public ModelAndView appointmentSubmit(@RequestParam String date,
-                                          @RequestParam String time,
-                                          @RequestParam Integer clinicianId) throws Exception {
+    public ModelAndView appointmentSubmit(@Valid SelectAppointmentScheduleFormBean form) throws Exception {
+//                                          @RequestParam String date,
+//                                          @RequestParam String time,
+//                                          @RequestParam Integer clinicianId)
         ModelAndView response = new ModelAndView();
 
-        response.setViewName("redirect:/user/schedule_appointment");
+//        response.setViewName("redirect:/user/schedule_appointment");
+
+        LocalDate date = LocalDate.of(form.getYear(), form.getMonth(), form.getDay());
+        Clinician clinician = form.getClinician();
+        Integer clinId = clinician.getClinicianId();
+
+        List<Appointment> appointments = appointmentDao.findByClinicianClinicianIdAndDate(clinId, date);
+
+        Set<String> scheduledTime = new HashSet<>();
+
+        for (Appointment appointment : appointments) {
+            scheduledTime.add(appointment.getTime().toString());
+            log.info(appointment.getTime().toString());
+        }
 
         return response;
         //convert string to local date -->
