@@ -13,7 +13,7 @@ import java.util.List;
 
 //Repository
 @Repository
-public interface PatientDAO extends JpaRepository<Patient, Long> {
+public interface PatientDAO extends JpaRepository<Patient, Integer> {
 
     public Patient findByPatientId(@Param("patientId") Integer patientId);
 

@@ -10,7 +10,7 @@ import java.util.List;
 
 //Repository
 @Repository
-public interface UserDAO extends JpaRepository<User, Long> {
+public interface UserDAO extends JpaRepository<User, Integer> {
 
     //this is a native query which is SQL like you would execute in workbench
 //    @Query(value= "select * from users where user_id = :user_id", nativeQuery = true)

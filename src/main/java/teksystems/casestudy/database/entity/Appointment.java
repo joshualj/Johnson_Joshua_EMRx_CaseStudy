@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +28,7 @@ public class Appointment {
     private LocalDate date;
 
     @Column(name = "time")
-    private Time time;
+    private LocalTime time;
 
 //    @Column(name = "clinician_id")
 //    private Integer clinicianId;

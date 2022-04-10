@@ -13,7 +13,7 @@ import java.util.List;
 
 //Repository
 @Repository
-public interface ClinicianDAO extends JpaRepository<Clinician, Long> {
+public interface ClinicianDAO extends JpaRepository<Clinician, Integer> {
 
     public Clinician findByClinicianId(@Param("clinicianId") Integer clinicianId);
 

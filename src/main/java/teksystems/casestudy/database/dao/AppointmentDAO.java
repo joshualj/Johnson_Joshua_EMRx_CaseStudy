@@ -11,18 +11,17 @@ import teksystems.casestudy.database.entity.User;
 import java.security.Timestamp;
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
 //Repository
 @Repository
-public interface AppointmentDAO extends JpaRepository<Appointment, Long> {
+public interface AppointmentDAO extends JpaRepository<Appointment, Integer> {
 
-    public Appointment findByAppointmentId(@Param("appointmentId") Integer appointmentId);
+    public Appointment findByAppointmentId(Integer appointmentId);
 
     public List<Appointment> findByDate(@Param("date") Date date);
-
-    public List<Appointment> findByTime(@Param("time") Time time);
 
     @Query(value = "select a.appointmentId from Appointment a where a.clinician.clinicianId = :clinicianId")
     public List<Appointment> findByClinicianId(@Param("clinicianId") Integer clinicianId);
@@ -30,6 +29,7 @@ public interface AppointmentDAO extends JpaRepository<Appointment, Long> {
     public List<Appointment> findByPatientPatientId(@Param("patientId") Integer patientId);
 
     public List<Appointment> findByClinicianClinicianId(@Param("clinicianId") Integer clinicianId);
+    //Don't need @Param
 
     public List<Appointment> findByClinicianClinicianIdAndDate(@Param("clinicianId") Integer clinicianId,
                                                                  @Param("date") LocalDate date);
@@ -40,7 +40,7 @@ public interface AppointmentDAO extends JpaRepository<Appointment, Long> {
     public Appointment findByPaqId(@Param("paqId") Integer paqId);
 
     public List<Appointment> findByDateAndTime(@Param("date") LocalDate date,
-                                               @Param("time") Time time);
+                                               @Param("time") LocalTime time);
 
     @Query(value = "select a.appointmentId from Appointment a where a.patient.patientId = :patientId AND a.date = :date")
     public List<Appointment> findByPatientIdAndDate(@Param("patientId") Integer patientId,
@@ -49,7 +49,7 @@ public interface AppointmentDAO extends JpaRepository<Appointment, Long> {
     @Query(value = "select a.appointmentId from Appointment a where a.patient.patientId = :patientId AND a.date = :date AND a.time = :time")
     public Appointment findByPatientIdAndDateAndTime(@Param("patientId") Integer patientId,
                                                        @Param("date") Date date,
-                                                       @Param("time") Time time);
+                                                       @Param("time") LocalTime time);
 
     @Query(value = "select a.appointmentId from Appointment a where a.clinician.clinicianId = :clinicianId AND a.date = :date")
     public List<Appointment> findByClinicianIdAndDate(@Param("clinicianId") Integer clinicianId,
@@ -58,7 +58,7 @@ public interface AppointmentDAO extends JpaRepository<Appointment, Long> {
     @Query(value = "select a.appointmentId from Appointment a where a.clinician.clinicianId = :clinicianId AND a.date = :date AND a.time = :time")
     public Appointment findByClinicianIdAndDateAndTime(@Param("clinicianId") Integer clinicianId,
                                                        @Param("date") Date date,
-                                                       @Param("time") Time time);
+                                                       @Param("time") LocalTime time);
 }
 //    @Query(value = "select u from User u where u.password = :password", nativeQuery = true)
 //    public List<User> getByPassword(@Param("password") String password);
