@@ -70,8 +70,8 @@
 <%--        </div>--%>
     </form>
     <div class="row justify-content-center align-items-center h-100">
-        <h1 id="date">Thursday, March 24</h1>
-        <h5 id="clinicianName">Dr. Jackson Smith</h5>
+        <h1 id="date" name="date" value="${localDate}">${localDate}</h1>
+        <h5 name="defaultClinician" value="${defaultClinician}">Dr. ${defaultClinician.firstName} ${defaultClinician.lastName}</h5>
         <div class="col-5">
             <div class="card shadow-2-strong" style="border-radius: 15px">
                 <div style="line-height: 2.0">

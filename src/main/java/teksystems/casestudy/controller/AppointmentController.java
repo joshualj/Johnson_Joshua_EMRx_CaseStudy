@@ -94,6 +94,8 @@ public class AppointmentController {
 
         log.info(clinicianId + "====" + year + "====" + month + "====" + day);
 
+        Clinician defaultClinician = clinicianDao.findByClinicianId(clinicianId);
+
         if(day == null) {
             day = 4;
         }
@@ -105,6 +107,7 @@ public class AppointmentController {
         }
         if(clinicianId == null) {
             clinicianId = 1;
+            defaultClinician = clinicianDao.findByClinicianId(1);
         }
 
 //        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -123,11 +126,13 @@ public class AppointmentController {
 
         List<Clinician> clins = clinicianDao.findAll();
 
+
 //        response.setViewName("user/schedule_appointment"); //getting the jsp file
         response.addObject("clinician", clins);
         response.addObject("scheduledTime", scheduledTime);
         response.addObject("localDate", date);
         response.addObject("clinicianId", clinicianId);
+        response.addObject("defaultClinician", defaultClinician);
         response.addObject("appointmentTimes", appointmentTimes);
 
         //attributeName is object inside of jsp, and scheduledTime is the object that is being passed to that name
