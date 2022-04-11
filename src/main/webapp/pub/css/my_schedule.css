@@ -1,0 +1,34 @@
+.gradient-custom {
+    background: linear-gradient(to top left,
+    rgb(125, 225, 243),
+    rgb(245, 213, 106));
+    padding-bottom: 80px;
+}
+
+footer {
+    background: linear-gradient(to bottom left,
+    rgb(125, 225, 243),
+    rgb(245, 213, 106))
+}
+
+.navbar {
+    background: linear-gradient(to bottom left,
+    rgb(125, 225, 243),
+    rgb(245, 213, 106))
+}
+
+#appointmentsTable {
+    font-size: 20px;
+}
+
+body {
+    font-family: "Raleway", sans-serif;
+}
+
+#date {
+    padding-left: 25px;
+}
+
+#clinicianName {
+    padding-left: 25px;
+}

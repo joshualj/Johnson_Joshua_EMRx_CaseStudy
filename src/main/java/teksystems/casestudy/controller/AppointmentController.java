@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import teksystems.casestudy.database.dao.AppointmentDAO;
 import teksystems.casestudy.database.dao.ClinicianDAO;
+import teksystems.casestudy.database.dao.PatientDAO;
 import teksystems.casestudy.database.dao.UserDAO;
 import teksystems.casestudy.database.entity.Appointment;
 import teksystems.casestudy.database.entity.Clinician;
+import teksystems.casestudy.database.entity.Patient;
 import teksystems.casestudy.database.entity.User;
 import teksystems.casestudy.formbean.RegisterFormBean;
 import teksystems.casestudy.formbean.SelectAppointmentScheduleFormBean;
@@ -41,6 +43,9 @@ public class AppointmentController {
 
     @Autowired
     private ClinicianDAO clinicianDao;
+
+    @Autowired
+    private PatientDAO patientDao;
 
 
 //    @RequestMapping(value="/user/schedule_appointment", method = RequestMethod.GET)
@@ -147,11 +152,6 @@ public class AppointmentController {
 //                                          @RequestParam Integer clinicianId)
         ModelAndView response = new ModelAndView();
 
-        log.info(form.getDate());
-        log.info("+++++++++++++++++");
-
-
-
 //        LocalDate date = LocalDate.of(form.getYear(), form.getMonth(), form.getDay());
 
 //        List<Appointment> appointments = appointmentDao.findByClinicianClinicianIdAndDate(form.getClinicianId(), date);
@@ -174,5 +174,26 @@ public class AppointmentController {
         //convert time to local time -->
         //convert time localtime --> just in DAO, entity, and wherever... not in database
 
+    }
+
+    @RequestMapping(value= "/user/my_schedule", method = RequestMethod.GET)
+    public ModelAndView myAppointments(@RequestParam(required = false) Integer userId) {
+        ModelAndView response = new ModelAndView();
+        response.setViewName("user/my_schedule");
+
+        List<Appointment> appointments = appointmentDao.findByPatientPatientId(userId);
+
+        String name = " ";
+
+        if(userId != null) {
+            Patient patient = patientDao.findByPatientId(userId);
+            name = patient.getFirstName();
+        }
+
+        response.addObject("appointments", appointments);
+        response.addObject("name", name);
+
+
+        return response;
     }
 }
