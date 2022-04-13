@@ -3,19 +3,23 @@ package teksystems.casestudy.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import teksystems.casestudy.database.dao.PatientDAO;
 import teksystems.casestudy.database.dao.UserDAO;
+import teksystems.casestudy.database.entity.Patient;
 import teksystems.casestudy.database.entity.User;
 import teksystems.casestudy.formbean.RegisterFormBean;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Slf4j
 @Controller
@@ -23,6 +27,12 @@ public class UserController{
 
     @Autowired
     private UserDAO userDao;
+
+    @Autowired
+    private PatientDAO patientDao;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @RequestMapping(value="/user/register", method = RequestMethod.GET)
     public ModelAndView register() throws Exception {
@@ -88,9 +98,31 @@ public class UserController{
         user.setEmail(form.getEmail());
         user.setFirstName(form.getFirstName());
         user.setLastName(form.getLastName());
-        user.setPassword(form.getPassword());
+        String password = passwordEncoder.encode(form.getPassword());
+        user.setPassword(password);
 
         userDao.save(user);
+
+        Patient patient = patientDao.findByUserId(user.getUserId());
+
+        if (patient == null) {
+            patient = new Patient();
+        }
+
+        //sets medical_record_number to a random number from 0-1999
+        //after checking to make sure no patient has that MRN.
+
+        Random rand = new Random();
+        int upperbound = 2000;
+        int mrn = rand.nextInt(upperbound);
+
+        while(patientDao.findByMedicalRecordNumber(mrn) != null) {
+            mrn = rand.nextInt(upperbound);
+        }
+        patient.setMedicalRecordNumber(mrn);
+        patient.setUserId(user.getUserId());
+
+        patientDao.save(patient);
 
         log.info(form.toString());
 

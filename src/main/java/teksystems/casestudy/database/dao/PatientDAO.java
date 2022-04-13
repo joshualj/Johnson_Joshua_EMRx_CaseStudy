@@ -17,6 +17,8 @@ public interface PatientDAO extends JpaRepository<Patient, Integer> {
 
     public Patient findByPatientId(@Param("patientId") Integer patientId);
 
+    public Patient findByUserId(@Param("userId") Integer userId);
+
     public Patient findByMedicalRecordNumber(@Param("medicalRecordNumber") Integer medicalRecordNumber);
 
 //    public List<Patient> findByFirstName(@Param("firstName") String firstName);
