@@ -3,6 +3,8 @@ package teksystems.casestudy.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,10 +21,7 @@ import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -44,40 +43,10 @@ public class AppointmentController {
     @Autowired
     private UserDAO userDao;
 
-
-//    @RequestMapping(value="/user/schedule_appointment", method = RequestMethod.GET)
-//    public ModelAndView schedule() throws Exception {
-//        ModelAndView response = new ModelAndView();
-//        response.setViewName("user/schedule_appointment");
+//    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//    String currentPrincipalName = authentication.getName();
 //
-////        Date day = new Date(2022, 04, 04);
-////        log.info(day.toString());
-//
-//        Time time = new Time(12, 30, 00);
-//
-//        List<Appointment> appointmentsByTime = appointmentDao.findByTime(time);
-//
-//        Appointment appointment = appointmentDao.findByAppointmentId(3);
-//        List<Appointment> appointments2 = appointmentDao.getByPatientId(1);
-//        Appointment apt = appointmentDao.findByPaqId(1);
-//
-//
-//        response.addObject("appointment", appointment);
-//
-//        log.info(appointment.toString() + "this was found by Appointment Id");
-//        log.info(apt.toString() + "this was found by Paq");
-//
-//
-//        for (Appointment appointmente : appointments2) {
-//            log.info(appointmente.toString() + "found by pt Id");
-//        }
-//
-//        for (Appointment appointmentT : appointmentsByTime) {
-//            log.info(appointmentT.toString() + "found by time");
-//        }
-//
-//        return response;
-//    }
+//    User user = userDao.findByEmail(currentPrincipalName);
 
     //TO DO: Add drop-down with DATE and clinicianId
     //TO DO: Update table after clicking submit button
@@ -86,7 +55,7 @@ public class AppointmentController {
     //handle null entry, when page is loaded initially
 
     @RequestMapping(value= "/user/schedule_appointment", method = RequestMethod.GET)
-    public ModelAndView schedule(@RequestParam(required = false) Integer clinicianId,
+    public ModelAndView schedule(@RequestParam(required = false) Integer userId,
                                  @RequestParam(required = false) Integer year,
                                  @RequestParam(required = false) Integer month,
                                  @RequestParam(required = false) Integer day) throws Exception {
@@ -94,10 +63,10 @@ public class AppointmentController {
         ModelAndView response = new ModelAndView();
         response.setViewName("user/schedule_appointment");
 
-        log.info(clinicianId + "====" + year + "====" + month + "====" + day);
-
-        Clinician clinician = (clinicianId != null) ? clinicianDao.findByClinicianId(clinicianId)
+        Clinician clinician = (userId != null) ? clinicianDao.findByUserId(userId)
                 : clinicianDao.findByClinicianId(4);
+
+        Integer clinicianId = (userId != null) ? clinician.getClinicianId() : 4;
 
         if(day == null) {
             day = 4;
@@ -111,12 +80,9 @@ public class AppointmentController {
 
         User user = userDao.findByUserId(clinician.getUserId());
 
+        log.info(user.toString());
 
-
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         LocalDate date = LocalDate.of(year, month, day);
-
-//        log.info("==================================");
 
         List<Appointment> appointments = appointmentDao.findByClinicianClinicianIdAndDate(clinicianId, date);
 
@@ -124,19 +90,28 @@ public class AppointmentController {
 
         for (Appointment appointment : appointments) {
             scheduledTime.add(appointment.getTime().toString());
-//            log.info(appointment.getTime().toString());
         }
 
         List<Clinician> clins = clinicianDao.findAll();
+        List<User> clinicianUsers = new ArrayList<>();
+
+        for (Clinician clin : clins) {
+            User clinUser = userDao.findByUserId(clin.getUserId());
+            clinicianUsers.add(clinUser);
+        }
 
 
 //        response.setViewName("user/schedule_appointment"); //getting the jsp file
-        response.addObject("clinician", clins);
+        response.addObject("clinicianUsers", clinicianUsers);
+        response.addObject("clinUser", user);
         response.addObject("scheduledTime", scheduledTime);
         response.addObject("localDate", date);
         response.addObject("clinicianId", clinicianId);
-        response.addObject("user", user);
+//        response.addObject("user", user);
         response.addObject("appointmentTimes", appointmentTimes);
+
+//        SelectAppointmentScheduleFormBean form = new SelectAppointmentScheduleFormBean();
+//        response.addObject("form", form);
 
         //attributeName is object inside of jsp, and scheduledTime is the object that is being passed to that name
 
@@ -147,28 +122,18 @@ public class AppointmentController {
     public ModelAndView appointmentSubmit(@Valid SelectAppointmentScheduleFormBean form) throws Exception {
         ModelAndView response = new ModelAndView();
 
-//        LocalDate date = LocalDate.of(form.getYear(), form.getMonth(), form.getDay());
-
-//        List<Appointment> appointments = appointmentDao.findByClinicianClinicianIdAndDate(form.getClinicianId(), date);
-//        List<Appointment> appointments =
-//                appointmentDao.findByClinicianClinicianIdAndDate(form.getClinicianId(), form.getLocalDate());
-
-
         Appointment appointment = new Appointment();
-        appointment.setClinician(clinicianDao.getById(form.getClinicianId()));
+        Clinician clinician = clinicianDao.findByUserId(form.getUserId());
+        appointment.setClinician(clinician);
         appointment.setDate(LocalDate.parse(form.getDate()));
         appointment.setTime(LocalTime.parse(form.getTime()));
-
         appointmentDao.save(appointment);
 
 
-//        response.setViewName("redirect:/user/schedule_appointment");
-        response.setViewName("redirect:/user/my_schedule");
+//      TODO: response.setViewName("redirect:/user/schedule_appointment" + userId);
+//        response.setViewName("redirect:/user/my_schedule/" + user.getUserId());
 
         return response;
-        //convert string to local date -->
-        //convert time to local time -->
-        //convert time localtime --> just in DAO, entity, and wherever... not in database
 
     }
 

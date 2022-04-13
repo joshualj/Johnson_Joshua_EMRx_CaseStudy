@@ -29,7 +29,7 @@ public interface PatientDAO extends JpaRepository<Patient, Integer> {
 
     public List<Patient> findByPrimaryLanguage(@Param("primaryLanguage") String primaryLanguage);
 
-    public List<Patient> findByFirstNameAndLastName(@Param("firstName") String firstName, @Param("lastName") String lastName);
+//    public List<Patient> findByFirstNameAndLastName(@Param("firstName") String firstName, @Param("lastName") String lastName);
 
 //    @Query(value = "select u from User u where u.password = :password", nativeQuery = true)
 //    public List<Patient> getByPassword(@Param("password") String password);

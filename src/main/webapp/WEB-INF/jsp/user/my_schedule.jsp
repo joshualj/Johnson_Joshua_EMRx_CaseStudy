@@ -10,9 +10,9 @@
 <%--        <input class="btn btn-outline-primary btn-md" type="submit" value="Submit" />--%>
 <%--    </form>--%>
     <div class="row justify-content-center align-items-center h-100">
-        <h1 id="name" name="patient" value="${user}">
-            <c:if test="${!empty user.firstName}">${user.firstName}'s Upcoming Appointments</c:if>
-            <c:if test="${empty user.firstName}">My Upcoming Appointments</c:if>
+        <h1 id="name" name="user" value="${user}">
+            <c:if test="${!empty user.firstName}">${user.firstName}'s Appointments</c:if>
+            <c:if test="${empty user.firstName}">My Appointments</c:if>
         </h1>
         <div class="col-5">
             <div class="card shadow-2-strong" style="border-radius: 15px">

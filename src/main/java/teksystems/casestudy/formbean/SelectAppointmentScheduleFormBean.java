@@ -24,7 +24,7 @@ public class SelectAppointmentScheduleFormBean {
 
     private String date;
 
-    private Integer clinicianId;
+    private Integer userId;
 
     private String time;
 

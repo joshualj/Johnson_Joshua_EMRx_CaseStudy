@@ -6,10 +6,10 @@
 <section class="vh-120 gradient-custom">
 <%--    <div class="row justify-content-center align-items-center">--%>
         <form class="appointmentDaySelect" action="/user/schedule_appointment">
-            <select class="selectYear form-control-md" name="clinicianId" value="${form.clinicianId}" required>
+            <select class="selectYear form-control-md" name="userId" value="${form.userId}" required>
                 <option value="0" disabled></option>
-                <c:forEach var="clinician" items="${clinician}">
-                    <option value="${clinician.clinicianId}">${clinician.firstName} ${clinician.lastName}</option>
+                <c:forEach var="clinician" items="${clinicianUsers}">
+                    <option value="${clinician.userId}">${clinician.firstName} ${clinician.lastName}</option>
                 </c:forEach>
             </select>
             <select class="selectYear form-control-md" name="year" value="${form.year}" required>
@@ -71,7 +71,7 @@
     </form>
     <div class="row justify-content-center align-items-center h-100">
         <h1 id="date" name="date" value="${localDate}">${localDate}</h1>
-        <h5 name="defaultClinician" value="${user}">Dr. ${user.firstName} ${user.lastName}</h5>
+        <h5 name="clinUser" value="${clinUser}">Dr. ${clinUser.firstName} ${clinUser.lastName}</h5>
         <div class="col-5">
             <div class="card shadow-2-strong" style="border-radius: 15px">
                 <div style="line-height: 2.0">
@@ -91,7 +91,7 @@
                                         <form action="/user/schedule_appointmentSubmit" method="post">
                                             <input type="hidden" name="date" value="${localDate}">
                                             <input type="hidden" name="time" value="${apptTime}">
-                                            <input type="hidden" name="clinicianId" value="${clinicianId}">
+                                            <input type="hidden" name="userId" value="${clinUser.userId}">
                                             <button type="submit">Schedule</button>
                                         </form>
                                     </c:if>
