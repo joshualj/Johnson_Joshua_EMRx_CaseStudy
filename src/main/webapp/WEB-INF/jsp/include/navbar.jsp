@@ -7,7 +7,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/index">| Home</a>
+                    <a class="nav-link active" aria-current="page" href="/login/login">| Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/user/register">| Register</a>
@@ -18,19 +18,25 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="/user/schedule_appointment">Schedule an Appointment</a></li>
-                        <li><a class="dropdown-item" href="/user/search">Find a Clinician</a></li>
+                        <li><a class="dropdown-item" href="/user/my_schedule">My Upcoming Appointments</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Add Pre-Visit Details</a></li>
+                        <sec:authorize access="hasAuthority('CLINICIAN')">
+                            <li><a class="dropdown-item" href="/user/search">Find a Clinician</a></li>
+                        </sec:authorize>
+<%--                        <li><a class="dropdown-item" href="#">Add Pre-Visit Details</a></li>--%>
                     </ul>
                 </li>
-                <!-- <li class="nav-item">
-                  <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                </li> -->
+                <sec:authorize access="isAuthenticated()">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login/logout">| Logout</a>
+                    </li>
+                    <sec:authentication property="principal.username" />
+                </sec:authorize>
             </ul>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Find a Clinician" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+<%--            <form class="d-flex">--%>
+<%--                <input class="form-control me-2" type="search" placeholder="Find a Clinician" aria-label="Search">--%>
+<%--                <button class="btn btn-outline-success" type="submit">Search</button>--%>
+<%--            </form>--%>
         </div>
     </div>
 </nav>

@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import teksystems.casestudy.database.dao.ClinicianDAO;
+import teksystems.casestudy.database.dao.UserDAO;
 import teksystems.casestudy.database.entity.Clinician;
+import teksystems.casestudy.database.entity.User;
 import teksystems.casestudy.formbean.ClinicianRegisterFormBean;
 
 import javax.validation.Valid;
@@ -27,19 +29,33 @@ public class ClinicianController {
     @Autowired
     private ClinicianDAO clinicianDao;
 
+    @Autowired
+    private UserDAO userDao;
+
+
     @GetMapping(value="/user/search")//, method= {RequestMethod.GET, RequestMethod.POST})
     public ModelAndView searchByLastName(@RequestParam (required = false) String searchLastName) {
         ModelAndView response = new ModelAndView();
         response.setViewName("user/search");
 
         List<Clinician> clinicians = new ArrayList<>();
+        List<User> users = new ArrayList<>();
+
 
         if (!StringUtils.isEmpty(searchLastName)) {
-            clinicians = clinicianDao.findByLastNameIgnoreCaseContaining(searchLastName);
+            users = userDao.findByLastNameIgnoreCaseContaining(searchLastName);
         }
+
+        for(User user : users) {
+            Clinician clinician = clinicianDao.findByUserId(user.getUserId());
+            clinicians.add(clinician);
+        }
+
+        log.info(users.toString());
 
         response.addObject("clinicians", clinicians);
         response.addObject("searchLastName", searchLastName);
+        response.addObject("users", users);
 
         return response;
 
@@ -79,16 +95,19 @@ public class ClinicianController {
             return response;
         }
 
+
         Clinician clinician = clinicianDao.findByUserId(form.getUserId());
+
+        //TODO Add new user
 
         if (clinician == null) {
             clinician = new Clinician();
         }
 
-        clinician.setFirstName(form.getFirstName());
-        clinician.setLastName(form.getLastName());
-        clinician.setEmail(form.getEmail());
-        clinician.setPassword(form.getPassword());
+//        clinician.setFirstName(form.getFirstName());
+//        clinician.setLastName(form.getLastName());
+//        clinician.setEmail(form.getEmail());
+//        clinician.setPassword(form.getPassword());
         clinician.setUserId(form.getUserId());
         clinician.setTitle(form.getTitle());
         clinician.setDepartment(form.getDepartment());
@@ -105,7 +124,8 @@ public class ClinicianController {
         //and dynamically creating the page
         //Browser to do a redirect to the URL after the. The big piece here to
         // recognize is redirect uses an actual URL rather than a view ??
-        response.setViewName("redirect:/clinician/edit/" + clinician.getUserId());
+        response.setViewName("redirect:/user/my_schedule");
+        //TODO: Change to clinician my schedule, today's date
 
         return response;
     }

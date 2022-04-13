@@ -21,14 +21,17 @@ public class Patient {
     @Column(name = "patient_id")
     private Integer patientId;
 
+    @Column(name = "user_id")
+    private Integer userId;
+
     @Column(name = "medical_record_number")
     private Integer medicalRecordNumber;
 
-    @Column(name = "first_name")
-    private String firstName;
-
-    @Column(name = "last_name")
-    private String lastName;
+//    @Column(name = "first_name")
+//    private String firstName;
+//
+//    @Column(name = "last_name")
+//    private String lastName;
 
     @Column(name = "preferred_name")
     private String preferredName;

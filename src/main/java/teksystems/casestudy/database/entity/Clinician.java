@@ -25,11 +25,11 @@ public class Clinician {
     private Integer userId;
     //probably delete this
 
-    @Column(name = "first_name")
-    private String firstName;
-
-    @Column(name = "last_name")
-    private String lastName;
+//    @Column(name = "first_name")
+//    private String firstName;
+//
+//    @Column(name = "last_name")
+//    private String lastName;
 
     @Column(name = "title")
     private String title;
@@ -37,11 +37,11 @@ public class Clinician {
     @Column(name = "department")
     private String department;
 
-    @Column(name = "email")
-    private String email;
-
-    @Column(name = "password")
-    private String password;
+//    @Column(name = "email")
+//    private String email;
+//
+//    @Column(name = "password")
+//    private String password;
 
     @Column(name = "languages")
     private String languages;

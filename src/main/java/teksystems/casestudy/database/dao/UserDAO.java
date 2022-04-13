@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import teksystems.casestudy.database.entity.Clinician;
 import teksystems.casestudy.database.entity.User;
 
 import java.util.List;
@@ -28,6 +29,8 @@ public interface UserDAO extends JpaRepository<User, Integer> {
     public List<User> findByFirstName(@Param("firstName") String firstName);
 
     public List<User> findByLastName(@Param("lastName") String lastName);
+
+    public List<User> findByLastNameIgnoreCaseContaining(@Param("lastName") String lastName);
 
     public User findByEmail(@Param("email") String email);
 

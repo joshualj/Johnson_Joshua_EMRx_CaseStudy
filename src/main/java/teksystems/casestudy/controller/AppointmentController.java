@@ -4,19 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import teksystems.casestudy.database.dao.AppointmentDAO;
 import teksystems.casestudy.database.dao.ClinicianDAO;
 import teksystems.casestudy.database.dao.PatientDAO;
 import teksystems.casestudy.database.dao.UserDAO;
-import teksystems.casestudy.database.entity.Appointment;
-import teksystems.casestudy.database.entity.Clinician;
-import teksystems.casestudy.database.entity.Patient;
-import teksystems.casestudy.database.entity.User;
+import teksystems.casestudy.database.entity.*;
 import teksystems.casestudy.formbean.RegisterFormBean;
 import teksystems.casestudy.formbean.SelectAppointmentScheduleFormBean;
 
@@ -46,6 +40,9 @@ public class AppointmentController {
 
     @Autowired
     private PatientDAO patientDao;
+
+    @Autowired
+    private UserDAO userDao;
 
 
 //    @RequestMapping(value="/user/schedule_appointment", method = RequestMethod.GET)
@@ -99,7 +96,8 @@ public class AppointmentController {
 
         log.info(clinicianId + "====" + year + "====" + month + "====" + day);
 
-        Clinician defaultClinician = clinicianDao.findByClinicianId(clinicianId);
+        Clinician clinician = (clinicianId != null) ? clinicianDao.findByClinicianId(clinicianId)
+                : clinicianDao.findByClinicianId(4);
 
         if(day == null) {
             day = 4;
@@ -110,10 +108,10 @@ public class AppointmentController {
         if(year == null) {
             year = 2022;
         }
-        if(clinicianId == null) {
-            clinicianId = 1;
-            defaultClinician = clinicianDao.findByClinicianId(1);
-        }
+
+        User user = userDao.findByUserId(clinician.getUserId());
+
+
 
 //        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         LocalDate date = LocalDate.of(year, month, day);
@@ -137,7 +135,7 @@ public class AppointmentController {
         response.addObject("scheduledTime", scheduledTime);
         response.addObject("localDate", date);
         response.addObject("clinicianId", clinicianId);
-        response.addObject("defaultClinician", defaultClinician);
+        response.addObject("user", user);
         response.addObject("appointmentTimes", appointmentTimes);
 
         //attributeName is object inside of jsp, and scheduledTime is the object that is being passed to that name
@@ -147,9 +145,6 @@ public class AppointmentController {
 
     @PostMapping(value= "/user/schedule_appointmentSubmit")
     public ModelAndView appointmentSubmit(@Valid SelectAppointmentScheduleFormBean form) throws Exception {
-//                                          @RequestParam String date,
-//                                          @RequestParam String time,
-//                                          @RequestParam Integer clinicianId)
         ModelAndView response = new ModelAndView();
 
 //        LocalDate date = LocalDate.of(form.getYear(), form.getMonth(), form.getDay());
@@ -168,6 +163,7 @@ public class AppointmentController {
 
 
 //        response.setViewName("redirect:/user/schedule_appointment");
+        response.setViewName("redirect:/user/my_schedule");
 
         return response;
         //convert string to local date -->
@@ -176,24 +172,39 @@ public class AppointmentController {
 
     }
 
-    @RequestMapping(value= "/user/my_schedule", method = RequestMethod.GET)
-    public ModelAndView myAppointments(@RequestParam(required = false) Integer userId) {
+    @RequestMapping(value= "/user/my_schedule/{userId}", method = RequestMethod.GET)
+    public ModelAndView myAppointments(@PathVariable("userId") Integer userId) {
         ModelAndView response = new ModelAndView();
         response.setViewName("user/my_schedule");
 
+
+
         List<Appointment> appointments = appointmentDao.findByPatientPatientId(userId);
 
-        String name = " ";
+        log.info(appointments.toString());
+        log.info(userId.toString());
 
-        if(userId != null) {
-            Patient patient = patientDao.findByPatientId(userId);
-            name = patient.getFirstName();
-        }
+//        String name = " ";
+
+//        if(userId != null) {
+        User user = userDao.findByUserId(userId);
+
+//            name = patient.getFirstName();
+//        }
 
         response.addObject("appointments", appointments);
-        response.addObject("name", name);
+        response.addObject("user", user);
 
+//        response.setViewName("redirect:/user/my_schedule/paq");
+        return response;
+    }
 
+    @RequestMapping(value= "/user/my_schedule/", method = RequestMethod.GET)
+    public ModelAndView navigateToPaq(@RequestParam(required = false) Integer userId) {
+        ModelAndView response = new ModelAndView();
+        response.setViewName("user/paq");
+
+        response.setViewName("redirect:/user/paq");
         return response;
     }
 }

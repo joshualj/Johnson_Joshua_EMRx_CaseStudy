@@ -14,8 +14,15 @@
                 <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
                     <div class="card-body p-4 p-md-5">
                         <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Pre-Appointment Questions</h3>
-                        <form id="paqForm" action="/user/paqSubmit" class="needs-validation" novalidate>
+                        <form id="paqForm" action="/user/paqSubmit" method="post" class="needs-validation" novalidate>
 <%--                            <input type="hidden" name="id" value="${form.id}">--%>
+                            <div class="col-md-12 mb-4">
+                                <input type="text" id="apptId" class="form-control form-control-lg" name="apptId" value="${form.apptId}" required/>
+                                <label class="form-label" for="apptId">Enter your medical appointment ID.</label>
+                                <div class="invalid-feedback">
+                                    Please provide a valid appointment ID.
+                                </div>
+                            </div>
                             <div class="col-md-12 mb-4">
                                 <input type="text" id="complaint" class="form-control form-control-lg" name="complaint" value="${form.complaint}" required/>
                                 <label class="form-label" for="complaint">Enter your medical concern.<br>(example: headache)</label>
@@ -46,8 +53,8 @@
                             </div>
 
                             <div class="col-md-12 mb-4">
-                                <input type="text" id="character" class="form-control form-control-lg" name="character" value="${form.character}" required/>
-                                <label class="form-label" for="location">Enter characteristics of your concern.<br>(examples: dull, sharp)</label>
+                                <input type="text" id="description" class="form-control form-control-lg" name="description" value="${form.description}" required/>
+                                <label class="form-label" for="description">Enter characteristics of your concern.<br>(examples: dull, sharp)</label>
                                 <div class="invalid-feedback">
                                     Please provide a valid description.
                                 </div>

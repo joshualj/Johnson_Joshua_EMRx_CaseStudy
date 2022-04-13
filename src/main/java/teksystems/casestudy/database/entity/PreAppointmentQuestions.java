@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Setter
 @ToString
 @Entity
-@Table(name = "pre_appointment_questions")
+@Table(name="pre_appointment_questions")
 @AllArgsConstructor
 @NoArgsConstructor
 public class PreAppointmentQuestions {
@@ -28,8 +28,8 @@ public class PreAppointmentQuestions {
     @Column(name = "duration")
     private String duration;
 
-    @Column(name = "character")
-    private String character;
+    @Column(name = "description")
+    private String description;
 
     @Column(name = "alleviating")
     private String alleviating;

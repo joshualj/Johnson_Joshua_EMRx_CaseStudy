@@ -24,6 +24,4 @@ public class EMR_Application {
 		SpringApplication.run(EMR_Application.class, args);
 	}
 
-
-
 }

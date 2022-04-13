@@ -5,11 +5,14 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.*;
 
 @Getter
 @Setter
 @ToString
 public class PreAppointmentQuestionsFormBean {
+
+    private String apptId;
 
     @Length(max = 200, message = "Entry must contain less than 200 characters.")
     @NotBlank(message="Medical concern is required")
@@ -29,7 +32,7 @@ public class PreAppointmentQuestionsFormBean {
 
     @Length(max = 200, message = "Entry must contain less than 200 characters.")
     @NotBlank(message="Description is required")
-    private String character;
+    private String description;
 
 //    @NotBlank(message="Relief sources is required")
     @Length(max = 200, message = "Entry must contain less than 200 characters.")

@@ -99,12 +99,10 @@ public class UserController{
         //and dynamically creating the page
         //Browser to do a redirect to the URL after the. The big piece here to
         // recognize is redirect uses an actual URL rather than a view ??
-        response.setViewName("redirect:/user/" + user.getUserId());
+        response.setViewName("redirect:/user/schedule_appointment");
 
         return response;
     }
-
-
 }
 
 //@Slf4j

@@ -5,14 +5,14 @@
 <body>
 <section class="vh-120 gradient-custom">
 <%--    <div class="row justify-content-center align-items-center">--%>
-    <form class="appointmentDaySelect" action="/user/my_schedule">
-        <input type="text" id="userId" class="form-control form-control-lg" name="userId" value="${form.userId}">
-        <input class="btn btn-outline-primary btn-md" type="submit" value="Submit" />
-    </form>
+<%--    <form class="appointmentDaySelect" action="/user/my_schedule">--%>
+<%--        <input type="text" id="userId" class="form-control form-control-lg" name="userId" value="${form.userId}">--%>
+<%--        <input class="btn btn-outline-primary btn-md" type="submit" value="Submit" />--%>
+<%--    </form>--%>
     <div class="row justify-content-center align-items-center h-100">
-        <h1 id="name" name="name" value="${name}">
-            <c:if test="${!empty name}">${name}'s Upcoming Appointments</c:if>
-            <c:if test="${empty name}">My Upcoming Appointments</c:if>
+        <h1 id="name" name="patient" value="${user}">
+            <c:if test="${!empty user.firstName}">${user.firstName}'s Upcoming Appointments</c:if>
+            <c:if test="${empty user.firstName}">My Upcoming Appointments</c:if>
         </h1>
         <div class="col-5">
             <div class="card shadow-2-strong" style="border-radius: 15px">
@@ -34,7 +34,7 @@
                                 <td>
                                     <c:if test="${!empty appt.paqId}">Completed</c:if>
                                     <c:if test="${empty appt.paqId}">
-                                        <form action="/user/my_scheduleSubmit" method="post">
+                                        <form action="/user/paq" method="GET">
                                             <input type="hidden" name="date" value="${appt.date}">
                                             <input type="hidden" name="time" value="${appt.time}">
                                             <input type="hidden" name="clinicianId" value="${appt.clinician.clinicianId}">
