@@ -1,6 +1,7 @@
 package teksystems.casestudy.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
@@ -42,11 +43,6 @@ public class AppointmentController {
 
     @Autowired
     private UserDAO userDao;
-
-//    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//    String currentPrincipalName = authentication.getName();
-//
-//    User user = userDao.findByEmail(currentPrincipalName);
 
     //TO DO: Add drop-down with DATE and clinicianId
     //TO DO: Update table after clicking submit button
@@ -129,6 +125,19 @@ public class AppointmentController {
         appointment.setTime(LocalTime.parse(form.getTime()));
         appointmentDao.save(appointment);
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+
+        if(!StringUtils.equals("anonymousUser", currentPrincipalName)){
+            User user = userDao.findByEmail(currentPrincipalName);
+            Patient patient = patientDao.findByUserId(user.getUserId());
+            log.info(user.toString() + "    " + patient.toString());
+            appointment.setPatient(patient);
+            appointmentDao.save(appointment);
+            log.info(user.toString());
+            response.setViewName("redirect:/user/my_schedule/" + user.getUserId());
+        }
+
 
 //      TODO: response.setViewName("redirect:/user/schedule_appointment" + userId);
 //        response.setViewName("redirect:/user/my_schedule/" + user.getUserId());
@@ -142,9 +151,9 @@ public class AppointmentController {
         ModelAndView response = new ModelAndView();
         response.setViewName("user/my_schedule");
 
+        Integer patientId = patientDao.findByUserId(userId).getPatientId();
 
-
-        List<Appointment> appointments = appointmentDao.findByPatientPatientId(userId);
+        List<Appointment> appointments = appointmentDao.findByPatientPatientId(patientId);
 
         log.info(appointments.toString());
         log.info(userId.toString());

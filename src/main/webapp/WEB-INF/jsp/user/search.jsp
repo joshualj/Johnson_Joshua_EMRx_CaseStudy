@@ -23,11 +23,8 @@
     </tr>
     <c:forEach items="${clinicians}" var="clinician" varStatus="status">
         <tr scope="row">
-<%--            <td>${clinician.clinicianId}</td>--%>
             <td>${users[status.index].firstName}</td>
             <td>${users[status.index].lastName}</td>
-<%--            <td>${clinician.firstName}</td>--%>
-<%--            <td>${clinician.lastName}</td>--%>
             <td>${clinician.title}</td>
             <td>${clinician.department}</td>
             <td><a href=/user/edit/${user.id}">Edit</a></td>

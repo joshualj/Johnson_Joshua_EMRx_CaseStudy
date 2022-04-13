@@ -22,7 +22,7 @@ public class LoginController {
     @RequestMapping(value="/login/login", method = RequestMethod.GET)
     public ModelAndView login() throws Exception {
         ModelAndView response = new ModelAndView();
-        response.setViewName("login/loginForm");
+        response.setViewName("login/loginForm"); //may want to change this to "/index"
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
