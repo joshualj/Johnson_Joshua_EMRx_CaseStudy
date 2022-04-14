@@ -131,7 +131,6 @@ public class AppointmentController {
         if(!StringUtils.equals("anonymousUser", currentPrincipalName)){
             User user = userDao.findByEmail(currentPrincipalName);
             Patient patient = patientDao.findByUserId(user.getUserId());
-            log.info(user.toString() + "    " + patient.toString());
             appointment.setPatient(patient);
             appointmentDao.save(appointment);
             log.info(user.toString());
@@ -158,25 +157,21 @@ public class AppointmentController {
         log.info(appointments.toString());
         log.info(userId.toString());
 
-//        String name = " ";
-
-//        if(userId != null) {
         User user = userDao.findByUserId(userId);
-
-//            name = patient.getFirstName();
-//        }
 
         response.addObject("appointments", appointments);
         response.addObject("user", user);
 
-//        response.setViewName("redirect:/user/my_schedule/paq");
+//        response.setViewName("redirect:/user/paq/" + user.getUserId());
         return response;
     }
 
-    @RequestMapping(value= "/user/my_schedule/", method = RequestMethod.GET)
+    @RequestMapping(value= "/user/paq", method = RequestMethod.GET)
     public ModelAndView navigateToPaq(@RequestParam(required = false) Integer userId) {
         ModelAndView response = new ModelAndView();
         response.setViewName("user/paq");
+
+
 
         response.setViewName("redirect:/user/paq");
         return response;

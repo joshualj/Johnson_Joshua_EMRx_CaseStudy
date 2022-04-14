@@ -32,13 +32,20 @@
                                 <td><b>${appt.time}</b></td>
                                 <td><b>${appt.clinician.clinicianId}</b></td>
                                 <td>
-                                    <c:if test="${!empty appt.paqId}">Completed</c:if>
-                                    <c:if test="${empty appt.paqId}">
-                                        <form action="/user/paq" method="GET">
+                                    <c:if test="${!empty appt.paqId}">
+                                        <form action="/user/paq/${appt.appointmentId}" method="GET">
                                             <input type="hidden" name="date" value="${appt.date}">
                                             <input type="hidden" name="time" value="${appt.time}">
                                             <input type="hidden" name="clinicianId" value="${appt.clinician.clinicianId}">
-                                            <button type="submit">Questionnaire</button>
+                                            <button type="submit">Edit</button>
+                                        </form>
+                                    </c:if>
+                                    <c:if test="${empty appt.paqId}">
+                                        <form action="/user/paq/${appt.appointmentId}" method="GET">
+                                            <input type="hidden" name="date" value="${appt.date}">
+                                            <input type="hidden" name="time" value="${appt.time}">
+                                            <input type="hidden" name="clinicianId" value="${appt.clinician.clinicianId}">
+                                            <button type="submit">Start</button>
                                         </form>
                                     </c:if>
                                 </td>
