@@ -12,7 +12,7 @@ import javax.validation.constraints.*;
 @ToString
 public class PreAppointmentQuestionsFormBean {
 
-    private String apptId;
+//    private String apptId;
 
     @Length(max = 200, message = "Entry must contain less than 200 characters.")
     @NotBlank(message="Medical concern is required")

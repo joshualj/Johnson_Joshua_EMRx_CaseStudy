@@ -16,13 +16,13 @@
                         <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Clinician Registration</h3>
                         <form id="registerForm" action="/clinician/register_clinicianSubmit" class="needs-validation" novalidate>
 <%--                            <input type="hidden" name="id" value="${form.id}">--%>
-                            <div class="col-md-12 mb-4">
-                                <input type="text" id="userId" class="form-control form-control-lg" name="userId" value="${form.userId}" required/>
-                                <label class="form-label" for="userId">User Id</label>
-                                <div class="invalid-feedback">
-                                    Please provide a valid User Id.
-                                </div>
-                            </div>
+<%--                            <div class="col-md-12 mb-4">--%>
+<%--                                <input type="text" id="userId" class="form-control form-control-lg" name="userId" value="${form.userId}" required/>--%>
+<%--                                <label class="form-label" for="userId">User Id</label>--%>
+<%--                                <div class="invalid-feedback">--%>
+<%--                                    Please provide a valid User Id.--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
 
                             <div class="col-md-12 mb-4">
                                 <input type="text" id="firstName" class="form-control form-control-lg" name="firstName" value="${form.firstName}" required/>
@@ -90,15 +90,6 @@
                             </div>
 
 <%--                            <div class="col-md-12 mb-4">--%>
-<%--                                <input type="password" id="confirmPassword" class="form-control form-control-lg"--%>
-<%--                                       onkeyup='check();' name="confirmPassword" value="${form.confirmPassword}"required/>--%>
-<%--                                <label class="form-label" for="confirmPassword">Confirm Password</label>--%>
-<%--                                <div class="invalid-feedback">--%>
-<%--                                    Please provide a valid password.--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-<%--                            <div class="col-md-12 mb-4">--%>
 <%--                                <h6 class="mb-2 pb-1">User Type:</h6>--%>
 <%--                                <div class="form-check form-check-inline">--%>
 <%--                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"--%>
@@ -123,7 +114,6 @@
 <%--                                </select>--%>
 <%--                                <label class="form-label select-label">Choose User Type</label>--%>
 <%--                            </div>--%>
-
                             <div class="row">
                                 <div class="col-md-3 mt-4 pt-2">
                                     <input class="btn btn-outline-primary btn-md" type="submit" value="Submit" />

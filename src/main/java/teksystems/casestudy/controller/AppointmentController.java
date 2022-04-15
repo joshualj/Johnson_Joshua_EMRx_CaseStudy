@@ -29,7 +29,7 @@ import java.util.*;
 public class AppointmentController {
 
     private final String[] appointmentTimes = {"08:00", "08:30", "09:00", "09:30", "10:00",
-            "10:30", "11:00", "11:30", "12:00", "12:00", "01:00", "01:30",
+            "10:30", "11:00", "11:30", "12:00", "01:00", "01:30",
             "02:00", "02:30", "03:00", "03:30", "04:00"};
 
     @Autowired
@@ -51,10 +51,12 @@ public class AppointmentController {
     //handle null entry, when page is loaded initially
 
     @RequestMapping(value= "/user/schedule_appointment", method = RequestMethod.GET)
-    public ModelAndView schedule(@RequestParam(required = false) Integer userId,
-                                 @RequestParam(required = false) Integer year,
-                                 @RequestParam(required = false) Integer month,
-                                 @RequestParam(required = false) Integer day) throws Exception {
+    public ModelAndView viewClinicianScheduleAsPatient(@RequestParam(required = false) Integer userId,
+                                     @RequestParam(required = false) String date) throws Exception {
+//                                 @RequestParam(required = false) Integer year,
+//                                 @RequestParam(required = false) Integer month,
+//                                 @RequestParam(required = false) Integer day)
+
 
         ModelAndView response = new ModelAndView();
         response.setViewName("user/schedule_appointment");
@@ -64,23 +66,21 @@ public class AppointmentController {
 
         Integer clinicianId = (userId != null) ? clinician.getClinicianId() : 4;
 
-        if(day == null) {
-            day = 4;
-        }
-        if(month == null) {
-            month = 4;
-        }
-        if(year == null) {
-            year = 2022;
-        }
+        Integer year = (date != null) ? Integer.parseInt(date.split("-")[0]) : 2022;
+        Integer month = (date != null) ? Integer.parseInt(date.split("-")[1]) : 4;
+        Integer day = (date != null) ? Integer.parseInt(date.split("-")[2]) : 4;
 
         User user = userDao.findByUserId(clinician.getUserId());
 
-        log.info(user.toString());
+        LocalDate dateFormatted = LocalDate.of(year, month, day);
+        log.info(dateFormatted.toString());
 
-        LocalDate date = LocalDate.of(year, month, day);
+        String dayOfWeek = dateFormatted.getDayOfWeek().toString().substring(0, 1).toUpperCase() + dateFormatted.getDayOfWeek().toString().substring(1).toLowerCase();
+        String monthName = dateFormatted.getMonth().toString().substring(0, 1).toUpperCase() + dateFormatted.getMonth().toString().substring(1).toLowerCase();
+        String yearDate = year.toString();
+        String dayDate = day.toString();
 
-        List<Appointment> appointments = appointmentDao.findByClinicianClinicianIdAndDate(clinicianId, date);
+        List<Appointment> appointments = appointmentDao.findByClinicianClinicianIdAndDate(clinicianId, dateFormatted);
 
         Set<String> scheduledTime = new HashSet<>();
 
@@ -96,12 +96,14 @@ public class AppointmentController {
             clinicianUsers.add(clinUser);
         }
 
-
-//        response.setViewName("user/schedule_appointment"); //getting the jsp file
         response.addObject("clinicianUsers", clinicianUsers);
         response.addObject("clinUser", user);
         response.addObject("scheduledTime", scheduledTime);
-        response.addObject("localDate", date);
+        response.addObject("localDate", dateFormatted);
+        response.addObject("dayOfWeek", dayOfWeek);
+        response.addObject("monthName", monthName);
+        response.addObject("dayDate", dayDate);
+        response.addObject("yearDate", yearDate);
         response.addObject("clinicianId", clinicianId);
 //        response.addObject("user", user);
         response.addObject("appointmentTimes", appointmentTimes);
@@ -121,14 +123,16 @@ public class AppointmentController {
         Appointment appointment = new Appointment();
         Clinician clinician = clinicianDao.findByUserId(form.getUserId());
         appointment.setClinician(clinician);
+
+        //converting String date and String time to Date, Time objects
         appointment.setDate(LocalDate.parse(form.getDate()));
         appointment.setTime(LocalTime.parse(form.getTime()));
-        appointmentDao.save(appointment);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
 
         if(!StringUtils.equals("anonymousUser", currentPrincipalName)){
+            appointmentDao.save(appointment);
             User user = userDao.findByEmail(currentPrincipalName);
             Patient patient = patientDao.findByUserId(user.getUserId());
             appointment.setPatient(patient);
@@ -170,8 +174,6 @@ public class AppointmentController {
     public ModelAndView navigateToPaq(@RequestParam(required = false) Integer userId) {
         ModelAndView response = new ModelAndView();
         response.setViewName("user/paq");
-
-
 
         response.setViewName("redirect:/user/paq");
         return response;

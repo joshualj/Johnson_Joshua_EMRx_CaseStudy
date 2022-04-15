@@ -40,6 +40,8 @@ public class PreAppointmentQuestionsController {
         ModelAndView response = new ModelAndView();
         response.setViewName("user/paq");
 
+        log.info(appointmentId.toString());
+
         //attributeName is object inside of jsp, and scheduledTime is the object that is being passed to that name
 
         PreAppointmentQuestionsFormBean form = new PreAppointmentQuestionsFormBean();
@@ -61,20 +63,24 @@ public class PreAppointmentQuestionsController {
         return response;
     }
 
-    @RequestMapping(value= "/user/paqSubmit", method = RequestMethod.POST)
-    public ModelAndView paqSubmit(@Valid PreAppointmentQuestionsFormBean form) throws Exception {
+    @RequestMapping(value= "/user/paqSubmit/{appointmentId}", method = RequestMethod.POST)
+    public ModelAndView paqSubmit(@Valid PreAppointmentQuestionsFormBean form,
+                                  @PathVariable("appointmentId") Integer appointmentId) throws Exception {
+
         ModelAndView response = new ModelAndView();
-        response.setViewName("user/paqSubmit");
+        response.addObject("appointmentId", appointmentId);
 
         log.info(form.toString());
-        log.info(form.getApptId());
+//        log.info(form.getApptId());
 
-        Appointment appointment = appointmentDao.findByAppointmentId(Integer.parseInt(form.getApptId()));
+        Appointment appointment = appointmentDao.findByAppointmentId(appointmentId);
+
+//        Appointment appointment = appointmentDao.findByAppointmentId(Integer.parseInt(form.getApptId()));
         log.info("============");
 
         //erroring out here
-        PreAppointmentQuestions paq = (appointment.getPaqId() != null) ? paqDao.getById(appointment.getPaqId()) :
-                new PreAppointmentQuestions();
+        PreAppointmentQuestions paq = (appointment.getPaqId() != null) ?
+                paqDao.getById(appointment.getPaqId()) : new PreAppointmentQuestions();
 
         log.info("it makes it this far?");
         log.info(paq.toString());
@@ -105,6 +111,7 @@ public class PreAppointmentQuestionsController {
             User user = userDao.findByEmail(currentPrincipalName);
             response.setViewName("redirect:/user/my_schedule/" + user.getUserId());
         }
+
         return response;
     }
 }

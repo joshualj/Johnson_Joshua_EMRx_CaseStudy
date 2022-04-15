@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @ToString
 public class ClinicianRegisterFormBean {
-    private Integer userId; //probably need to delete this, once table field is deleted
+//    private Integer userId; //probably need to delete this, once table field is deleted
 //    private Integer id;
 
     @NotBlank(message="Email is required")

@@ -10,8 +10,10 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import teksystems.casestudy.database.dao.ClinicianDAO;
 import teksystems.casestudy.database.dao.PatientDAO;
 import teksystems.casestudy.database.dao.UserDAO;
+import teksystems.casestudy.database.entity.Clinician;
 import teksystems.casestudy.database.entity.Patient;
 import teksystems.casestudy.database.entity.User;
 import teksystems.casestudy.formbean.RegisterFormBean;
@@ -27,6 +29,9 @@ public class UserController{
 
     @Autowired
     private UserDAO userDao;
+
+    @Autowired
+    private ClinicianDAO clinicianDao;
 
     @Autowired
     private PatientDAO patientDao;
@@ -100,29 +105,23 @@ public class UserController{
         user.setLastName(form.getLastName());
         String password = passwordEncoder.encode(form.getPassword());
         user.setPassword(password);
+        user.setUserRole("PATIENT");
+
 
         userDao.save(user);
 
-        Patient patient = patientDao.findByUserId(user.getUserId());
+        Clinician clinician = clinicianDao.findByUserId(user.getUserId());
 
-        if (patient == null) {
-            patient = new Patient();
+        if (clinician == null) {
+            clinician = new Clinician();
         }
 
         //sets medical_record_number to a random number from 0-1999
         //after checking to make sure no patient has that MRN.
 
-        Random rand = new Random();
-        int upperbound = 2000;
-        int mrn = rand.nextInt(upperbound);
+        clinician.setUserId(user.getUserId());
 
-        while(patientDao.findByMedicalRecordNumber(mrn) != null) {
-            mrn = rand.nextInt(upperbound);
-        }
-        patient.setMedicalRecordNumber(mrn);
-        patient.setUserId(user.getUserId());
-
-        patientDao.save(patient);
+        clinicianDao.save(clinician);
 
         log.info(form.toString());
 
