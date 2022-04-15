@@ -25,43 +25,56 @@
                             <th><b>Patient</b></th>
                             <th><b>Birthdate</b></th>
                             <th><b>Sex/Gender</b></th>
-                            <th><b>Chief Complaint</b></th>
+                            <th><b>Complaint</b></th>
                             <th><b>PAQ</b></th>
-                            <th><b>Edit Appt</b></th>
-                            <th style="border-top-right-radius: 15px"><b>Cancel</b></th>
+                            <th><b>Options</b></th>
+                            <th style="border-top-right-radius: 15px"><b></b></th>
                         </tr>
                         </thead>
-                        <c:forEach var="appt" items="${appointments}" varStatus="status">
+                        <c:forEach var="appt" items="${appointmentTimes}"> <%-- varStatus="status"> --%>
                             <tr>
-                                <td><b>${appt.date}</b></td>
-                                <td><b>${appt.time}</b></td>
-                                <td><b>${users[status.index].firstName} ${users[status.index].lastName}</b></td>
-                                <td><b>${patients[status.index].birthDate}</b></td>
-                                <td><b>${patients[status.index].sex}/${patients[status.index].gender}</b></td>
-                                <td><b>${appt.chiefComplaint}</b></td>
-                                <td>
-                                    <c:if test="${!empty appt.paqId}">
-                                        <form action="/clinician/my_clinician_schedule/${appt.appointmentId}" method="GET">
-                                            <input type="hidden" name="date" value="${appt.date}">
-                                            <input type="hidden" name="time" value="${appt.time}">
-                                            <input type="hidden" name="clinicianId" value="${appt.clinician.clinicianId}">
+                                <td><b>${localDate}</b></td>
+                                <td><b>${appt}</b></td>
+                                <c:if test="${scheduledTime.contains(appt)}">
+                                    <td><b>${users[scheduledTime.indexOf(appt)].firstName} ${users[scheduledTime.indexOf(appt)].lastName}</b></td>
+                                    <td><b>${patients[scheduledTime.indexOf(appt)].birthDate}</b></td>
+                                    <td><b>${patients[scheduledTime.indexOf(appt)].sex}/${patients[scheduledTime.indexOf(appt)].gender}</b></td>
+                                    <td><b>${appointments[scheduledTime.indexOf(appt)].chiefComplaint}</b></td>
+                                    <c:if test="${!empty appointments[scheduledTime.indexOf(appt)].paqId}">
+                                        <td>
+                                        <form action="/clinician/my_clinician_schedule/${appointments[scheduledTime.indexOf(appt)].appointmentId}" method="GET">
+                                            <input type="hidden" name="date" value="${appointments[scheduledTime.indexOf(appt)].date}">
+                                            <input type="hidden" name="time" value="${appointments[scheduledTime.indexOf(appt)].time}">
+                                            <input type="hidden" name="clinicianId" value="${appointments[scheduledTime.indexOf(appt)].clinician.clinicianId}">
                                             <button type="submit">View</button>
                                         </form>
+                                        </td>
                                     </c:if>
-                                    <c:if test="${empty appt.paqId}">N/A</c:if>
-                                </td>
-                                <td>
-                                    <form action=/clinician/my_clinician_schedule/edit/${appt.appointmentId}" method="POST">
-                                        <input type="hidden" name="apptId" value="${appt.appointmentId}">
-                                        <button type="submit">Edit</button>
-                                    </form>
-                                </td>
-                                <td>
-                                    <form action=/clinician/my_clinician_schedule/cancel/${appt.appointmentId}" method="POST">
-                                        <input type="hidden" name="apptId" value="${appt.appointmentId}">
-                                        <button type="submit">Cancel</button>
-                                    </form>
-                                </td>
+                                    <c:if test="${empty appointments[scheduledTime.indexOf(appt)].paqId}">
+                                        <td>N/A</td>
+                                    </c:if>
+                                    <td>
+                                        <form action="/clinician/my_clinician_schedule/edit/${appointments[scheduledTime.indexOf(appt)].appointmentId}" method="GET">
+                                            <input type="hidden" name="apptId" value="${appointments[scheduledTime.indexOf(appt)].appointmentId}">
+                                            <button type="submit">Edit</button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action=/clinician/my_clinician_schedule/cancel/${appointments[scheduledTime.indexOf(appt)].appointmentId}" method="GET">
+                                            <input type="hidden" name="apptId" value="${appointments[scheduledTime.indexOf(appt)].appointmentId}">
+                                            <button type="submit">Cancel</button>
+                                        </form>
+                                    </td>
+                                </c:if>
+                                <c:if test="${!scheduledTime.contains(appt)}">
+                                    <td><b></b></td>
+                                    <td><b></b></td>
+                                    <td><b></b></td>
+                                    <td><b></b></td>
+                                    <td><b> </b></td>
+                                    <td><b> </b></td>
+                                    <td><b> </b></td>
+                                </c:if>
                             </tr>
                         </c:forEach>
                     </table>

@@ -190,7 +190,7 @@ public class ClinicianController {
         //TODO: Need to sort appointments!
 //        appointments.sort(Comparator.comparing(Appointment::getTime));
 
-        Set<String> scheduledTime = new HashSet<>();
+        List<String> scheduledTime = new ArrayList<>();
         List<Patient> patients = new ArrayList<>();
         List<User> users = new ArrayList<>();
 

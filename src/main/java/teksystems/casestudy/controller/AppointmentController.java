@@ -14,6 +14,7 @@ import teksystems.casestudy.database.dao.ClinicianDAO;
 import teksystems.casestudy.database.dao.PatientDAO;
 import teksystems.casestudy.database.dao.UserDAO;
 import teksystems.casestudy.database.entity.*;
+import teksystems.casestudy.formbean.PreAppointmentQuestionsFormBean;
 import teksystems.casestudy.formbean.RegisterFormBean;
 import teksystems.casestudy.formbean.SelectAppointmentScheduleFormBean;
 
@@ -50,9 +51,9 @@ public class AppointmentController {
     //store all dates in a drop-down (as strings), maybe have four drop downs?
     //handle null entry, when page is loaded initially
 
-    @RequestMapping(value= "/user/schedule_appointment", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/schedule_appointment", method = RequestMethod.GET)
     public ModelAndView viewClinicianScheduleAsPatient(@RequestParam(required = false) Integer userId,
-                                     @RequestParam(required = false) String date) throws Exception {
+                                                       @RequestParam(required = false) String date) throws Exception {
 //                                 @RequestParam(required = false) Integer year,
 //                                 @RequestParam(required = false) Integer month,
 //                                 @RequestParam(required = false) Integer day)
@@ -116,7 +117,7 @@ public class AppointmentController {
         return response;
     }
 
-    @PostMapping(value= "/user/schedule_appointmentSubmit")
+    @PostMapping(value = "/user/schedule_appointmentSubmit")
     public ModelAndView appointmentSubmit(@Valid SelectAppointmentScheduleFormBean form) throws Exception {
         ModelAndView response = new ModelAndView();
 
@@ -131,7 +132,7 @@ public class AppointmentController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
 
-        if(!StringUtils.equals("anonymousUser", currentPrincipalName)){
+        if (!StringUtils.equals("anonymousUser", currentPrincipalName)) {
             appointmentDao.save(appointment);
             User user = userDao.findByEmail(currentPrincipalName);
             Patient patient = patientDao.findByUserId(user.getUserId());
@@ -149,8 +150,8 @@ public class AppointmentController {
 
     }
 
-    @RequestMapping(value= "/user/my_schedule/{userId}", method = RequestMethod.GET)
-    public ModelAndView myAppointments(@PathVariable("userId") Integer userId) {
+    @RequestMapping(value = "/user/my_schedule/{userId}", method = RequestMethod.GET)
+    public ModelAndView viewMyAppointments(@PathVariable("userId") Integer userId) {
         ModelAndView response = new ModelAndView();
         response.setViewName("user/my_schedule");
 
@@ -170,12 +171,103 @@ public class AppointmentController {
         return response;
     }
 
-    @RequestMapping(value= "/user/paq", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/paq", method = RequestMethod.GET)
     public ModelAndView navigateToPaq(@RequestParam(required = false) Integer userId) {
         ModelAndView response = new ModelAndView();
         response.setViewName("user/paq");
 
         response.setViewName("redirect:/user/paq");
+        return response;
+    }
+
+    @RequestMapping(value = "/clinician/my_clinician_schedule/edit/{appointmentId}", method = RequestMethod.GET)
+    public ModelAndView editAppointment(@PathVariable("appointmentId") Integer appointmentId) {
+        ModelAndView response = new ModelAndView();
+        response.setViewName("clinician/appointment_editor");
+        //TODO FIX
+
+        SelectAppointmentScheduleFormBean form = new SelectAppointmentScheduleFormBean();
+
+        Appointment appointment = appointmentDao.getById(appointmentId);
+        form.setDate(appointment.getDate().toString());
+        form.setTime(appointment.getTime().toString());
+        form.setClinicianId(appointment.getClinician().getClinicianId().toString());
+        form.setPatientId(appointment.getPatient().getPatientId().toString());
+        if(appointment.getChiefComplaint() != null) {
+            form.setChiefComplaint(appointment.getChiefComplaint());
+        }
+        if(appointment.getPaqId() != null) {
+            form.setPaqId(appointment.getPaqId().toString());
+        }
+
+        Integer userId = appointment.getPatient().getUserId();
+        form.setUserId(userId);
+
+        response.addObject("form", form);
+        response.addObject("appointmentId", appointment.getAppointmentId());
+
+        return response;
+    }
+
+    @RequestMapping(value = "/clinician/my_clinician_scheduleSubmit/{appointmentId}", method = RequestMethod.POST)
+    public ModelAndView submitAppointment(@Valid SelectAppointmentScheduleFormBean form,
+                                          @PathVariable("appointmentId") Integer appointmentId) {
+        ModelAndView response = new ModelAndView();
+        //TODO FIX
+
+
+        Appointment appointment = appointmentDao.findByAppointmentId(appointmentId);
+
+        //converting date from String date to LocalDate date
+        String dateArray[] = form.getDate().split("-");
+
+        log.info(Arrays.toString(dateArray) + "THIS IS WHAT THE RETRIEVED DATE LOOKS LIKE");
+
+        Integer year = Integer.parseInt(dateArray[0]);
+        Integer month = Integer.parseInt(dateArray[1]);
+        Integer day = Integer.parseInt(dateArray[2]);
+
+        LocalDate dateFormatted = LocalDate.of(year, month, day);
+
+        appointment.setDate(dateFormatted);
+
+        //converting time from String to LocalTime time
+        String timeArray[] = form.getTime().split(":");
+
+        log.info(Arrays.toString(timeArray) + "THIS IS WHAT THE RETRIEVED TIME LOOKS LIKE");
+        Integer hour = Integer.parseInt(timeArray[0]);
+        Integer minute = Integer.parseInt(timeArray[1]);
+
+        LocalTime timeFormatted = LocalTime.of(hour, minute);
+        appointment.setTime(timeFormatted);
+
+        Integer parsedClinicianId = Integer.parseInt(form.getClinicianId());
+        Integer parsedPatientId = Integer.parseInt(form.getPatientId());
+
+        if(form.getPaqId() != "" && form.getPaqId() != null){
+            Integer parsedPaqId = Integer.parseInt(form.getPaqId());
+            appointment.setPaqId(parsedPaqId);
+        }
+
+        //Retrieving a clinician based on the clinicianId entered in the form
+        Clinician clinician = clinicianDao.findByClinicianId(parsedClinicianId);
+        appointment.setClinician(clinician);
+
+        //Retrieving a patient based on the patientId entered in the form
+        Patient patient = patientDao.findByPatientId(parsedPatientId);
+        appointment.setPatient(patient);
+
+        appointment.setChiefComplaint(form.getChiefComplaint());
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+
+        if(!StringUtils.equals("anonymousUser", currentPrincipalName)){
+            appointmentDao.save(appointment);
+            User user = userDao.findByEmail(currentPrincipalName);
+            response.setViewName("redirect:/clinician/my_clinician_schedule/" + user.getUserId());
+        }
+
         return response;
     }
 }

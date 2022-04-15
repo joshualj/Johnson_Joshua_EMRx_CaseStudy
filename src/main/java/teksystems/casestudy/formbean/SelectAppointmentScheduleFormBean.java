@@ -28,4 +28,14 @@ public class SelectAppointmentScheduleFormBean {
 
     private String time;
 
+    //Used for Editing
+
+    private String clinicianId;
+
+    private String patientId;
+
+    private String chiefComplaint;
+
+    private String paqId;
+
 }
