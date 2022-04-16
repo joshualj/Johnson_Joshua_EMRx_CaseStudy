@@ -3,6 +3,7 @@ package teksystems.casestudy.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -39,6 +40,7 @@ public class UserController{
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @PreAuthorize("hasAnyAuthority('CLINICIAN','PATIENT')")
     @RequestMapping(value="/user/register", method = RequestMethod.GET)
     public ModelAndView register() throws Exception {
         ModelAndView response = new ModelAndView();
@@ -56,6 +58,7 @@ public class UserController{
         return response;
     }
 
+    @PreAuthorize("hasAnyAuthority('CLINICIAN','PATIENT')")
     @RequestMapping(value="/user/registerSubmit", method = {RequestMethod.GET, RequestMethod.POST})
     public ModelAndView registerSubmit(@Valid RegisterFormBean form) throws Exception {
         ModelAndView response = new ModelAndView();

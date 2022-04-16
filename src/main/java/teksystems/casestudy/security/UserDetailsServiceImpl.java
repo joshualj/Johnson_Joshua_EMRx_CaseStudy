@@ -39,7 +39,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("Username '" + username + "' not found in database");
         }
 
-        List<UserRole> userRoles = userRoleDao.findByUserId(user.getUserId());
+        //MODIFIED
+//        List<UserRole> userRoles = userRoleDao.findByUserId(user.getUserId());
+        String userRole = user.getUserRole();
+
         // check the account status
 //        boolean accountIsEnabled = false;
 
@@ -52,21 +55,32 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // setup user roles
         // List<Permission> permissions = userDao.getPermissionsByEmail(username);
         // Collection<? extends GrantedAuthority> springRoles = buildGrantAuthorities(permissions);
-        Collection<? extends GrantedAuthority> springRoles = buildGrantAuthorities(userRoles);
+
+        //MODIFIED
+        //Collection<? extends GrantedAuthority> springRoles = buildGrantAuthorities(userRoles);
+        Collection<? extends GrantedAuthority> springRoles = buildGrantAuthorities(userRole);
+
 
         String password = user.getPassword();
 
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
                 accountIsEnabled, accountNonExpired, credentialsNonExpired, accountNonLocked, springRoles);
     }
-    private Collection<? extends GrantedAuthority> buildGrantAuthorities(List<UserRole> userRoles) {
+    //MODIFIED
+//    private Collection<? extends GrantedAuthority> buildGrantAuthorities(List<UserRole> userRoles) {
+//        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+//        for (UserRole role : userRoles) {
+//            authorities.add(new SimpleGrantedAuthority(role.getUserRole()));
+//        }
+//
+//        return authorities;
+//
+//    }
+    private Collection<? extends GrantedAuthority> buildGrantAuthorities(String userRole) {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        for (UserRole role : userRoles) {
-            authorities.add(new SimpleGrantedAuthority(role.getUserRole()));
-        }
+        authorities.add(new SimpleGrantedAuthority(userRole));
 
         return authorities;
-
     }
 
 }

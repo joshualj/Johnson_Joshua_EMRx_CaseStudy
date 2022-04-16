@@ -3,6 +3,7 @@ package teksystems.casestudy.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -43,9 +44,9 @@ public class ClinicianController {
     @Autowired
     private UserDAO userDao;
 
-
+    @PreAuthorize("hasAnyAuthority('CLINICIAN','PATIENT')")
     @GetMapping(value="/user/search")//, method= {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView searchByLastName(@RequestParam (required = false) String searchLastName) {
+    public ModelAndView searchClinicianByLastName(@RequestParam (required = false) String searchLastName) {
         ModelAndView response = new ModelAndView();
         response.setViewName("user/search");
 
@@ -70,6 +71,7 @@ public class ClinicianController {
 
     }
 
+    @PreAuthorize("hasAuthority('CLINICIAN')")
     @RequestMapping(value="/clinician/register_clinician", method = RequestMethod.GET)
     public ModelAndView registerClinician() throws Exception {
         ModelAndView response = new ModelAndView();
@@ -81,6 +83,7 @@ public class ClinicianController {
         return response;
     }
 
+    @PreAuthorize("hasAuthority('CLINICIAN')")
     @RequestMapping(value="/clinician/register_clinicianSubmit", method = {RequestMethod.GET, RequestMethod.POST})
     public ModelAndView registerClinicianSubmit(@Valid ClinicianRegisterFormBean form, BindingResult bindingResult) throws Exception {
         ModelAndView response = new ModelAndView();
@@ -146,6 +149,7 @@ public class ClinicianController {
         return response;
     }
 
+    @PreAuthorize("hasAuthority('CLINICIAN')")
     @RequestMapping(value= "/clinician/my_clinician_schedule/{userId}", method = RequestMethod.GET)
     public ModelAndView viewClinicianScheduleAsClinician(@PathVariable("userId") Integer userId,
                                                        @RequestParam(required = false) String date) throws Exception {

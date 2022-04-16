@@ -3,6 +3,7 @@ package teksystems.casestudy.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,7 @@ public class PreAppointmentQuestionsController {
     @Autowired
     private AppointmentDAO appointmentDao;
 
+    @PreAuthorize("hasAnyAuthority('CLINICIAN','PATIENT')")
     @RequestMapping(value= "user/paq/{appointmentId}", method = RequestMethod.GET)
     public ModelAndView paq(@PathVariable("appointmentId") Integer appointmentId) throws Exception {
         ModelAndView response = new ModelAndView();
@@ -63,6 +65,7 @@ public class PreAppointmentQuestionsController {
         return response;
     }
 
+    @PreAuthorize("hasAnyAuthority('CLINICIAN','PATIENT')")
     @RequestMapping(value= "/user/paqSubmit/{appointmentId}", method = RequestMethod.POST)
     public ModelAndView paqSubmit(@Valid PreAppointmentQuestionsFormBean form,
                                   @PathVariable("appointmentId") Integer appointmentId) throws Exception {

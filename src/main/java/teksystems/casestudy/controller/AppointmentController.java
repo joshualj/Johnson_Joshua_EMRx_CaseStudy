@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -148,7 +149,7 @@ public class AppointmentController {
         return response;
 
     }
-
+    @PreAuthorize("hasAuthority('CLINICIAN')")
     @RequestMapping(value = "/clinician/my_clinician_schedule", method = RequestMethod.GET)
     public ModelAndView navToMyClinicianSchedule() {
         ModelAndView response = new ModelAndView();
@@ -164,6 +165,7 @@ public class AppointmentController {
         return response;
     }
 
+    @PreAuthorize("hasAnyAuthority('CLINICIAN','PATIENT')")
     @RequestMapping(value = "/user/my_schedule", method = RequestMethod.GET)
     public ModelAndView navToMyAppointmentsAsPatient() {
         ModelAndView response = new ModelAndView();
@@ -179,8 +181,8 @@ public class AppointmentController {
         return response;
     }
 
-
-        @RequestMapping(value = "/user/my_schedule/{userId}", method = RequestMethod.GET)
+    @PreAuthorize("hasAnyAuthority('CLINICIAN','PATIENT')")
+    @RequestMapping(value = "/user/my_schedule/{userId}", method = RequestMethod.GET)
     public ModelAndView viewMyAppointments(@PathVariable("userId") Integer userId) {
         ModelAndView response = new ModelAndView();
         response.setViewName("user/my_schedule");
@@ -201,6 +203,7 @@ public class AppointmentController {
         return response;
     }
 
+    @PreAuthorize("hasAnyAuthority('CLINICIAN','PATIENT')")
     @RequestMapping(value = "/user/paq", method = RequestMethod.GET)
     public ModelAndView navigateToPaq(@RequestParam(required = false) Integer userId) {
         ModelAndView response = new ModelAndView();
@@ -210,6 +213,7 @@ public class AppointmentController {
         return response;
     }
 
+    @PreAuthorize("hasAuthority('CLINICIAN')")
     @RequestMapping(value = "/clinician/my_clinician_schedule/edit/{appointmentId}", method = RequestMethod.GET)
     public ModelAndView editAppointment(@PathVariable("appointmentId") Integer appointmentId) {
         ModelAndView response = new ModelAndView();
@@ -239,6 +243,7 @@ public class AppointmentController {
         return response;
     }
 
+    @PreAuthorize("hasAuthority('CLINICIAN')")
     @RequestMapping(value = "/clinician/my_clinician_scheduleSubmit/{appointmentId}", method = RequestMethod.POST)
     public ModelAndView submitAppointment(@Valid SelectAppointmentScheduleFormBean form,
                                           @PathVariable("appointmentId") Integer appointmentId) {
