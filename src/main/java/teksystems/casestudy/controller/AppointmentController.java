@@ -17,6 +17,7 @@ import teksystems.casestudy.database.entity.*;
 import teksystems.casestudy.formbean.PreAppointmentQuestionsFormBean;
 import teksystems.casestudy.formbean.RegisterFormBean;
 import teksystems.casestudy.formbean.SelectAppointmentScheduleFormBean;
+import teksystems.casestudy.security.AuthenticationFacade;
 
 import javax.validation.Valid;
 import java.sql.Time;
@@ -35,6 +36,9 @@ public class AppointmentController {
 
     @Autowired
     private AppointmentDAO appointmentDao;
+
+    @Autowired
+    private AuthenticationFacade authentication;
 
     @Autowired
     private ClinicianDAO clinicianDao;
@@ -57,7 +61,6 @@ public class AppointmentController {
 //                                 @RequestParam(required = false) Integer year,
 //                                 @RequestParam(required = false) Integer month,
 //                                 @RequestParam(required = false) Integer day)
-
 
         ModelAndView response = new ModelAndView();
         response.setViewName("user/schedule_appointment");
@@ -141,10 +144,6 @@ public class AppointmentController {
             log.info(user.toString());
             response.setViewName("redirect:/user/my_schedule/" + user.getUserId());
         }
-
-
-//      TODO: response.setViewName("redirect:/user/schedule_appointment" + userId);
-//        response.setViewName("redirect:/user/my_schedule/" + user.getUserId());
 
         return response;
 

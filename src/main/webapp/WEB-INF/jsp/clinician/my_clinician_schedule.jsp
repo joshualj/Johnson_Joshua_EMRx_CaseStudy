@@ -9,11 +9,41 @@
 <%--        <input type="text" id="userId" class="form-control form-control-lg" name="userId" value="${form.userId}">--%>
 <%--        <input class="btn btn-outline-primary btn-md" type="submit" value="Submit" />--%>
 <%--    </form>--%>
+    <div class="physDate">
+        <form class="appointmentDaySelect w-25" action="/clinician/my_clinician_schedule/${userId}">
+<%--            <div class="dropdown">--%>
+<%--                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--%>
+<%--                    Select A Clinician--%>
+<%--                </button>--%>
+<%--                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">--%>
+<%--                    <c:forEach var="clinician" items="${clinicianUsers}">--%>
+<%--                        <a class="dropdown-item" value="${clinician.userId}">${clinician.firstName} ${clinician.lastName}</a>--%>
+<%--                    </c:forEach>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+            <select class="selectYear form-control-md" name="userId" value="${form.userId}"required>
+                <option value="0" disabled></option>
+                <c:forEach var="clinician" items="${clinicianUsers}">
+                    <option value="${clinician.userId}">${clinician.firstName} ${clinician.lastName}</option>
+                </c:forEach>
+            </select>
+<%--            <select class="selectYear form-control-md" name="userId" value="${userId}"required>--%>
+<%--                <option value="0" disabled>Select Clinician</option>--%>
+<%--            </select>--%>
+            <tr>
+            <input type="date" name="date" placeholder="Date" class="form-control form-control-lg mb-3 input-border-width:50%" value="${form.date}">
+            <input class="btn btn-outline-primary btn-md" type="submit" value="Submit">
+            </tr>
+        </form>
+    </div>
     <div class="row justify-content-center align-items-center h-100">
         <h1 id="name" name="user" value="${user}">
+            <b>
             <c:if test="${!empty user.firstName}">${user.firstName}'s Appointments</c:if>
             <c:if test="${empty user.firstName}">My Appointments</c:if>
+            </b>
         </h1>
+        <h1>${dayOfWeek}, ${monthName} ${dayDate}, ${yearDate}</h1>
         <div class="col-8">
             <div class="card shadow-2-strong" style="border-radius: 15px">
                 <div style="line-height: 2.0">

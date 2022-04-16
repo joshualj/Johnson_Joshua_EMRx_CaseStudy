@@ -164,9 +164,9 @@ public class ClinicianController {
         //need to get userId to show today's schedule
         Clinician clinician = clinicianDao.findByUserId(userId);
 
-        Integer year = (date != null) ? Integer.parseInt(date.split("-")[0]) : 2022;
-        Integer month = (date != null) ? Integer.parseInt(date.split("-")[1]) : 4;
-        Integer day = (date != null) ? Integer.parseInt(date.split("-")[2]) : 4;
+        Integer year = ((date != null) && (date != "")) ? Integer.parseInt(date.split("-")[0]) : 2022;
+        Integer month = ((date != null) && (date != "")) ? Integer.parseInt(date.split("-")[1]) : 4;
+        Integer day = ((date != null) && (date != "")) ? Integer.parseInt(date.split("-")[2]) : 4;
 
         User user = userDao.findByUserId(userId);
 
@@ -215,6 +215,7 @@ public class ClinicianController {
         response.addObject("scheduledTime", scheduledTime);
         response.addObject("localDate", dateFormatted);
         response.addObject("dayOfWeek", dayOfWeek);
+        response.addObject("userId", userId);
         response.addObject("monthName", monthName);
         response.addObject("dayDate", dayDate);
         response.addObject("yearDate", yearDate);

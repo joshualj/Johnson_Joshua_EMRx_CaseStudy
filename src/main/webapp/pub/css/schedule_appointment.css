@@ -5,11 +5,11 @@
     padding-bottom: 80px;
 }
 
-footer {
-    background: linear-gradient(to bottom left,
-    rgb(125, 225, 243),
-    rgb(245, 213, 106))
-}
+/*footer {*/
+/*    background: linear-gradient(to bottom left,*/
+/*    rgb(125, 225, 243),*/
+/*    rgb(245, 213, 106))*/
+/*}*/
 
 .navbar {
     background: linear-gradient(to bottom left,
@@ -21,8 +21,50 @@ footer {
     font-size: 20px;
 }
 
-body {
+section {
+    /* background: url('../html/hand_medicalcross_logo.jpg') no-repeat center center fixed;
+    background-color: seashell;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover; */
+
     font-family: "Raleway", sans-serif;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-areas:
+        "physDate"
+        "schedule";
+
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*align-items: center;*/
+    /*justify-content: center;*/
+    /*background-color: seashell;*/
+    /*height: 100vh;*/
+}
+
+/*.form-inline {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*}*/
+
+.physDate {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#scheduleHeader {
+    text-align: center;
+}
+
+
+#schedule {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 #date {
