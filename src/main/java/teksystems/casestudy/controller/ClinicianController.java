@@ -62,8 +62,6 @@ public class ClinicianController {
             clinicians.add(clinician);
         }
 
-        log.info(users.toString());
-
         response.addObject("clinicians", clinicians);
         response.addObject("searchLastName", searchLastName);
         response.addObject("users", users);
@@ -86,8 +84,6 @@ public class ClinicianController {
     @RequestMapping(value="/clinician/register_clinicianSubmit", method = {RequestMethod.GET, RequestMethod.POST})
     public ModelAndView registerClinicianSubmit(@Valid ClinicianRegisterFormBean form, BindingResult bindingResult) throws Exception {
         ModelAndView response = new ModelAndView();
-
-        log.info(form.toString());
 
         if (bindingResult.hasErrors()) {
             List<String> errorMessages = new ArrayList<>();
@@ -137,11 +133,7 @@ public class ClinicianController {
         clinician.setDepartment(form.getDepartment());
         clinician.setLanguages(form.getLanguages());
 
-        log.info(clinician.toString());
-
         clinicianDao.save(clinician);
-
-        log.info(form.toString());
 
         //here instead of showing a view, we want to redirect for the edit page
         //the edit page will then be responsible for loading the user from the database
@@ -171,7 +163,6 @@ public class ClinicianController {
         User user = userDao.findByUserId(userId);
 
         LocalDate dateFormatted = LocalDate.of(year, month, day);
-        log.info(dateFormatted.toString());
 
         String dayOfWeek = dateFormatted.getDayOfWeek().toString().substring(0, 1).toUpperCase()
                 + dateFormatted.getDayOfWeek().toString().substring(1).toLowerCase();

@@ -18,8 +18,11 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="/user/schedule_appointment">Schedule an Appointment</a></li>
-                        <li><a class="dropdown-item" href="/user/my_schedule">My Upcoming Appointments</a></li>
+                        <li><a class="dropdown-item" href="/user/my_schedule">My Appointments</a></li>
                         <li><hr class="dropdown-divider"></li>
+                        <sec:authorize access="hasAuthority('CLINICIAN')">
+                            <li><a class="dropdown-item" href="/clinician/my_clinician_schedule">My Clinician Schedule</a></li>
+                        </sec:authorize>
                         <sec:authorize access="hasAuthority('CLINICIAN')">
                             <li><a class="dropdown-item" href="/user/search">Find a Clinician</a></li>
                         </sec:authorize>
@@ -30,7 +33,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/login/logout">| Logout</a>
                     </li>
-                    <sec:authentication property="principal.username" />
+                    <sec:authentication property="principal.username"/>
                 </sec:authorize>
             </ul>
 <%--            <form class="d-flex">--%>

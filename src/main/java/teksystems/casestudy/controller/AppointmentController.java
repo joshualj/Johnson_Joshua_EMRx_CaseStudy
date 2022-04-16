@@ -149,7 +149,38 @@ public class AppointmentController {
 
     }
 
-    @RequestMapping(value = "/user/my_schedule/{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/clinician/my_clinician_schedule", method = RequestMethod.GET)
+    public ModelAndView navToMyClinicianSchedule() {
+        ModelAndView response = new ModelAndView();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+
+        if(!StringUtils.equals("anonymousUser", currentPrincipalName)){
+            User user = userDao.findByEmail(currentPrincipalName);
+            response.setViewName("redirect:/clinician/my_clinician_schedule/" + user.getUserId());
+        }
+
+        return response;
+    }
+
+    @RequestMapping(value = "/user/my_schedule", method = RequestMethod.GET)
+    public ModelAndView navToMyAppointmentsAsPatient() {
+        ModelAndView response = new ModelAndView();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+
+        if(!StringUtils.equals("anonymousUser", currentPrincipalName)){
+            User user = userDao.findByEmail(currentPrincipalName);
+            response.setViewName("redirect:/user/my_schedule/" + user.getUserId());
+        }
+
+        return response;
+    }
+
+
+        @RequestMapping(value = "/user/my_schedule/{userId}", method = RequestMethod.GET)
     public ModelAndView viewMyAppointments(@PathVariable("userId") Integer userId) {
         ModelAndView response = new ModelAndView();
         response.setViewName("user/my_schedule");
@@ -220,8 +251,6 @@ public class AppointmentController {
         //converting date from String date to LocalDate date
         String dateArray[] = form.getDate().split("-");
 
-        log.info(Arrays.toString(dateArray) + "THIS IS WHAT THE RETRIEVED DATE LOOKS LIKE");
-
         Integer year = Integer.parseInt(dateArray[0]);
         Integer month = Integer.parseInt(dateArray[1]);
         Integer day = Integer.parseInt(dateArray[2]);
@@ -233,7 +262,6 @@ public class AppointmentController {
         //converting time from String to LocalTime time
         String timeArray[] = form.getTime().split(":");
 
-        log.info(Arrays.toString(timeArray) + "THIS IS WHAT THE RETRIEVED TIME LOOKS LIKE");
         Integer hour = Integer.parseInt(timeArray[0]);
         Integer minute = Integer.parseInt(timeArray[1]);
 
