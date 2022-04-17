@@ -8,6 +8,7 @@ import teksystems.casestudy.validation.EmailUnique;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -27,6 +28,19 @@ public class RegisterFormBean {
 
     @NotBlank(message="Second name is required")
     private String lastName;
+
+    private String preferredName;
+
+    @NotBlank(message="Birth date is required")
+    private String birthDate;
+
+    private String pronouns;
+
+    private String gender;
+
+    private String sex;
+
+    private String primaryLanguage;
 
     @Length(min = 3, max = 15, message = "Password must contain between 3 and 15 characters.")
     @NotBlank(message="Password is required")

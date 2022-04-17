@@ -8,6 +8,7 @@ import teksystems.casestudy.database.entity.Clinician;
 import teksystems.casestudy.database.entity.Patient;
 import teksystems.casestudy.database.entity.User;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public interface PatientDAO extends JpaRepository<Patient, Integer> {
 
     public List<Patient> findByPreferredName(@Param("preferredName") String preferredName);
 
-    public List<Patient> findByBirthDate(@Param("birthDate") Date birthDate);
+    public List<Patient> findByBirthDate(@Param("birthDate") LocalDate birthDate);
 
     public List<Patient> findByPrimaryLanguage(@Param("primaryLanguage") String primaryLanguage);
 

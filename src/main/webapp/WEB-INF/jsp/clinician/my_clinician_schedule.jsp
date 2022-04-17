@@ -21,7 +21,7 @@
 <%--                    </c:forEach>--%>
 <%--                </div>--%>
 <%--            </div>--%>
-            <select class="selectYear form-control-md" name="userId" value="${form.userId}"required>
+            <select class="selectYear form-control-md" name="userId" required>
                 <option value="0" disabled></option>
                 <c:forEach var="clinician" items="${clinicianUsers}">
                     <option value="${clinician.userId}">${clinician.firstName} ${clinician.lastName}</option>
@@ -37,7 +37,7 @@
         </form>
     </div>
     <div class="row justify-content-center align-items-center h-100">
-        <h1 id="name" name="user" value="${user}">
+        <h1 id="name">
             <b>
             <c:if test="${!empty user.firstName}">${user.firstName}'s Appointments</c:if>
             <c:if test="${empty user.firstName}">My Appointments</c:if>
@@ -90,7 +90,7 @@
                                         </form>
                                     </td>
                                     <td>
-                                        <form action=/clinician/my_clinician_schedule/cancel/${appointments[scheduledTime.indexOf(appt)].appointmentId}" method="GET">
+                                        <form action="/clinician/my_clinician_schedule/cancel/${appointments[scheduledTime.indexOf(appt)].appointmentId}" method="POST">
                                             <input type="hidden" name="apptId" value="${appointments[scheduledTime.indexOf(appt)].appointmentId}">
                                             <button type="submit">Cancel</button>
                                         </form>

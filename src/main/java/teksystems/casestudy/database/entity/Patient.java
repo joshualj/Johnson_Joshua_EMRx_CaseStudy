@@ -3,6 +3,7 @@ package teksystems.casestudy.database.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,9 +37,8 @@ public class Patient {
     @Column(name = "preferred_name")
     private String preferredName;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "birth_date")
-    private Date birthDate;
+    private LocalDate birthDate;
 
     @Column(name = "sex")
     private String sex;

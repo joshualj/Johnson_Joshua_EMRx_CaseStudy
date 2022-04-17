@@ -21,7 +21,7 @@ public interface AppointmentDAO extends JpaRepository<Appointment, Integer> {
 
     public Appointment findByAppointmentId(Integer appointmentId);
 
-    public List<Appointment> findByDate(@Param("date") Date date);
+    public List<Appointment> findByDate(@Param("date") LocalDate date);
 
     @Query(value = "select a.appointmentId from Appointment a where a.clinician.clinicianId = :clinicianId")
     public List<Appointment> findByClinicianId(@Param("clinicianId") Integer clinicianId);
@@ -44,20 +44,20 @@ public interface AppointmentDAO extends JpaRepository<Appointment, Integer> {
 
     @Query(value = "select a.appointmentId from Appointment a where a.patient.patientId = :patientId AND a.date = :date")
     public List<Appointment> findByPatientIdAndDate(@Param("patientId") Integer patientId,
-                                                      @Param("date") Date date);
+                                                      @Param("date") LocalDate date);
 
     @Query(value = "select a.appointmentId from Appointment a where a.patient.patientId = :patientId AND a.date = :date AND a.time = :time")
     public Appointment findByPatientIdAndDateAndTime(@Param("patientId") Integer patientId,
-                                                       @Param("date") Date date,
+                                                       @Param("date") LocalDate date,
                                                        @Param("time") LocalTime time);
 
     @Query(value = "select a.appointmentId from Appointment a where a.clinician.clinicianId = :clinicianId AND a.date = :date")
     public List<Appointment> findByClinicianIdAndDate(@Param("clinicianId") Integer clinicianId,
-                                                      @Param("date") Date date);
+                                                      @Param("date") LocalDate date);
 
     @Query(value = "select a.appointmentId from Appointment a where a.clinician.clinicianId = :clinicianId AND a.date = :date AND a.time = :time")
     public Appointment findByClinicianIdAndDateAndTime(@Param("clinicianId") Integer clinicianId,
-                                                       @Param("date") Date date,
+                                                       @Param("date") LocalDate date,
                                                        @Param("time") LocalTime time);
 }
 //    @Query(value = "select u from User u where u.password = :password", nativeQuery = true)

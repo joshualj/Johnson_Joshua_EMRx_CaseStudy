@@ -25,68 +25,90 @@
 <%--                            </div>--%>
 
                             <div class="col-md-12 mb-4">
-                                <input type="text" id="firstName" class="form-control form-control-lg" name="firstName" value="${form.firstName}" required/>
+                                <input type="text" id="firstName" class="form-control form-control-lg" name="firstName" value="${form.firstName}"/>
+                                <c:forEach items="${bindingResult.getFieldErrors('firstName')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
                                 <label class="form-label" for="firstName">First Name</label>
-                                <div class="invalid-feedback">
-                                    Please provide a valid first name.
-                                </div>
                             </div>
 
                             <div class="col-md-12 mb-4">
-                                <input type="text" id="lastName" class="form-control form-control-lg" name="lastName" value="${form.lastName}" required/>
+                                <input type="text" id="lastName" class="form-control form-control-lg" name="lastName" value="${form.lastName}"/>
+                                <c:forEach items="${bindingResult.getFieldErrors('lastName')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
                                 <label class="form-label" for="lastName">Last Name</label>
-                                <div class="invalid-feedback">
-                                    Please provide a valid last name.
-                                </div>
                             </div>
 
                             <div class="col-md-12 mb-4">
-                                <input type="text" id="email" class="form-control form-control-lg" name="email" value="${form.email}" required/>
+                                <input type="text" id="email" class="form-control form-control-lg" name="email" value="${form.email}"/>
+                                <c:forEach items="${bindingResult.getFieldErrors('email')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
                                 <label class="email" for="email">Email</label>
-                                <div class="invalid-feedback">
-                                    Please provide a valid email.
-                                </div>
                             </div>
 
                             <div class="col-md-12 mb-4">
-                                <input type="password" id="password" class="form-control form-control-lg" name="password" value="${form.password}" required/>
+                                <input type="password" id="password" class="form-control form-control-lg" name="password" value="${form.password}"/>
                                 <label class="form-label" for="password">Password</label>
                                 <div class="invalid-feedback">
                                     Please provide a valid password.
                                 </div>
+                                <c:forEach items="${bindingResult.getFieldErrors('password')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
                             </div>
 
                             <div class="col-md-12 mb-4">
                                 <input type="password" id="confirmPassword" class="form-control form-control-lg"
-                                       onkeyup='check();' name="confirmPassword" value="${form.confirmPassword}"required/>
+                                       onkeyup='check();' name="confirmPassword" value="${form.confirmPassword}"/>
                                 <label class="form-label" for="confirmPassword">Confirm Password</label>
                                 <div class="invalid-feedback">
                                     Please provide a valid password.
                                 </div>
+                                <c:forEach items="${bindingResult.getFieldErrors('confirmPassword')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
                             </div>
 
                             <div class="col-md-12 mb-4">
-                                <input type="text" id="title" class="form-control form-control-lg" name="title" value="${form.title}" required/>
+                                <input type="text" id="title" class="form-control form-control-lg" name="title" value="${form.title}"/>
+                                <c:forEach items="${bindingResult.getFieldErrors('title')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
                                 <label class="form-label" for="title">Title</label>
-                                <div class="invalid-feedback">
-                                    Please provide a valid title.
-                                </div>
                             </div>
 
                             <div class="col-md-12 mb-4">
-                                <input type="text" id="department" class="form-control form-control-lg" name="department" value="${form.department}" required/>
+                                <input type="text" id="department" class="form-control form-control-lg" name="department" value="${form.department}"/>
+                                <c:forEach items="${bindingResult.getFieldErrors('department')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
                                 <label class="form-label" for="department">Department</label>
-                                <div class="invalid-feedback">
-                                    Please provide a valid department.
-                                </div>
                             </div>
 
                             <div class="col-md-12 mb-4">
-                                <input type="text" id="languages" class="form-control form-control-lg" name="languages" value="${form.languages}" required/>
+                                <input type="text" id="languages" class="form-control form-control-lg" name="languages" value="${form.languages}"/>
                                 <label class="form-label" for="languages">Languages</label>
-                                <div class="invalid-feedback">
-                                    Please provide a valid language.
-                                </div>
+                                <c:forEach items="${bindingResult.getFieldErrors('languages')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
                             </div>
 
 <%--                            <div class="col-md-12 mb-4">--%>
@@ -131,18 +153,18 @@
 </section>
 </body>
 
-<%--<script>--%>
-<%--    let check = function() {--%>
-<%--        if (document.getElementById('password').value ==--%>
-<%--            document.getElementById('confirmPassword').value) {--%>
-<%--            document.getElementById('message').style.color = 'green';--%>
-<%--            document.getElementById('message').innerHTML = 'Password confirmed';--%>
-<%--        } else {--%>
-<%--            document.getElementById('message').style.color = 'red';--%>
-<%--            document.getElementById('message').innerHTML = 'Password does not match';--%>
-<%--        }--%>
-<%--    }--%>
-<%--</script>--%>
+<script>
+    let check = function() {
+        if (document.getElementById('password').value ==
+            document.getElementById('confirmPassword').value) {
+            document.getElementById('message').style.color = 'green';
+            document.getElementById('message').innerHTML = 'Password confirmed';
+        } else {
+            document.getElementById('message').style.color = 'red';
+            document.getElementById('message').innerHTML = 'Password does not match';
+        }
+    }
+</script>
 
 <script src= "../../../pub/js/register_clinician.js"></script>
 

@@ -147,8 +147,8 @@ public class AppointmentController {
         }
 
         return response;
-
     }
+
     @PreAuthorize("hasAuthority('CLINICIAN')")
     @RequestMapping(value = "/clinician/my_clinician_schedule", method = RequestMethod.GET)
     public ModelAndView navToMyClinicianSchedule() {
@@ -254,7 +254,7 @@ public class AppointmentController {
         Appointment appointment = appointmentDao.findByAppointmentId(appointmentId);
 
         //converting date from String date to LocalDate date
-        String dateArray[] = form.getDate().split("-");
+        String[] dateArray = form.getDate().split("-");
 
         Integer year = Integer.parseInt(dateArray[0]);
         Integer month = Integer.parseInt(dateArray[1]);
@@ -265,7 +265,7 @@ public class AppointmentController {
         appointment.setDate(dateFormatted);
 
         //converting time from String to LocalTime time
-        String timeArray[] = form.getTime().split(":");
+        String[] timeArray = form.getTime().split(":");
 
         Integer hour = Integer.parseInt(timeArray[0]);
         Integer minute = Integer.parseInt(timeArray[1]);
@@ -276,7 +276,7 @@ public class AppointmentController {
         Integer parsedClinicianId = Integer.parseInt(form.getClinicianId());
         Integer parsedPatientId = Integer.parseInt(form.getPatientId());
 
-        if(form.getPaqId() != "" && form.getPaqId() != null){
+        if(!StringUtils.equals("", form.getPaqId()) && form.getPaqId() != null){
             Integer parsedPaqId = Integer.parseInt(form.getPaqId());
             appointment.setPaqId(parsedPaqId);
         }
@@ -290,6 +290,30 @@ public class AppointmentController {
         appointment.setPatient(patient);
 
         appointment.setChiefComplaint(form.getChiefComplaint());
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+
+        if(!StringUtils.equals("anonymousUser", currentPrincipalName)){
+            appointmentDao.save(appointment);
+            User user = userDao.findByEmail(currentPrincipalName);
+            response.setViewName("redirect:/clinician/my_clinician_schedule/" + user.getUserId());
+        }
+
+        return response;
+    }
+
+    @PreAuthorize("hasAuthority('CLINICIAN')")
+    @RequestMapping(value = "/clinician/my_clinician_schedule/cancel/{appointmentId}", method = RequestMethod.POST)
+    public ModelAndView clearAppointmentFields(@PathVariable("appointmentId") Integer appointmentId) {
+        ModelAndView response = new ModelAndView();
+
+        Appointment appointment = appointmentDao.findByAppointmentId(appointmentId);
+
+        appointment.setClinician(null);
+        appointment.setPatient(null);
+        appointment.setPaqId(null);
+        appointment.setChiefComplaint(null);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();

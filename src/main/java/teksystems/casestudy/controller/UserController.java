@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -20,6 +22,7 @@ import teksystems.casestudy.database.entity.User;
 import teksystems.casestudy.formbean.RegisterFormBean;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -40,7 +43,6 @@ public class UserController{
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @PreAuthorize("hasAnyAuthority('CLINICIAN','PATIENT')")
     @RequestMapping(value="/user/register", method = RequestMethod.GET)
     public ModelAndView register() throws Exception {
         ModelAndView response = new ModelAndView();
@@ -58,38 +60,27 @@ public class UserController{
         return response;
     }
 
-    @PreAuthorize("hasAnyAuthority('CLINICIAN','PATIENT')")
     @RequestMapping(value="/user/registerSubmit", method = {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView registerSubmit(@Valid RegisterFormBean form) throws Exception {
+    public ModelAndView registerSubmit(@Valid RegisterFormBean form, BindingResult bindingResult) throws Exception {
         ModelAndView response = new ModelAndView();
 
         log.info(form.toString());
 
-//        if (bindingResult.hasErrors()) {
-//            List<String> errorMessages = new ArrayList<>();
-//
-//            bindingResult.getFieldErrorCount("firstName");
-//
-//            for(ObjectError error : bindingResult.getAllErrors()) {
-//                errorMessages.add(error.getDefaultMessage());
-////                errors.put( ((FieldError) error).getField(), error.getDefaultMessage());
-//                log.info( ((FieldError) error).getField() + " " + error.getDefaultMessage());
-//            }
-//
-//            response.addObject("form", form);
-//
-//            response.addObject("bindingResult", bindingResult);
-//
-//            //add error list ot the model
-////            response.addObject("errorMessages", errorMessages);
-//
-//
-//            //because there is 1 or more error, we do not want to process logic below
-//            // that will create a new user in the database. We want to show the register_clinician.jsp
-//
-//            response.setViewName("user/register");
-//            return response;
-//        }
+        if (bindingResult.hasErrors()) {
+            List<String> errorMessages = new ArrayList<>();
+
+            for(ObjectError error : bindingResult.getAllErrors()) {
+                errorMessages.add(error.getDefaultMessage());
+                log.info( ((FieldError) error).getField() + " " + error.getDefaultMessage());
+            }
+
+            response.addObject("form", form);
+
+            response.addObject("bindingResult", bindingResult);
+
+            response.setViewName("user/register");
+            return response;
+        }
 
 
         //we first assume we are going to do an edit by loading the user by loading the user from
@@ -113,26 +104,48 @@ public class UserController{
 
         userDao.save(user);
 
-        Clinician clinician = clinicianDao.findByUserId(user.getUserId());
+        Patient patient = patientDao.findByUserId(user.getUserId());
 
-        if (clinician == null) {
-            clinician = new Clinician();
+        if (patient == null) {
+            patient = new Patient();
         }
 
         //sets medical_record_number to a random number from 0-1999
         //after checking to make sure no patient has that MRN.
 
-        clinician.setUserId(user.getUserId());
+        Random rand = new Random();
+        int upperbound = 2000;
+        int mrn = rand.nextInt(upperbound);
 
-        clinicianDao.save(clinician);
+        while(patientDao.findByMedicalRecordNumber(mrn) != null) {
+            mrn = rand.nextInt(upperbound);
+        }
+        patient.setMedicalRecordNumber(mrn);
+        patient.setUserId(user.getUserId());
+
+        patientDao.save(patient);
 
         log.info(form.toString());
 
-        //here instead of showing a view, we want to redirect for the edit page
-        //the edit page will then be responsible for loading the user from the database
-        //and dynamically creating the page
-        //Browser to do a redirect to the URL after the. The big piece here to
-        // recognize is redirect uses an actual URL rather than a view ??
+        patient.setPreferredName(form.getPreferredName());
+
+        //converting String birthDate to a LocalDate object
+        Integer day = Integer.parseInt(form.getBirthDate().split("-")[2]);
+        Integer month = Integer.parseInt(form.getBirthDate().split("-")[1]);
+        Integer year = Integer.parseInt(form.getBirthDate().split("-")[0]);
+        LocalDate date = LocalDate.of(year, month, day);
+
+        patient.setBirthDate(date);
+
+        patient.setGender(form.getGender());
+        patient.setPronouns(form.getPronouns());
+        patient.setSex(form.getSex());
+        patient.setPrimaryLanguage(form.getPrimaryLanguage());
+
+        patientDao.save(patient);
+
+        log.info(form.toString());
+
         response.setViewName("redirect:/user/schedule_appointment");
 
         return response;

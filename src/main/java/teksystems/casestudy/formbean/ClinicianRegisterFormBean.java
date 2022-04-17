@@ -33,13 +33,13 @@ public class ClinicianRegisterFormBean {
     @NotBlank(message="Department is required")
     private String department;
 
-    @NotBlank(message="Languages is required")
+    @NotBlank(message="Language(s) is(are) required")
     private String languages;
 
     @Length(min = 3, max = 15, message = "Password must contain between 3 and 15 characters.")
     @NotBlank(message="Password is required")
     private String password;
 
-    @NotBlank(message="Confirming password is required")
+    @NotBlank(message="Password confirmation is required")
     private String confirmPassword;
 }

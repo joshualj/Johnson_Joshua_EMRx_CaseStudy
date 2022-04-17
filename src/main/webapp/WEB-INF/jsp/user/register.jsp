@@ -24,27 +24,101 @@
                         <form id="registerForm" action="/user/registerSubmit" class="needs-validation" novalidate>
 <%--                            <input type="hidden" name="id" value="${form.id}">--%>
                             <div class="col-md-12 mb-4">
-                                <input type="text" id="firstName" class="form-control form-control-lg" name="firstName" value="${form.firstName}" required/>
+<%--                                <input type="text" id="firstName" class="form-control form-control-lg" name="firstName" value="${form.firstName}" required/>--%>
+                                <input type="text" id="firstName" class="form-control form-control-lg" name="firstName" value="${form.firstName}"/>
+                                <c:forEach items="${bindingResult.getFieldErrors('firstName')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
                                 <label class="form-label" for="firstName">First Name</label>
-                                <div class="invalid-feedback">
-                                    Please provide a valid first name.
-                                </div>
                             </div>
 
                             <div class="col-md-12 mb-4">
-                                <input type="text" id="lastName" class="form-control form-control-lg" name="lastName" value="${form.lastName}" required/>
+                                <input type="text" id="lastName" class="form-control form-control-lg" name="lastName" value="${form.lastName}"/>
+                                <c:forEach items="${bindingResult.getFieldErrors('lastName')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
                                 <label class="form-label" for="lastName">Last Name</label>
+                            </div>
+
+                            <div class="col-md-12 mb-4">
+                                <input type="text" id="preferredName" class="form-control form-control-lg" name="preferredName" value="${form.preferredName}"/>
+                                <c:forEach items="${bindingResult.getFieldErrors('preferredName')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
+                                <label class="form-label" for="preferredName">Preferred Name</label>
+                            </div>
+
+                            <div class="col-md-12 mb-4">
+                                <input type="text" id="email" class="form-control form-control-lg" name="email" value="${form.email}"/>
+                                <c:forEach items="${bindingResult.getFieldErrors('email')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
+                                <label class="form-label" for="email">Email</label>
+                            </div>
+
+                            <div class="col-md-12 mb-4">
+                                <input type="date" id="birthDate" class="form-control form-control-lg" name="birthDate" value="${form.birthDate}"/>
+                                <c:forEach items="${bindingResult.getFieldErrors('birthDate')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
+                                <label class="form-label" for="birthDate">Birth Date</label>
+<%--                                <div class="invalid-feedback">--%>
+<%--                                    Please provide a valid birthdate.--%>
+<%--                                </div>--%>
+                            </div>
+
+                            <div class="col-md-12 mb-4">
+                                <input type="text" id="pronouns" class="form-control form-control-lg" name="pronouns" value="${form.pronouns}"/>
+                                <c:forEach items="${bindingResult.getFieldErrors('pronouns')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
+                                <label class="form-label" for="pronouns">Pronouns</label>
+<%--                                <div class="invalid-feedback">--%>
+<%--                                </div>--%>
+                            </div>
+
+                            <div class="col-md-12 mb-4">
+                                <input type="text" id="gender" class="form-control form-control-lg" name="gender" value="${form.gender}"/>
+                                <c:forEach items="${bindingResult.getFieldErrors('gender')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
+                                <label class="form-label" for="gender">Gender</label>
+                            </div>
+
+                            <div class="col-md-12 mb-4">
+                                <input type="text" id="sex" class="form-control form-control-lg" name="sex" value="${form.sex}" required/>
+                                <c:forEach items="${bindingResult.getFieldErrors('sex')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
+                                <label class="form-label" for="sex">Sex</label>
                                 <div class="invalid-feedback">
-                                    Please provide a valid last name.
                                 </div>
                             </div>
 
                             <div class="col-md-12 mb-4">
-                                <input type="text" id="email" class="form-control form-control-lg" name="email" value="${form.email}" required/>
-                                <label class="email" for="email">Email</label>
-                                <div class="invalid-feedback">
-                                    Please provide a valid email.
-                                </div>
+                                <input type="text" id="primaryLanguage" class="form-control form-control-lg" name="primaryLanguage" value="${form.primaryLanguage}"/>
+                                <c:forEach items="${bindingResult.getFieldErrors('primaryLanguage')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
+                                <label class="form-label" for="primaryLanguage">Primary Language</label>
                             </div>
 
                             <div class="col-md-12 mb-4">
@@ -63,7 +137,6 @@
                                     Please provide a valid password.
                                 </div>
                             </div>
-
 <%--                            <div class="col-md-12 mb-4">--%>
 <%--                                <h6 class="mb-2 pb-1">User Type:</h6>--%>
 <%--                                <div class="form-check form-check-inline">--%>
@@ -89,7 +162,6 @@
 <%--                                </select>--%>
 <%--                                <label class="form-label select-label">Choose User Type</label>--%>
 <%--                            </div>--%>
-
                             <div class="row">
                                 <div class="col-md-3 mt-4 pt-2">
                                     <input class="btn btn-outline-primary btn-md" type="submit" value="Submit" />
@@ -107,6 +179,7 @@
 </section>
 </body>
 
+<%-- TODO: UNDO COMMENTING OUT THE FOLLOWING CODE--%>
 <script>
     let check = function() {
         if (document.getElementById('password').value ==
