@@ -7,6 +7,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +25,8 @@ import teksystems.casestudy.formbean.PreAppointmentQuestionsFormBean;
 import teksystems.casestudy.formbean.RegisterFormBean;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -38,16 +43,15 @@ public class PreAppointmentQuestionsController {
 
     @PreAuthorize("hasAnyAuthority('CLINICIAN','PATIENT')")
     @RequestMapping(value= "user/paq/{appointmentId}", method = RequestMethod.GET)
-    public ModelAndView paq(@PathVariable("appointmentId") Integer appointmentId) throws Exception {
+    public ModelAndView viewPaq(@PathVariable("appointmentId") Integer appointmentId) throws Exception {
         ModelAndView response = new ModelAndView();
         response.setViewName("user/paq");
 
         log.info(appointmentId.toString());
 
-        //attributeName is object inside of jsp, and scheduledTime is the object that is being passed to that name
-
         PreAppointmentQuestionsFormBean form = new PreAppointmentQuestionsFormBean();
 
+        //if a form has previously been completed, populate those fields into the form
         if(appointmentDao.findByAppointmentId(appointmentId).getPaqId() != null){
             PreAppointmentQuestions paq = paqDao.getById(appointmentDao.findByAppointmentId(appointmentId).getPaqId());
             form.setComplaint(paq.getComplaint());
@@ -60,20 +64,41 @@ public class PreAppointmentQuestionsController {
             form.setTemporalPatterns(paq.getTemporalPatterns());
             form.setSymptoms(paq.getSymptoms());
         }
+
         response.addObject("form", form);
+        response.addObject("appointmentId", appointmentId);
+        log.info("This will print");
+        log.info(response.toString());
 
         return response;
     }
 
     @PreAuthorize("hasAnyAuthority('CLINICIAN','PATIENT')")
-    @RequestMapping(value= "/user/paqSubmit/{appointmentId}", method = RequestMethod.POST)
+    @RequestMapping(value= "/user/paqSubmit/{appointmentId}", method={RequestMethod.POST, RequestMethod.GET})
     public ModelAndView paqSubmit(@Valid PreAppointmentQuestionsFormBean form,
-                                  @PathVariable("appointmentId") Integer appointmentId) throws Exception {
-
+                                  @PathVariable("appointmentId") Integer appointmentId,
+                                  BindingResult bindingResult) throws Exception {
         ModelAndView response = new ModelAndView();
+        log.info("This will not print");
+
+        if (bindingResult.hasErrors()) {
+            List<String> errorMessages = new ArrayList<>();
+
+            for(ObjectError error : bindingResult.getAllErrors()) {
+                errorMessages.add(error.getDefaultMessage());
+                log.info( ((FieldError) error).getField() + " " + error.getDefaultMessage());
+            }
+
+            response.addObject("form", form);
+
+            response.addObject("bindingResult", bindingResult);
+
+            response.setViewName("user/paq");
+            return response;
+        }
+
         response.addObject("appointmentId", appointmentId);
 
-        log.info(form.toString());
 //        log.info(form.getApptId());
 
         Appointment appointment = appointmentDao.findByAppointmentId(appointmentId);
@@ -87,7 +112,6 @@ public class PreAppointmentQuestionsController {
 
         log.info("it makes it this far?");
         log.info(paq.toString());
-
 
         paq.setAlleviating(form.getAlleviating());
         log.info("did it make it passed Alleviating??");

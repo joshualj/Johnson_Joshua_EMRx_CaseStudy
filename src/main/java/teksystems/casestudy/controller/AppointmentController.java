@@ -57,7 +57,7 @@ public class AppointmentController {
     //handle null entry, when page is loaded initially
 
     @RequestMapping(value = "/user/schedule_appointment", method = RequestMethod.GET)
-    public ModelAndView viewClinicianScheduleAsPatient(@RequestParam(required = false) Integer userId,
+    public ModelAndView viewClinicianScheduleAsPatient(@PathVariable(required = false) Integer userId,
                                                        @RequestParam(required = false) String date) throws Exception {
 //                                 @RequestParam(required = false) Integer year,
 //                                 @RequestParam(required = false) Integer month,
@@ -73,7 +73,7 @@ public class AppointmentController {
 
         Integer year = (date != null) ? Integer.parseInt(date.split("-")[0]) : 2022;
         Integer month = (date != null) ? Integer.parseInt(date.split("-")[1]) : 4;
-        Integer day = (date != null) ? Integer.parseInt(date.split("-")[2]) : 4;
+        Integer day = (date != null) ? Integer.parseInt(date.split("-")[2]) : 5;
 
         User user = userDao.findByUserId(clinician.getUserId());
 

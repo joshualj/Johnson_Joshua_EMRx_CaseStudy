@@ -24,69 +24,87 @@
 <%--                                </div>--%>
 <%--                            </div>--%>
                             <div class="col-md-12 mb-4">
-                                <input type="text" id="complaint" class="form-control form-control-lg" name="complaint" value="${form.complaint}" required/>
+                                <input type="text" id="complaint" class="form-control form-control-lg" name="complaint" value="${form.complaint}"/>
+                                <c:forEach items="${bindingResult.getFieldErrors('complaint')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
                                 <label class="form-label" for="complaint">Enter your medical concern.<br>(example: headache)</label>
-                                <div class="invalid-feedback">
-                                    Please provide a valid first name.
-                                </div>
                             </div>
                             <div class="col-md-12 mb-4">
-                                <input type="text" id="onset" class="form-control form-control-lg" name="onset" value="${form.onset}" required/>
+                                <input type="text" id="onset" class="form-control form-control-lg" name="onset" value="${form.onset}"/>
+                                <c:forEach items="${bindingResult.getFieldErrors('onset')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
                                 <label class="form-label" for="onset">Enter the date you first experienced your concern.<br>(example: 2022-04-21)</label>
-                                <div class="invalid-feedback">
-                                    Please provide a valid onset.
-                                </div>
                             </div>
                             <div class="col-md-12 mb-4">
-                                <input type="text" id="location" class="form-control form-control-lg" name="location" value="${form.location}" required/>
+                                <input type="text" id="location" class="form-control form-control-lg" name="location" value="${form.location}"/>
+                                <c:forEach items="${bindingResult.getFieldErrors('location')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
                                 <label class="form-label" for="location">Enter the location of your concern.<br>(example: left side of chest)</label>
-                                <div class="invalid-feedback">
-                                    Please provide a valid location.
-                                </div>
                             </div>
                             <div class="col-md-12 mb-4">
                                 <input type="text" id="duration" class="form-control form-control-lg" name="duration" value="${form.duration}" required/>
+                                <c:forEach items="${bindingResult.getFieldErrors('duration')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
                                 <label class="form-label" for="duration">Enter how long your medical concern lasts, when present.<br>(examples: 10 minutes, always)</label>
-                                <div class="invalid-feedback">
-                                    Please provide a valid duration.
-                                </div>
                             </div>
 
                             <div class="col-md-12 mb-4">
                                 <input type="text" id="description" class="form-control form-control-lg" name="description" value="${form.description}" required/>
+                                <c:forEach items="${bindingResult.getFieldErrors('description')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
                                 <label class="form-label" for="description">Enter characteristics of your concern.<br>(examples: dull, sharp)</label>
-                                <div class="invalid-feedback">
-                                    Please provide a valid description.
-                                </div>
                             </div>
                             <div class="col-md-12 mb-4">
                                 <input type="text" id="alleviating" class="form-control form-control-lg" name="alleviating" value="${form.alleviating}" required/>
+                                <c:forEach items="${bindingResult.getFieldErrors('alleviating')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
                                 <label class="form-label" for="alleviating">List any medications or actions that relieve your concern.<br>(examples: heat-pad, tylenol)</label>
-                                <div class="invalid-feedback">
-                                    Please provide a valid onset.
-                                </div>
                             </div>
                             <div class="col-md-12 mb-4">
                                 <input type="text" id="radiation" class="form-control form-control-lg" name="radiation" value="${form.radiation}" required/>
+                                <c:forEach items="${bindingResult.getFieldErrors('radiation')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
                                 <label class="form-label" for="radiation">List any locations your pain travels to.<br>(examples: left foot, lower back)</label>
-                                <div class="invalid-feedback">
-                                    Please provide a valid location.
-                                </div>
                             </div>
                             <div class="col-md-12 mb-4">
                                 <input type="text" id="temporalPatterns" class="form-control form-control-lg" name="temporalPatterns" value="${form.temporalPatterns}" required/>
+                                <c:forEach items="${bindingResult.getFieldErrors('temporalPatterns')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
                                 <label class="form-label" for="temporalPatterns">Enter how often you experience your concern.<br>(examples: always, once daily, randomly)</label>
-                                <div class="invalid-feedback">
-                                    Please provide a valid duration.
-                                </div>
                             </div>
 
                             <div class="col-md-12 mb-4">
                                 <input type="text" id="symptoms" class="form-control form-control-lg" name="symptoms" value="${form.symptoms}" required/>
+                                <c:forEach items="${bindingResult.getFieldErrors('symptoms')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
                                 <label class="form-label" for="symptoms">List your symptoms.<br>(examples: dizziness, fatigue)</label>
-                                <div class="invalid-feedback">
-                                    Please provide a valid description.
-                                </div>
                             </div>
 
                             <div class="row">

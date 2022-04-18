@@ -2,14 +2,14 @@
 <jsp:include page="../include/header.jsp"/>
 <jsp:include page="../include/navbar.jsp"/>
 <link href="../../../pub/css/my_schedule.css" rel="stylesheet">
-<body>
+<body id="appointments">
 <section class="vh-120 gradient-custom">
 <%--    <div class="row justify-content-center align-items-center">--%>
 <%--    <form class="appointmentDaySelect" action="/user/my_schedule">--%>
 <%--        <input type="text" id="userId" class="form-control form-control-lg" name="userId" value="${form.userId}">--%>
 <%--        <input class="btn btn-outline-primary btn-md" type="submit" value="Submit" />--%>
 <%--    </form>--%>
-    <div class="row justify-content-center align-items-center h-100">
+    <div class="row justify-content-center align-items-center">
         <h1 id="name" name="user" value="${user}">
             <c:if test="${!empty user.firstName}">${user.firstName}'s Appointments</c:if>
             <c:if test="${empty user.firstName}">My Appointments</c:if>

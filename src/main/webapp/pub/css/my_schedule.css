@@ -2,14 +2,55 @@
     background: linear-gradient(to top left,
     rgb(125, 225, 243),
     rgb(245, 213, 106));
-    padding-bottom: 80px;
+    padding-bottom: 20px;
+    /*min-height: 100vh;*/
 }
 
-footer {
-    background: linear-gradient(to bottom left,
-    rgb(125, 225, 243),
-    rgb(245, 213, 106))
+.physDate {
+    padding-top: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
+.col {
+    display: grid;
+}
+
+#scheduleHeader {
+    text-align: center;
+}
+
+.physDateForm {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    background-color: rgba(63, 62, 60, 0.20);
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 30px;
+}
+
+#appointments {
+    /*min-height: 150vh;*/
+    /*background: linear-gradient(to top left,*/
+    /*rgb(125, 225, 243),*/
+    /*rgb(245, 213, 106));*/
+}
+
+section {
+    min-height: 100vh;
+}
+
+/*footer {*/
+/*    background: linear-gradient(to bottom left,*/
+/*    rgb(125, 225, 243),*/
+/*    rgb(245, 213, 106))*/
+/*}*/
 
 .navbar {
     background: linear-gradient(to bottom left,

@@ -10,48 +10,65 @@
 <%--        <input class="btn btn-outline-primary btn-md" type="submit" value="Submit" />--%>
 <%--    </form>--%>
     <div class="physDate">
-        <form class="appointmentDaySelect w-25" action="/clinician/my_clinician_schedule/${userId}">
-<%--            <div class="dropdown">--%>
-<%--                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--%>
-<%--                    Select A Clinician--%>
-<%--                </button>--%>
-<%--                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">--%>
-<%--                    <c:forEach var="clinician" items="${clinicianUsers}">--%>
-<%--                        <a class="dropdown-item" value="${clinician.userId}">${clinician.firstName} ${clinician.lastName}</a>--%>
-<%--                    </c:forEach>--%>
+<%--        <form class="form-inline"" action="/user/schedule_appointment">--%>
+<%--            <div class="form-row align-items-center">--%>
+<%--                <div class="col-sm-3 my-1">--%>
+<%--                    <label for="clinician">Select a Clinician</label>--%>
+<%--                    <select id="clinician" class="form-control-md mb-3" name="userId" value="${form.userId}"required>--%>
+<%--                        <option value="0" disabled></option>--%>
+<%--                        <c:forEach var="clinician" items="${clinicianUsers}">--%>
+<%--                            <option value="${clinician.userId}">${clinician.firstName} ${clinician.lastName}</option>--%>
+<%--                        </c:forEach>--%>
+<%--                    </select>--%>
+<%--                </div>--%>
+<%--                <div class="col-sm-3 my-1">--%>
+<%--                    <label for="date">Select a Date</label>--%>
+<%--                    <input type="date" id="date" name="date" placeholder="Date" class="form-control-md mb-3" value="${form.date}">--%>
+<%--                </div>--%>
+<%--                <div class="col-auto my-1">--%>
+<%--                    <button type="submit" class="btn btn-primary">Submit</button>--%>
 <%--                </div>--%>
 <%--            </div>--%>
-            <select class="selectYear form-control-md" name="userId" required>
-                <option value="0" disabled></option>
-                <c:forEach var="clinician" items="${clinicianUsers}">
-                    <option value="${clinician.userId}">${clinician.firstName} ${clinician.lastName}</option>
-                </c:forEach>
-            </select>
-<%--            <select class="selectYear form-control-md" name="userId" value="${userId}"required>--%>
-<%--                <option value="0" disabled>Select Clinician</option>--%>
-<%--            </select>--%>
-            <tr>
-            <input type="date" name="date" placeholder="Date" class="form-control form-control-lg mb-3 input-border-width:50%" value="${form.date}">
-            <input class="btn btn-outline-primary btn-md" type="submit" value="Submit">
-            </tr>
+<%--        </form>--%>
+        <form class="physDateForm form-inline" action="/user/schedule_appointment">
+<%--            <div class="form-inline">--%>
+                <div class="col">
+                <label for="clinician">Clinician</label>
+                    <select id="clinician" class="form-control-md mb-4" name="userId" value="${form.userId}"required>
+                        <option value="0" disabled></option>
+                        <c:forEach var="clinician" items="${clinicianUsers}">
+                            <option value="${clinician.userId}">${clinician.firstName} ${clinician.lastName}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="date">Date</label>
+                    <input type="date" id="date" name="date" placeholder="Date" class="form-control-md mb-4" value="${form.date}">
+                </div>
+                <div class="col">
+                    <input class="btn btn-outline-primary btn-sm" type="submit" value="Submit">
+                </div>
+<%--            </div>--%>
         </form>
     </div>
+    <hr>
     <div class="row justify-content-center align-items-center h-100">
-        <h1 id="name">
-            <b>
-            <c:if test="${!empty user.firstName}">${user.firstName}'s Appointments</c:if>
-            <c:if test="${empty user.firstName}">My Appointments</c:if>
-            </b>
-        </h1>
+        <div id="scheduleHeader">
         <h1>${dayOfWeek}, ${monthName} ${dayDate}, ${yearDate}</h1>
+        <h5 id="name">
+            <b>
+                <c:if test="${!empty clinUser.firstName}">Dr. ${clinUser.firstName} ${clinUser.lastName}'s Appointment Schedule</c:if>
+            </b>
+        </h5>
+        </div>
         <div class="col-8">
             <div class="card shadow-2-strong" style="border-radius: 15px">
                 <div style="line-height: 2.0">
                     <table id="appointmentsTable" class="table table-striped">
                         <thead class="table-dark">
                         <tr>
-                            <th style="border-top-left-radius: 15px"><b>Date</b></th>
-                            <th><b>Time</b></th>
+<%--                            <th style="border-top-left-radius: 15px"><b>Date</b></th>--%>
+                            <th style="border-top-left-radius: 15px"><b>Time</b></th>
                             <th><b>Patient</b></th>
                             <th><b>Birthdate</b></th>
                             <th><b>Sex/Gender</b></th>
@@ -63,7 +80,7 @@
                         </thead>
                         <c:forEach var="appt" items="${appointmentTimes}"> <%-- varStatus="status"> --%>
                             <tr>
-                                <td><b>${localDate}</b></td>
+<%--                                <td><b>${localDate}</b></td>--%>
                                 <td><b>${appt}</b></td>
                                 <c:if test="${scheduledTime.contains(appt)}">
                                     <td><b>${users[scheduledTime.indexOf(appt)].firstName} ${users[scheduledTime.indexOf(appt)].lastName}</b></td>
