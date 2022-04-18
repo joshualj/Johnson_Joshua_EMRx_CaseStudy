@@ -46,25 +46,48 @@ public class ClinicianController {
 
     @PreAuthorize("hasAnyAuthority('CLINICIAN','PATIENT')")
     @GetMapping(value="/user/search")//, method= {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView searchClinicianByLastName(@RequestParam (required = false) String searchLastName) {
+    public ModelAndView searchClinicianByLastName(@RequestParam (required = false) String searchEntry,
+                                                  @RequestParam (required = false) String searchType) {
         ModelAndView response = new ModelAndView();
         response.setViewName("user/search");
 
         List<Clinician> clinicians = new ArrayList<>();
         List<User> users = new ArrayList<>();
 
-
-        if (!StringUtils.isEmpty(searchLastName)) {
-            users = userDao.findByLastNameIgnoreCaseContaining(searchLastName);
+        if (!StringUtils.isEmpty(searchEntry) && StringUtils.equals("lastName", searchType)) {
+            List<User> allUsers = userDao.findByLastNameIgnoreCaseContaining(searchEntry);
+            //since this is a clinician search, I need to narrow down to just users who are clinicians
+            for(User user : allUsers) {
+                if(clinicianDao.findByUserId(user.getUserId()) != null) {
+                    users.add(user);
+                }
+            }
+            for(User user : users) {
+                Clinician clinician = clinicianDao.findByUserId(user.getUserId());
+                clinicians.add(clinician);
+            }
         }
 
-        for(User user : users) {
-            Clinician clinician = clinicianDao.findByUserId(user.getUserId());
-            clinicians.add(clinician);
+        if (!StringUtils.isEmpty(searchEntry) && StringUtils.equals("department", searchType)) {
+            clinicians = clinicianDao.findByDepartment(searchEntry);
+
+            for(Clinician clinician : clinicians) {
+                User user = userDao.findByUserId(clinician.getUserId());
+                users.add(user);
+            }
+        }
+
+        if (!StringUtils.isEmpty(searchEntry) && StringUtils.equals("language", searchType)) {
+            clinicians = clinicianDao.findByLanguagesIgnoreCaseContaining(searchEntry);
+
+            for(Clinician clinician : clinicians) {
+                User user = userDao.findByUserId(clinician.getUserId());
+                users.add(user);
+            }
         }
 
         response.addObject("clinicians", clinicians);
-        response.addObject("searchLastName", searchLastName);
+        response.addObject("searchEntry", searchEntry);
         response.addObject("users", users);
 
         return response;

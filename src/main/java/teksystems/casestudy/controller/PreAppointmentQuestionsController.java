@@ -51,7 +51,7 @@ public class PreAppointmentQuestionsController {
 
         PreAppointmentQuestionsFormBean form = new PreAppointmentQuestionsFormBean();
 
-        //if a form has previously been completed, populate those fields into the form
+        //if a form has previously been completed, this will populate those fields into the form
         if(appointmentDao.findByAppointmentId(appointmentId).getPaqId() != null){
             PreAppointmentQuestions paq = paqDao.getById(appointmentDao.findByAppointmentId(appointmentId).getPaqId());
             form.setComplaint(paq.getComplaint());
@@ -74,12 +74,14 @@ public class PreAppointmentQuestionsController {
     }
 
     @PreAuthorize("hasAnyAuthority('CLINICIAN','PATIENT')")
-    @RequestMapping(value= "/user/paqSubmit/{appointmentId}", method={RequestMethod.POST, RequestMethod.GET})
-    public ModelAndView paqSubmit(@Valid PreAppointmentQuestionsFormBean form,
-                                  @PathVariable("appointmentId") Integer appointmentId,
+    @RequestMapping(value= "/user/paqSubmit/{appointmentId}", method=RequestMethod.POST)
+    public ModelAndView paqSubmit(@PathVariable("appointmentId") Integer appointmentId,
+                                  @Valid PreAppointmentQuestionsFormBean form,
                                   BindingResult bindingResult) throws Exception {
         ModelAndView response = new ModelAndView();
         log.info("This will not print");
+
+        //TODO: FIX BINDINGRESULT
 
         if (bindingResult.hasErrors()) {
             List<String> errorMessages = new ArrayList<>();
@@ -110,12 +112,9 @@ public class PreAppointmentQuestionsController {
         PreAppointmentQuestions paq = (appointment.getPaqId() != null) ?
                 paqDao.getById(appointment.getPaqId()) : new PreAppointmentQuestions();
 
-        log.info("it makes it this far?");
         log.info(paq.toString());
 
         paq.setAlleviating(form.getAlleviating());
-        log.info("did it make it passed Alleviating??");
-
         paq.setDescription(form.getDescription());
         paq.setComplaint(form.getComplaint());
         paq.setDuration(form.getDuration());

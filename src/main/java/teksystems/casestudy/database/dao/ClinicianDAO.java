@@ -19,6 +19,8 @@ public interface ClinicianDAO extends JpaRepository<Clinician, Integer> {
 
     public Clinician findByUserId(@Param("userId") Integer userId);
 
+    public List<Clinician> findByLanguagesIgnoreCaseContaining(@Param("languages") String languages);
+
 //    public Clinician findByEmail(@Param("email") String email);
 //
 //    public List<Clinician> findByPassword(@Param("password") String password);
