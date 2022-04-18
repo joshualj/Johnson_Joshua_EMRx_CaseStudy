@@ -17,61 +17,64 @@
                         <form id="registerForm" action="/clinician/my_clinician_scheduleSubmit/${appointmentId}" method="POST" class="needs-validation" novalidate>
 <%--                            <input type="hidden" name="id" value="${form.id}">--%>
                             <div class="col-md-12 mb-4">
-                                <input type="date" id="date" class="form-control form-control-lg" name="date" value="${form.date}" required/>
+                                <input type="date" id="date" class="form-control form-control-lg" name="date" value="${form.date}"/>
+                                <c:forEach items="${bindingResult.getFieldErrors('date')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
                                 <label class="form-label" for="date">Date</label>
-                                <div class="invalid-feedback">
-                                    Please provide a valid date.
-                                </div>
+                            </div>
+                            <div class="col-md-12 mb-4">
+                                <input type="time" id="time" class="form-control form-control-lg" name="time" value="${form.time}"/>
+                                <c:forEach items="${bindingResult.getFieldErrors('time')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
+                                <label class="form-label" for="time">Time</label>
                             </div>
 
                             <div class="col-md-12 mb-4">
-                                <input type="time" id="time" class="form-control form-control-lg" name="time" value="${form.time}" required/>
-                                <label class="form-label" for="time">Last Name</label>
-                                <div class="invalid-feedback">
-                                    Please provide a valid time.
-                                </div>
+                                <input type="text" id="clinicianId" class="form-control form-control-lg" name="clinicianId" value="${form.clinicianId}"/>
+                                <c:forEach items="${bindingResult.getFieldErrors('clinicianId')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
+                                <label class="form-label" for="clinicianId">Clinician Id</label>
                             </div>
 
                             <div class="col-md-12 mb-4">
-                                <input type="text" id="clinicianId" class="form-control form-control-lg" name="clinicianId" value="${form.clinicianId}" required/>
-                                <label class="email" for="clinicianId">Clinician Id</label>
-                                <div class="invalid-feedback">
-                                    Please provide a clinicianId.
-                                </div>
-                            </div>
-
-                            <div class="col-md-12 mb-4">
-                                <input type="text" id="patientId" class="form-control form-control-lg" name="patientId" value="${form.patientId}" required/>
+                                <input type="text" id="patientId" class="form-control form-control-lg" name="patientId" value="${form.patientId}"/>
+                                <c:forEach items="${bindingResult.getFieldErrors('patientId')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
                                 <label class="form-label" for="patientId">Patient Id</label>
-                                <div class="invalid-feedback">
-                                    Please provide a valid password.
-                                </div>
                             </div>
 
                             <div class="col-md-12 mb-4">
                                 <input type="text" id="chiefComplaint" class="form-control form-control-lg" name="chiefComplaint" value="${form.chiefComplaint}"/>
+                                <c:forEach items="${bindingResult.getFieldErrors('chiefComplaint')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
                                 <label class="form-label" for="chiefComplaint">Chief Complaint</label>
-                                <div class="invalid-feedback">
-                                    Please provide a chief complaint.
-                                </div>
+
                             </div>
 
                             <div class="col-md-12 mb-4">
                                 <input type="text" id="paqId" class="form-control form-control-lg" name="paqId" value="${form.paqId}"/>
+                                <c:forEach items="${bindingResult.getFieldErrors('paqId')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
                                 <label class="form-label" for="paqId">Pre-Appointment Questionnaire Id</label>
-                                <div class="invalid-feedback">
-                                    Please provide a PAQ Id.
-                                </div>
                             </div>
-<%--                            <div class="col-6">--%>
-<%--                                <select class="select form-control-md">--%>
-<%--                                    <option value="1" disabled>Choose option</option>--%>
-<%--                                    <option value="2">Patient</option>--%>
-<%--                                    <option value="3">Clinician</option>--%>
-<%--                                    <option value="4">Administrator</option>--%>
-<%--                                </select>--%>
-<%--                                <label class="form-label select-label">Choose User Type</label>--%>
-<%--                            </div>--%>
                             <div class="row">
                                 <div class="col-md-3 mt-4 pt-2">
                                     <input class="btn btn-outline-primary btn-md" type="submit" value="Submit"/>

@@ -8,6 +8,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import teksystems.casestudy.database.dao.AppointmentDAO;
@@ -15,6 +18,7 @@ import teksystems.casestudy.database.dao.ClinicianDAO;
 import teksystems.casestudy.database.dao.PatientDAO;
 import teksystems.casestudy.database.dao.UserDAO;
 import teksystems.casestudy.database.entity.*;
+import teksystems.casestudy.formbean.AppointmentEditorFormBean;
 import teksystems.casestudy.formbean.PreAppointmentQuestionsFormBean;
 import teksystems.casestudy.formbean.RegisterFormBean;
 import teksystems.casestudy.formbean.SelectAppointmentScheduleFormBean;
@@ -57,7 +61,7 @@ public class AppointmentController {
     //handle null entry, when page is loaded initially
 
     @RequestMapping(value = "/user/schedule_appointment", method = RequestMethod.GET)
-    public ModelAndView viewClinicianScheduleAsPatient(@PathVariable(required = false) Integer userId,
+    public ModelAndView viewClinicianScheduleAsPatient(@RequestParam(required = false) Integer userId,
                                                        @RequestParam(required = false) String date) throws Exception {
 //                                 @RequestParam(required = false) Integer year,
 //                                 @RequestParam(required = false) Integer month,
@@ -65,6 +69,11 @@ public class AppointmentController {
 
         ModelAndView response = new ModelAndView();
         response.setViewName("user/schedule_appointment");
+
+        if (userId != null) {
+            log.info(userId.toString());
+        }
+
 
         Clinician clinician = (userId != null) ? clinicianDao.findByUserId(userId)
                 : clinicianDao.findByClinicianId(4);
@@ -220,7 +229,7 @@ public class AppointmentController {
         response.setViewName("clinician/appointment_editor");
         //TODO FIX
 
-        SelectAppointmentScheduleFormBean form = new SelectAppointmentScheduleFormBean();
+        AppointmentEditorFormBean form = new AppointmentEditorFormBean();
 
         Appointment appointment = appointmentDao.getById(appointmentId);
         form.setDate(appointment.getDate().toString());
@@ -243,13 +252,30 @@ public class AppointmentController {
         return response;
     }
 
+    //submit edits
     @PreAuthorize("hasAuthority('CLINICIAN')")
     @RequestMapping(value = "/clinician/my_clinician_scheduleSubmit/{appointmentId}", method = RequestMethod.POST)
-    public ModelAndView submitAppointment(@Valid SelectAppointmentScheduleFormBean form,
-                                          @PathVariable("appointmentId") Integer appointmentId) {
+    public ModelAndView submitAppointmentEdits(@PathVariable("appointmentId") Integer appointmentId,
+                                          @Valid AppointmentEditorFormBean form,
+                                           BindingResult bindingResult) {
         ModelAndView response = new ModelAndView();
         //TODO FIX
 
+        if (bindingResult.hasErrors()) {
+            List<String> errorMessages = new ArrayList<>();
+
+            for(ObjectError error : bindingResult.getAllErrors()) {
+                errorMessages.add(error.getDefaultMessage());
+                log.info( ((FieldError) error).getField() + " " + error.getDefaultMessage());
+            }
+
+            response.addObject("form", form);
+
+            response.addObject("bindingResult", bindingResult);
+
+            response.setViewName("clinician/appointment_editor");
+            return response;
+        }
 
         Appointment appointment = appointmentDao.findByAppointmentId(appointmentId);
 

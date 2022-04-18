@@ -26,16 +26,21 @@ public class SelectAppointmentScheduleFormBean {
 
     private Integer userId;
 
+//    @NotBlank(message="Please enter an appointment time")
     private String time;
 
     //Used for Editing
 
+//    @NotBlank(message="Please enter a clinician id")
     private String clinicianId;
 
+//    @NotBlank(message="Please enter a patient id")
     private String patientId;
 
+//    @NotBlank(message="Please enter a chief complaint")
     private String chiefComplaint;
 
+//    @NotBlank(message= "Please enter the paqId corresponding to this appointment")
     private String paqId;
 
 }

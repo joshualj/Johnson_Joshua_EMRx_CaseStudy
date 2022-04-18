@@ -1,4 +1,4 @@
-<%--TODO:FIX: <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" --%>
+<%--<TODO: %--<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags">&ndash;%&gt;--%>
 
 <nav class="navbar navbar-expand-lg navbar-light gradient-custom">
     <div class="container-fluid">

@@ -231,7 +231,7 @@ public class ClinicianController {
         response.addObject("scheduledTime", scheduledTime);
         response.addObject("localDate", dateFormatted);
         response.addObject("dayOfWeek", dayOfWeek);
-        response.addObject("userId", userId);
+//        response.addObject("userId", userId);
         response.addObject("monthName", monthName);
         response.addObject("dayDate", dayDate);
         response.addObject("yearDate", yearDate);

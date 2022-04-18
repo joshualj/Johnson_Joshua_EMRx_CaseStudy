@@ -30,7 +30,7 @@
 <%--                </div>--%>
 <%--            </div>--%>
 <%--        </form>--%>
-        <form class="physDateForm form-inline" action="/user/schedule_appointment">
+        <form class="physDateForm form-inline" action="/clinician/my_clinician_schedule/${userId}">
 <%--            <div class="form-inline">--%>
                 <div class="col">
                 <label for="clinician">Clinician</label>
