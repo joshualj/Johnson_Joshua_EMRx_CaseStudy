@@ -34,7 +34,7 @@
 <%--            <div class="form-inline">--%>
                 <div class="col">
                 <label for="clinician">Clinician</label>
-                    <select id="clinician" class="form-control-md mb-4" name="userId" value="${form.userId}"required>
+                    <select id="clinician" class="form-control-md mb-4" name="userId" value="${clinUser.firstName} ${clinUser.lastName}"required>
                         <option value="0" disabled></option>
                         <c:forEach var="clinician" items="${clinicianUsers}">
                             <option value="${clinician.userId}">${clinician.firstName} ${clinician.lastName}</option>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="col">
                     <label for="date">Date</label>
-                    <input type="date" id="date" name="date" placeholder="Date" class="form-control-md mb-4" value="${form.date}">
+                    <input type="date" id="date" name="date" placeholder="Date" class="form-control-md mb-4" value="${localDate}">
                 </div>
                 <div class="col">
                     <input class="btn btn-outline-primary btn-sm" type="submit" value="Submit">

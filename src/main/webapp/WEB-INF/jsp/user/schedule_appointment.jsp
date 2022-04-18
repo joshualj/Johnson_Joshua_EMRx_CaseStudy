@@ -7,7 +7,7 @@
     <div class="physDate">
         <form class="physDateForm row justify-content-center align-items-center" action="/user/schedule_appointment">
             <label for="clinician">Select a Clinician</label>
-            <select id="clinician" class="form-control-md mb-3" name="userId" value="${form.userId}"required>
+            <select id="clinician" class="form-control-md mb-3" name="userId" value="${clinUser.firstName} ${clinUser.lastName}"required>
                 <option value="0" disabled></option>
                 <c:forEach var="clinician" items="${clinicianUsers}">
                     <option value="${clinician.userId}">${clinician.firstName} ${clinician.lastName}</option>
@@ -15,7 +15,7 @@
             </select>
             <hr>
             <label for="date">Select a Date</label>
-            <input type="date" id="date" name="date" placeholder="Date" class="form-control-md mb-3" value="${form.date}">
+            <input type="date" id="date" name="date" placeholder="Date" class="form-control-md mb-3" value="${localDate}">
             <hr>
             <%--            <select class="selectYear form-control-md" name="year" value="${form.year}" required>--%>
             <input class="btn btn-outline-primary btn-md" type="submit" value="Submit">

@@ -46,7 +46,7 @@ public class ClinicianController {
 
     @PreAuthorize("hasAnyAuthority('CLINICIAN','PATIENT')")
     @GetMapping(value="/user/search")//, method= {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView searchClinicianByLastName(@RequestParam (required = false) String searchEntry,
+    public ModelAndView searchClinician(@RequestParam (required = false) String searchEntry,
                                                   @RequestParam (required = false) String searchType) {
         ModelAndView response = new ModelAndView();
         response.setViewName("user/search");
