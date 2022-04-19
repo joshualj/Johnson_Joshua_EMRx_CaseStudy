@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -171,21 +173,35 @@ public class ClinicianController {
     }
 
     @PreAuthorize("hasAuthority('CLINICIAN')")
-    @RequestMapping(value= "/clinician/my_clinician_schedule/{userId}", method = RequestMethod.GET)
-    public ModelAndView viewClinicianScheduleAsClinician(@PathVariable("userId") Integer userId,
+    @RequestMapping(value= "/clinician/my_clinician_schedule", method = RequestMethod.GET)
+    public ModelAndView viewClinicianScheduleAsClinician(@RequestParam(required = false) Integer userId,
                                                        @RequestParam(required = false) String date) throws Exception {
 
         ModelAndView response = new ModelAndView();
         response.setViewName("clinician/my_clinician_schedule");
 
-        //need to get userId to show today's schedule
-        Clinician clinician = clinicianDao.findByUserId(userId);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
 
+        //if userId is not provided, set userId equals to the current user's id
+        if(!StringUtils.equals("anonymousUser", currentPrincipalName) && (userId == null)){
+            userId = userDao.findByEmail(currentPrincipalName).getUserId();
+        }
+
+        log.info(userId.toString());
+
+        //get user object with id of userId
+        User user = userDao.findByUserId(userId);
+
+        //get userId to show today's schedule
+        Clinician clinician = clinicianDao.findByUserId(userId);
+        Integer clinicianId = clinician.getClinicianId();
+
+        //format date, setting default if date is not provided
+        //TODO: Set default to today's date
         Integer year = ((date != null) && (date != "")) ? Integer.parseInt(date.split("-")[0]) : 2022;
         Integer month = ((date != null) && (date != "")) ? Integer.parseInt(date.split("-")[1]) : 4;
         Integer day = ((date != null) && (date != "")) ? Integer.parseInt(date.split("-")[2]) : 4;
-
-        User user = userDao.findByUserId(userId);
 
         LocalDate dateFormatted = LocalDate.of(year, month, day);
 
@@ -198,13 +214,12 @@ public class ClinicianController {
         String yearDate = year.toString();
         String dayDate = day.toString();
 
-        Integer clinicianId = clinician.getClinicianId();
-
+        //finding all appointments of a clinician on a specific date
         List<Appointment> appointments =
                 appointmentDao.findByClinicianClinicianIdAndDate(clinicianId, dateFormatted);
 
         //TODO: Need to sort appointments!
-//        appointments.sort(Comparator.comparing(Appointment::getTime));
+        //appointments.sort(Comparator.comparing(Appointment::getTime));
 
         List<String> scheduledTime = new ArrayList<>();
         List<Patient> patients = new ArrayList<>();

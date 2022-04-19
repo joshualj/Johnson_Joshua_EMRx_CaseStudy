@@ -6,11 +6,13 @@
 <section class="vh-120 gradient-custom">
     <div class="physDate">
         <form class="physDateForm row justify-content-center align-items-center" action="/user/schedule_appointment">
-            <label for="clinician">Select a Clinician</label>
-            <select id="clinician" class="form-control-md mb-3" name="userId" value="${clinUser.firstName} ${clinUser.lastName}"required>
-                <option value="0" disabled></option>
+            <label for="userId">Select a Clinician</label>
+            <select id="userId" class="form-control-md mb-3" name="userId" value="${clinUser.userId}" required>
+                <option value="${clinUser.userId}">${clinUser.firstName} ${clinUser.lastName}</option>
                 <c:forEach var="clinician" items="${clinicianUsers}">
-                    <option value="${clinician.userId}">${clinician.firstName} ${clinician.lastName}</option>
+                    <c:if test="${clinUser.userId != clinician.userId}">
+                        <option value="${clinician.userId}">${clinician.firstName} ${clinician.lastName}</option>
+                    </c:if>
                 </c:forEach>
             </select>
             <hr>

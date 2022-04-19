@@ -28,6 +28,7 @@
                         <sec:authorize access="hasAuthority('CLINICIAN')">
                             <li><a class="dropdown-item" href="/user/search">Find a Clinician</a></li>
                         </sec:authorize>
+
 <%--                        <li><a class="dropdown-item" href="#">Add Pre-Visit Details</a></li>--%>
                     </ul>
                 </li>
@@ -35,7 +36,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/login/logout">| Logout</a>
                     </li>
-                    <sec:authentication property="principal.username"/>
+                    <li class="nav-item">
+                        <a>| <sec:authentication property="principal.username"/></a>
+                    </li>
                 </sec:authorize>
             </ul>
 <%--            <form class="d-flex">--%>

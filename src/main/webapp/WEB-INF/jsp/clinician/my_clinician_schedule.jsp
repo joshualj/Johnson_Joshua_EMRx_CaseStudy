@@ -30,14 +30,16 @@
 <%--                </div>--%>
 <%--            </div>--%>
 <%--        </form>--%>
-        <form class="physDateForm form-inline" action="/clinician/my_clinician_schedule/${userId}">
+        <form class="physDateForm form-inline" action="/clinician/my_clinician_schedule">
 <%--            <div class="form-inline">--%>
                 <div class="col">
-                <label for="clinician">Clinician</label>
-                    <select id="clinician" class="form-control-md mb-4" name="userId" value="${clinUser.firstName} ${clinUser.lastName}"required>
-                        <option value="0" disabled></option>
+                <label for="userId">Clinician</label>
+                    <select id="userId" class="form-control-md mb-3" name="userId" value="${clinUser.userId}" required>
+                        <option value="${clinUser.userId}">${clinUser.firstName} ${clinUser.lastName}</option>
                         <c:forEach var="clinician" items="${clinicianUsers}">
-                            <option value="${clinician.userId}">${clinician.firstName} ${clinician.lastName}</option>
+                            <c:if test="${clinUser.userId != clinician.userId}">
+                                <option value="${clinician.userId}">${clinician.firstName} ${clinician.lastName}</option>
+                            </c:if>
                         </c:forEach>
                     </select>
                 </div>

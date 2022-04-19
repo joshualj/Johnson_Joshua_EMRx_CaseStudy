@@ -71,20 +71,22 @@ public class AppointmentController {
         response.setViewName("user/schedule_appointment");
 
         if (userId != null) {
-            log.info(userId.toString());
+            log.info(userId.toString() + " THIS IS THE userID");
+        } else {
+            log.info("User Id is null");
         }
 
 
         Clinician clinician = (userId != null) ? clinicianDao.findByUserId(userId)
                 : clinicianDao.findByClinicianId(4);
 
+        User user = userDao.findByUserId(clinician.getUserId());
+
         Integer clinicianId = (userId != null) ? clinician.getClinicianId() : 4;
 
         Integer year = (date != null) ? Integer.parseInt(date.split("-")[0]) : 2022;
         Integer month = (date != null) ? Integer.parseInt(date.split("-")[1]) : 4;
         Integer day = (date != null) ? Integer.parseInt(date.split("-")[2]) : 5;
-
-        User user = userDao.findByUserId(clinician.getUserId());
 
         LocalDate dateFormatted = LocalDate.of(year, month, day);
         log.info(dateFormatted.toString());
@@ -158,21 +160,21 @@ public class AppointmentController {
         return response;
     }
 
-    @PreAuthorize("hasAuthority('CLINICIAN')")
-    @RequestMapping(value = "/clinician/my_clinician_schedule", method = RequestMethod.GET)
-    public ModelAndView navToMyClinicianSchedule() {
-        ModelAndView response = new ModelAndView();
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
-
-        if(!StringUtils.equals("anonymousUser", currentPrincipalName)){
-            User user = userDao.findByEmail(currentPrincipalName);
-            response.setViewName("redirect:/clinician/my_clinician_schedule/" + user.getUserId());
-        }
-
-        return response;
-    }
+//    @PreAuthorize("hasAuthority('CLINICIAN')")
+//    @RequestMapping(value = "/clinician/my_clinician_schedule", method = RequestMethod.GET)
+//    public ModelAndView navToMyClinicianSchedule() {
+//        ModelAndView response = new ModelAndView();
+//
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String currentPrincipalName = authentication.getName();
+//
+//        if(!StringUtils.equals("anonymousUser", currentPrincipalName)){
+//            User user = userDao.findByEmail(currentPrincipalName);
+//            response.setViewName("redirect:/clinician/my_clinician_schedule/" + user.getUserId());
+//        }
+//
+//        return response;
+//    }
 
     @PreAuthorize("hasAnyAuthority('CLINICIAN','PATIENT')")
     @RequestMapping(value = "/user/my_schedule", method = RequestMethod.GET)

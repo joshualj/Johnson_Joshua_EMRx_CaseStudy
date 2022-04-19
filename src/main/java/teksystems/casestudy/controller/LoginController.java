@@ -33,7 +33,7 @@ public class LoginController {
             if(StringUtils.equals("PATIENT", user.getUserRole())){
                 response.setViewName("redirect:/user/my_schedule/" + user.getUserId());
             } else {
-                response.setViewName("redirect:/clinician/my_clinician_schedule/" + user.getUserId());
+                response.setViewName("redirect:/clinician/my_clinician_schedule");
             }
         }
 
