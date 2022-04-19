@@ -16,6 +16,7 @@ import java.util.Set;
 @Entity
 @Table(name = "patients")
 @AllArgsConstructor
+@RequiredArgsConstructor
 @NoArgsConstructor
 public class Patient {
     @Id
@@ -23,9 +24,11 @@ public class Patient {
     @Column(name = "patient_id")
     private Integer patientId;
 
+    @NonNull
     @Column(name = "user_id")
     private Integer userId;
 
+    @NonNull
     @Column(name = "medical_record_number")
     private Integer medicalRecordNumber;
 
@@ -34,13 +37,11 @@ public class Patient {
 //
 //    @Column(name = "last_name")
 //    private String lastName;
-
-    @Column(name = "preferred_name")
-    private String preferredName;
-
+    @NonNull
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
+    @NonNull
     @Column(name = "sex")
     private String sex;
 
@@ -49,6 +50,9 @@ public class Patient {
 
     @Column(name = "pronouns")
     private String pronouns;
+
+    @Column(name = "preferred_name")
+    private String preferredName;
 
     @Column(name = "primary_language")
     private String primaryLanguage;
