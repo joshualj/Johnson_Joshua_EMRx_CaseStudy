@@ -3,6 +3,7 @@ package teksystems.casestudy.database.entity;
 import lombok.*;
 import javax.persistence.*;
 
+@Builder
 @Getter
 @Setter
 @ToString

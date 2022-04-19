@@ -28,8 +28,6 @@
                         <sec:authorize access="hasAuthority('CLINICIAN')">
                             <li><a class="dropdown-item" href="/user/search">Find a Clinician</a></li>
                         </sec:authorize>
-
-<%--                        <li><a class="dropdown-item" href="#">Add Pre-Visit Details</a></li>--%>
                     </ul>
                 </li>
                 <sec:authorize access="isAuthenticated()">

@@ -84,17 +84,27 @@ public class AppointmentController {
 
         Integer clinicianId = (userId != null) ? clinician.getClinicianId() : 4;
 
-        Integer year = (date != null) ? Integer.parseInt(date.split("-")[0]) : 2022;
-        Integer month = (date != null) ? Integer.parseInt(date.split("-")[1]) : 4;
-        Integer day = (date != null) ? Integer.parseInt(date.split("-")[2]) : 5;
+        LocalDate currentDate = LocalDate.now();
+        log.info(currentDate.toString() + " THIS IS TODAY's DATE");
 
-        LocalDate dateFormatted = LocalDate.of(year, month, day);
-        log.info(dateFormatted.toString());
+//        Integer year = (date != null) ? Integer.parseInt(date.split("-")[0]) : Integer.parseInt(currentDate.toString().split("-")[0]);
+//        Integer month = (date != null) ? Integer.parseInt(date.split("-")[1]) : Integer.parseInt(currentDate.toString().split("-")[1]);
+//        Integer day = (date != null) ? Integer.parseInt(date.split("-")[2]) : Integer.parseInt(currentDate.toString().split("-")[2]);
+
+        //if the inputted date is null, set the date to today's date
+        LocalDate dateFormatted = (date != null) ?
+                LocalDate.of(Integer.parseInt(date.split("-")[0]),
+                Integer.parseInt(date.split("-")[1]),
+                Integer.parseInt(date.split("-")[2])) : currentDate;
+
+//        LocalDate dateFormatted = LocalDate.of(year, month, day);
+//        log.info(dateFormatted.toString());
 
         String dayOfWeek = dateFormatted.getDayOfWeek().toString().substring(0, 1).toUpperCase() + dateFormatted.getDayOfWeek().toString().substring(1).toLowerCase();
         String monthName = dateFormatted.getMonth().toString().substring(0, 1).toUpperCase() + dateFormatted.getMonth().toString().substring(1).toLowerCase();
+        Integer year = dateFormatted.getYear();
         String yearDate = year.toString();
-        String dayDate = day.toString();
+        Integer dayDate = Integer.parseInt(dateFormatted.toString().split("-")[2]);
 
         List<Appointment> appointments = appointmentDao.findByClinicianClinicianIdAndDate(clinicianId, dateFormatted);
 
