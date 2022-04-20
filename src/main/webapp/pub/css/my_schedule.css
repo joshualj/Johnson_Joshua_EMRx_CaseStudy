@@ -26,6 +26,9 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
+    align-content: center;
+
     gap: 10px;
     background-color: rgba(63, 62, 60, 0.20);
     padding-left: 30px;

@@ -131,11 +131,13 @@ public class PreAppointmentQuestionsController {
         String currentPrincipalName = authentication.getName();
 
         if(!StringUtils.equals("anonymousUser", currentPrincipalName)){
-            paqDao.save(paq);
-            appointment.setPaqId(paq.getId());
-            appointmentDao.save(appointment);
             User user = userDao.findByEmail(currentPrincipalName);
-            response.setViewName("redirect:/user/my_schedule/" + user.getUserId());
+            response.addObject(user);
+            if(StringUtils.equals("PATIENT", user.getUserRole())){
+                response.setViewName("redirect:/user/my_schedule");
+            } else {
+                response.setViewName("redirect:/clinician/my_clinician_schedule");
+            }
         }
 
         return response;

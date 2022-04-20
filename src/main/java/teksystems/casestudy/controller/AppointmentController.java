@@ -329,7 +329,7 @@ public class AppointmentController {
         if(!StringUtils.equals("anonymousUser", currentPrincipalName)){
             appointmentDao.save(appointment);
             User user = userDao.findByEmail(currentPrincipalName);
-            response.setViewName("redirect:/clinician/my_clinician_schedule/" + user.getUserId());
+            response.setViewName("redirect:/clinician/my_clinician_schedule");
         }
 
         return response;
@@ -353,7 +353,7 @@ public class AppointmentController {
         if(!StringUtils.equals("anonymousUser", currentPrincipalName)){
             appointmentDao.save(appointment);
             User user = userDao.findByEmail(currentPrincipalName);
-            response.setViewName("redirect:/clinician/my_clinician_schedule/" + user.getUserId());
+            response.setViewName("redirect:/clinician/my_clinician_schedule");
         }
 
         return response;

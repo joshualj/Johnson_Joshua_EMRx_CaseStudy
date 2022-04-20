@@ -40,6 +40,7 @@ public class AppointmentDAOTest {
     Clinician clinicianOne;
     Clinician clinicianTwo;
     Appointment appointmentOne;
+    Appointment appointmentTwo;
 
 
     @BeforeEach
@@ -82,37 +83,62 @@ public class AppointmentDAOTest {
         //Appointment Object Used for testing, not saved
         LocalDate today = LocalDate.of(2022,4,19);
         LocalTime time = LocalTime.of(12,30);
-        appointmentOne = new Appointment(today, time, clinicianOne, patientOne);
-    }
+        appointmentOne = new Appointment(today, time);
+        appointmentOne.setClinician(clinicianOne);
+        appointmentOne.setPatient(patientOne);
 
+        appointmentTwo = new Appointment(today, time);
+        appointmentTwo.setClinician(clinicianOne);
+        appointmentTwo.setPatient(patientOne);
+        appointmentDao.save(appointmentTwo);
+
+    }
 
     @Test
     @Order(1)
     @Rollback(value = false)
-    public void editAppointmentTest(){
-//        userDao.save(cUserOne);
-//        clinicianDao.save(clinicianOne);
-//        userDao.save(pUserOne);
-//        patientDao.save(patientOne);
-
-        clinicianDao.save(clinicianTwo);
+    public void saveAppointment(){
+        clinicianDao.save(clinicianOne);
+        patientDao.save(patientOne);
         appointmentDao.save(appointmentOne);
 
-        Appointment appointment = appointmentDao.findByAppointmentId(1);
-        appointment.setClinician(clinicianTwo);
-        appointmentDao.save(appointment);
-        Assertions.assertThat(appointment.getClinician()).isEqualTo(clinicianTwo);
+        Assertions.assertThat(appointmentOne.getClinician()).isEqualTo(clinicianOne);
+        Assertions.assertThat(appointmentOne.getPatient()).isEqualTo(patientOne);
     }
 
     @Test
     @Order(2)
     @Rollback(value = false)
+    public void findByAppointmentIdTest(){
+        appointmentDao.save(appointmentTwo);
+        Appointment appointment = appointmentDao.findByAppointmentId(appointmentTwo.getAppointmentId());
+        Assertions.assertThat(appointment).isEqualTo(appointmentTwo);
+//        Assertions.assertThat(appointmentOne).isEqualTo(appointment);
+    }
+
+    @Test
+    @Order(3)
+    @Rollback(value = false)
+    public void editAppointmentTest(){
+        appointmentDao.save(appointmentOne);
+        Appointment appointment = appointmentDao.findByAppointmentId(appointmentOne.getAppointmentId());
+
+        clinicianDao.save(clinicianTwo);
+        appointment.setClinician(clinicianTwo);
+
+        appointmentDao.save(appointment);
+        Assertions.assertThat(appointment.getClinician()).isEqualTo(clinicianTwo);
+    }
+
+    @Test
+    @Order(4)
+    @Rollback(value = false)
     public void deleteByAppointmentIdTest(){
 
-        appointmentDao.deleteById(appointmentOne.getAppointmentId());
+        appointmentDao.deleteById(1);
 
-        Optional<Appointment> possibleApt = Optional.ofNullable(appointmentDao.findByAppointmentId(
-                appointmentOne.getAppointmentId()));
+        Optional<Appointment> possibleApt = Optional.ofNullable(
+                appointmentDao.findByAppointmentId(appointmentOne.getAppointmentId()));
 
         Appointment nullApt = null;
         if (possibleApt.isPresent()) {
@@ -120,23 +146,6 @@ public class AppointmentDAOTest {
         }
 
         Assertions.assertThat(nullApt).isNull();
-    }
-
-    @Test
-    @Order(3)
-    @Rollback(value = false)
-    public void findByAppointmentIdTest(){
-        Appointment appointment = appointmentDao.findByAppointmentId(appointmentOne.getAppointmentId());
-        Assertions.assertThat(appointment).isEqualTo(appointmentOne);
-    }
-
-    @Test
-    @Order(4)
-    @Rollback(value = false)
-    public void saveAppointment(){
-
-        Assertions.assertThat(appointmentOne.getClinician()).isEqualTo(clinicianOne);
-        Assertions.assertThat(appointmentOne.getPatient()).isEqualTo(patientOne);
     }
 
 }

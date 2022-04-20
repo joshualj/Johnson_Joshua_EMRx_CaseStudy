@@ -91,7 +91,7 @@
                                     <td><b>${appointments[scheduledTime.indexOf(appt)].chiefComplaint}</b></td>
                                     <c:if test="${!empty appointments[scheduledTime.indexOf(appt)].paqId}">
                                         <td>
-                                        <form action="/clinician/my_clinician_schedule/${appointments[scheduledTime.indexOf(appt)].appointmentId}" method="GET">
+                                        <form action="/user/paq/${appointments[scheduledTime.indexOf(appt)].appointmentId}" method="GET">
                                             <input type="hidden" name="date" value="${appointments[scheduledTime.indexOf(appt)].date}">
                                             <input type="hidden" name="time" value="${appointments[scheduledTime.indexOf(appt)].time}">
                                             <input type="hidden" name="clinicianId" value="${appointments[scheduledTime.indexOf(appt)].clinician.clinicianId}">

@@ -39,13 +39,14 @@ public class Appointment {
 //
 //    @Column(name = "patient_id")
 //    private Integer patientId;
-    @NonNull
+
+//    @NonNull
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "clinician_id", nullable = false)
     private Clinician clinician;
 
-    @NonNull
+//    @NonNull
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "patient_id", nullable = false)
