@@ -18,6 +18,7 @@ import java.util.List;
 @Entity
 @Table(name = "appointments")
 @AllArgsConstructor
+@RequiredArgsConstructor
 @NoArgsConstructor
 public class Appointment {
     @Id
@@ -25,9 +26,11 @@ public class Appointment {
     @Column(name="appointment_id")
     private Integer appointmentId;
 
+    @NonNull
     @Column(name = "date")
     private LocalDate date;
 
+    @NonNull
     @Column(name = "time")
     private LocalTime time;
 
@@ -36,12 +39,13 @@ public class Appointment {
 //
 //    @Column(name = "patient_id")
 //    private Integer patientId;
-
+    @NonNull
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "clinician_id", nullable = false)
     private Clinician clinician;
 
+    @NonNull
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "patient_id", nullable = false)
