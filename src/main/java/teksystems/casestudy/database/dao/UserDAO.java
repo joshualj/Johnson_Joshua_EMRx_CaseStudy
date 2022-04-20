@@ -32,12 +32,15 @@ public interface UserDAO extends JpaRepository<User, Integer> {
 
     public List<User> findByLastNameIgnoreCaseContaining(@Param("lastName") String lastName);
 
+//    public User findByEmail(@Param("email") String email);
+
+
+    //NativeQuery
+    @Query(value = "select * from users u where u.email = :email", nativeQuery = true)
     public User findByEmail(@Param("email") String email);
 
     public User findByUserId(@Param("userId") Integer userId);
 
     public List<User> findByUserRole(@Param("userRole") String userType);
 
-    @Query(value = "select u from User u where u.password = :password", nativeQuery = true)
-    public List<User> getByPassword(@Param("password") String password);
 }

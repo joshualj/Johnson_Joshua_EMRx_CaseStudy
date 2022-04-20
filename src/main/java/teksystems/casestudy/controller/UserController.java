@@ -67,12 +67,11 @@ public class UserController{
         log.info(form.toString());
 
         if (bindingResult.hasErrors()) {
-            List<String> errorMessages = new ArrayList<>();
-
-            for(ObjectError error : bindingResult.getAllErrors()) {
-                errorMessages.add(error.getDefaultMessage());
-                log.info( ((FieldError) error).getField() + " " + error.getDefaultMessage());
-            }
+//            List<String> errorMessages = new ArrayList<>();
+//
+//            for(ObjectError error : bindingResult.getAllErrors()) {
+//                errorMessages.add(error.getDefaultMessage());
+//            }
 
             response.addObject("form", form);
 

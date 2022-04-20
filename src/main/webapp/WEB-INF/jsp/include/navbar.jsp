@@ -11,9 +11,26 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/login/login">| Home</a>
                 </li>
+                <sec:authorize access="!isAuthenticated()">
                 <li class="nav-item">
                     <a class="nav-link" href="/user/register">| Register</a>
                 </li>
+                </sec:authorize>
+                <sec:authorize access="isAuthenticated()">
+                <sec:authorize access="hasAuthority('CLINICIAN')">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/clinician/my_clinician_schedule">| My Clinician Schedule</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/search">| Find A Clinician</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/clinician/register_clinician">| Register New Clinician</a>
+                    </li>
+                </sec:authorize>
+                </sec:authorize>
+                <sec:authorize access="isAuthenticated()">
+                <sec:authorize access="hasAuthority('PATIENT')">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         | Patient Options
@@ -22,27 +39,18 @@
                         <li><a class="dropdown-item" href="/user/schedule_appointment">Schedule an Appointment</a></li>
                         <li><a class="dropdown-item" href="/user/my_schedule">My Appointments</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <sec:authorize access="hasAuthority('CLINICIAN')">
-                            <li><a class="dropdown-item" href="/clinician/my_clinician_schedule">My Clinician Schedule</a></li>
-                        </sec:authorize>
-                        <sec:authorize access="hasAuthority('CLINICIAN')">
-                            <li><a class="dropdown-item" href="/user/search">Find a Clinician</a></li>
-                        </sec:authorize>
+                        <li><a class="dropdown-item" href="/user/search">Find a Clinician</a></li>
                     </ul>
                 </li>
-                <sec:authorize access="isAuthenticated()">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login/logout">| Logout</a>
-                    </li>
-                    <li class="nav-item">
-                        <a>| <sec:authentication property="principal.username"/></a>
-                    </li>
+                </sec:authorize>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login/logout">| Logout</a>
+                </li>
                 </sec:authorize>
             </ul>
-<%--            <form class="d-flex">--%>
-<%--                <input class="form-control me-2" type="search" placeholder="Find a Clinician" aria-label="Search">--%>
-<%--                <button class="btn btn-outline-success" type="submit">Search</button>--%>
-<%--            </form>--%>
+            <sec:authorize access="isAuthenticated()">
+            <a><sec:authentication property="principal.username"/></a>
+            </sec:authorize>
         </div>
     </div>
 </nav>

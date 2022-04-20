@@ -58,7 +58,7 @@ public class ClinicianController {
 
         if (!StringUtils.isEmpty(searchEntry) && StringUtils.equals("lastName", searchType)) {
             List<User> allUsers = userDao.findByLastNameIgnoreCaseContaining(searchEntry);
-            //since this is a clinician search, I need to narrow down to just users who are clinicians
+            //since this is a clinician search, I need specify users who are clinicians
             for(User user : allUsers) {
                 if(clinicianDao.findByUserId(user.getUserId()) != null) {
                     users.add(user);
@@ -98,7 +98,7 @@ public class ClinicianController {
 
     @PreAuthorize("hasAuthority('CLINICIAN')")
     @RequestMapping(value="/clinician/register_clinician", method = RequestMethod.GET)
-    public ModelAndView registerClinician() throws Exception {
+    public ModelAndView registerClinicianUser() throws Exception {
         ModelAndView response = new ModelAndView();
         response.setViewName("clinician/register_clinician");
 
@@ -110,7 +110,7 @@ public class ClinicianController {
 
     @PreAuthorize("hasAuthority('CLINICIAN')")
     @RequestMapping(value="/clinician/register_clinicianSubmit", method = {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView registerClinicianSubmit(@Valid ClinicianRegisterFormBean form, BindingResult bindingResult) throws Exception {
+    public ModelAndView registerClinicianUserSubmit(@Valid ClinicianRegisterFormBean form, BindingResult bindingResult) throws Exception {
         ModelAndView response = new ModelAndView();
 
         if (bindingResult.hasErrors()) {
@@ -128,6 +128,7 @@ public class ClinicianController {
             return response;
         }
 
+        //search for user by email. If not found, create new user
         User user = userDao.findByEmail(form.getEmail());
 
         if (user == null) {
@@ -141,32 +142,26 @@ public class ClinicianController {
         user.setPassword(password);
         user.setUserRole("CLINICIAN");
 
+        //must save user so that user_id is generated, and can be assigned
+        // when clinician object is instantiated, below
         userDao.save(user);
 
+        //create new clinician object from user object
         Clinician clinician = clinicianDao.findByUserId(user.getUserId());
 
         if (clinician == null) {
             clinician = new Clinician();
         }
 
-//        clinician.setFirstName(form.getFirstName());
-//        clinician.setLastName(form.getLastName());
-//        clinician.setEmail(form.getEmail());
-//        clinician.setPassword(form.getPassword());
         clinician.setUserId(user.getUserId());
-        //TODO: Fix user ID setter
         clinician.setTitle(form.getTitle());
         clinician.setDepartment(form.getDepartment());
         clinician.setLanguages(form.getLanguages());
 
         clinicianDao.save(clinician);
 
-        //here instead of showing a view, we want to redirect for the edit page
-        //the edit page will then be responsible for loading the user from the database
-        //and dynamically creating the page
-        //Browser to do a redirect to the URL after the. The big piece here to
-        // recognize is redirect uses an actual URL rather than a view ??
-        response.setViewName("redirect:/clinician/my_clinician_schedule/" + user.getUserId());
+        //redirect to clinician's schedule
+        response.setViewName("redirect:/clinician/my_clinician_schedule");
         //TODO: Change to clinician my schedule, today's date
 
         return response;
@@ -183,36 +178,34 @@ public class ClinicianController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
 
-        //if userId is not provided, set userId equals to the current user's id
+        //if userId is not provided, set userId equal to the logged-in user's id
         if(!StringUtils.equals("anonymousUser", currentPrincipalName) && (userId == null)){
             userId = userDao.findByEmail(currentPrincipalName).getUserId();
         }
 
-        log.info(userId.toString());
-
         //get user object with id of userId
         User user = userDao.findByUserId(userId);
 
-        //get userId to show today's schedule
+        //find clinician with user id of userId, and get the clinician ID show today's schedule
         Clinician clinician = clinicianDao.findByUserId(userId);
         Integer clinicianId = clinician.getClinicianId();
 
-        //format date, setting default if date is not provided
-        //TODO: Set default to today's date
-        Integer year = ((date != null) && (date != "")) ? Integer.parseInt(date.split("-")[0]) : 2022;
-        Integer month = ((date != null) && (date != "")) ? Integer.parseInt(date.split("-")[1]) : 4;
-        Integer day = ((date != null) && (date != "")) ? Integer.parseInt(date.split("-")[2]) : 4;
+        //date formatting. Setting default to today's date, if date is not provided
+        LocalDate currentDate = LocalDate.now();
 
-        LocalDate dateFormatted = LocalDate.of(year, month, day);
+        //if the inputted date is null, set the date to today's date
+        LocalDate dateFormatted = (date != null) ?
+                LocalDate.of(Integer.parseInt(date.split("-")[0]),
+                        Integer.parseInt(date.split("-")[1]),
+                        Integer.parseInt(date.split("-")[2])) : currentDate;
 
-        String dayOfWeek = dateFormatted.getDayOfWeek().toString().substring(0, 1).toUpperCase()
-                + dateFormatted.getDayOfWeek().toString().substring(1).toLowerCase();
-
-        String monthName = dateFormatted.getMonth().toString().substring(0, 1).toUpperCase()
-                + dateFormatted.getMonth().toString().substring(1).toLowerCase();
-
+        //Getting variables to send to .jsp. With these Strings & Variables,
+        // we can see: "Tuesday, April 19, 2022"
+        String dayOfWeek = dateFormatted.getDayOfWeek().toString().substring(0, 1).toUpperCase() + dateFormatted.getDayOfWeek().toString().substring(1).toLowerCase();
+        String monthName = dateFormatted.getMonth().toString().substring(0, 1).toUpperCase() + dateFormatted.getMonth().toString().substring(1).toLowerCase();
+        Integer year = dateFormatted.getYear();
         String yearDate = year.toString();
-        String dayDate = day.toString();
+        Integer dayDate = Integer.parseInt(dateFormatted.toString().split("-")[2]);
 
         //finding all appointments of a clinician on a specific date
         List<Appointment> appointments =

@@ -6,13 +6,6 @@
 <title>Patient Registration</title>
 <link href="../../../pub/css/register.css" rel="stylesheet">
 
-<%--<c:if test="${form.userId == null}">--%>
-<%--    <h1>Sign Up</h1>--%>
-<%--</c:if>--%>
-<%--<c:if test="${form.userId != null}">--%>
-<%--    <h1>Edit User</h1>--%>
-<%--</c:if>--%>
-
 <body>
 <section class="vh-140 gradient-custom">
     <div class="container py-3 h-120">
@@ -98,6 +91,24 @@
                                 </c:forEach>
                                 <label class="form-label" for="gender">Gender</label>
                             </div>
+<%--                            <div class="col-md-12 mb-4">--%>
+<%--                                    <h6 class="mb-2 pb-1">Gender:</h6>--%>
+<%--                                    <div class="form-check form-check-inline">--%>
+<%--                                        <input class="form-check-input" type="radio" name="gender"--%>
+<%--                                               id="cis" value="cis"/>--%>
+<%--                                        <label class="form-check-label" for="cis">cis</label>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="form-check form-check-inline">--%>
+<%--                                        <input class="form-check-input" type="radio" name="gender"--%>
+<%--                                               id="trans" value="trans"/>--%>
+<%--                                        <label class="form-check-label" for="trans">trans</label>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="form-check form-check-inline">--%>
+<%--                                        <input class="form-check-input" type="radio" name="gender"--%>
+<%--                                               id="other" value="other"/>--%>
+<%--                                        <label class="form-check-label" for="other">other</label>--%>
+<%--                                    </div>--%>
+<%--                            </div>--%>
 
                             <div class="col-md-12 mb-4">
                                 <input type="text" id="sex" class="form-control form-control-lg" name="sex" value="${form.sex}" required/>
@@ -123,20 +134,26 @@
 
                             <div class="col-md-12 mb-4">
                                 <input type="password" id="password" class="form-control form-control-lg" name="password" value="${form.password}" required/>
+                                <c:forEach items="${bindingResult.getFieldErrors('password')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
                                 <label class="form-label" for="password">Password</label>
-                                <div class="invalid-feedback">
-                                    Please provide a valid password.
-                                </div>
                             </div>
 
                             <div class="col-md-12 mb-4">
                                 <input type="password" id="confirmPassword" class="form-control form-control-lg"
                                        onkeyup='check();' name="confirmPassword" value="${form.confirmPassword}"required/>
-                                <label class="form-label" for="confirmPassword">Confirm Password</label>
-                                <div class="invalid-feedback">
-                                    Please provide a valid password.
+                                <c:forEach items="${bindingResult.getGlobalErrors()}" var="error">
+                                <div style="color: red;">
+                                    ${error.getDefaultMessage()}
                                 </div>
+                                </c:forEach>
+                                <label class="form-label" for="confirmPassword">Confirm Password</label>
+                                <div class="col-md-6 mt-4 pt-2" id="message"></div>
                             </div>
+<%--                            </div>--%>
 <%--                            <div class="col-md-12 mb-4">--%>
 <%--                                <h6 class="mb-2 pb-1">User Type:</h6>--%>
 <%--                                <div class="form-check form-check-inline">--%>
@@ -162,6 +179,17 @@
 <%--                                </select>--%>
 <%--                                <label class="form-label select-label">Choose User Type</label>--%>
 <%--                            </div>--%>
+
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="confirmRemove" id="confirmRemove" value="remove"/>
+                                    <label class="form-check-label" for="confirmRemove">I confirm the above information is accurate</label>
+                                </div>
+<%--                            </div>--%>
+                            <c:forEach items="${bindingResult.getFieldErrors('confirmRemove')}" var="error">
+                                <div style="color: orangered;">
+                                    Confirmation is required.
+                                </div>
+                            </c:forEach>
                             <div class="row">
                                 <div class="col-md-3 mt-4 pt-2">
                                     <input class="btn btn-outline-primary btn-md" type="submit" value="Submit" />
@@ -169,7 +197,6 @@
                                 <div class="col-md-3 mt-4 pt-2">
                                 </div>
                             </div>
-                            <div class="col-md-6 mt-4 pt-2" id="message"></div>
                         </form>
                     </div>
                 </div>
@@ -180,35 +207,7 @@
 </body>
 
 <%-- TODO: UNDO COMMENTING OUT THE FOLLOWING CODE--%>
-<script>
-    let check = function() {
-        if (document.getElementById('password').value ==
-            document.getElementById('confirmPassword').value) {
-            document.getElementById('message').style.color = 'green';
-            document.getElementById('message').innerHTML = 'Password confirmed';
-        } else {
-            document.getElementById('message').style.color = 'red';
-            document.getElementById('message').innerHTML = 'Password does not match';
-        }
-    }
-</script>
 
 <script src= "../../../pub/js/register.js"></script>
 
-<%--Old template code--%>
-<%--<form action="/user/registerSubmit" method="post">--%>
-<%--    <input type="hidden" name="id" value="${form.id}">--%>
-
-<%--    Email <input type="email" name="email" id="emailId" value="${form.email}">--%>
-<%--    <br>--%>
-<%--    First Name <input type="text" name="firstName" id="firstNameId" value="${form.firstName}">--%>
-<%--    <br>--%>
-<%--    Last Name <input type="text" name="lastName" id="lastNameId" value="${form.lastName}">--%>
-<%--    <br>--%>
-<%--    Password <input type="password" name="password" id="passwordId" value="${form.password}">--%>
-<%--    <br>--%>
-<%--    Confirm Password <input type="password" name="confirmPassword" id="confirmPasswordId" value="${form.confirmPassword}">--%>
-<%--    <br>--%>
-<%--    <button type="submit">Submit</button>--%>
-<%--</form>--%>
 <jsp:include page="../include/footer.jsp"/>

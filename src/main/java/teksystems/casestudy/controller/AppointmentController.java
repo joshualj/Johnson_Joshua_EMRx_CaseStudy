@@ -54,11 +54,7 @@ public class AppointmentController {
     @Autowired
     private UserDAO userDao;
 
-    //TO DO: Add drop-down with DATE and clinicianId
-    //TO DO: Update table after clicking submit button
-    //store all clinicianId in a list, pass to front-end to use in drop down
-    //store all dates in a drop-down (as strings), maybe have four drop downs?
-    //handle null entry, when page is loaded initially
+
 
     @RequestMapping(value = "/user/schedule_appointment", method = RequestMethod.GET)
     public ModelAndView viewClinicianScheduleAsPatient(@RequestParam(required = false) Integer userId,
@@ -76,7 +72,6 @@ public class AppointmentController {
             log.info("User Id is null");
         }
 
-
         Clinician clinician = (userId != null) ? clinicianDao.findByUserId(userId)
                 : clinicianDao.findByClinicianId(4);
 
@@ -84,12 +79,8 @@ public class AppointmentController {
 
         Integer clinicianId = (userId != null) ? clinician.getClinicianId() : 4;
 
+        //Date Formatting
         LocalDate currentDate = LocalDate.now();
-        log.info(currentDate.toString() + " THIS IS TODAY's DATE");
-
-//        Integer year = (date != null) ? Integer.parseInt(date.split("-")[0]) : Integer.parseInt(currentDate.toString().split("-")[0]);
-//        Integer month = (date != null) ? Integer.parseInt(date.split("-")[1]) : Integer.parseInt(currentDate.toString().split("-")[1]);
-//        Integer day = (date != null) ? Integer.parseInt(date.split("-")[2]) : Integer.parseInt(currentDate.toString().split("-")[2]);
 
         //if the inputted date is null, set the date to today's date
         LocalDate dateFormatted = (date != null) ?
@@ -97,9 +88,8 @@ public class AppointmentController {
                 Integer.parseInt(date.split("-")[1]),
                 Integer.parseInt(date.split("-")[2])) : currentDate;
 
-//        LocalDate dateFormatted = LocalDate.of(year, month, day);
-//        log.info(dateFormatted.toString());
-
+        //Getting variables to send to .jsp. With these Strings & Variables,
+        // we can see: "Tuesday, April 19, 2022"
         String dayOfWeek = dateFormatted.getDayOfWeek().toString().substring(0, 1).toUpperCase() + dateFormatted.getDayOfWeek().toString().substring(1).toLowerCase();
         String monthName = dateFormatted.getMonth().toString().substring(0, 1).toUpperCase() + dateFormatted.getMonth().toString().substring(1).toLowerCase();
         Integer year = dateFormatted.getYear();
@@ -211,6 +201,10 @@ public class AppointmentController {
         Integer patientId = patientDao.findByUserId(userId).getPatientId();
 
         List<Appointment> appointments = appointmentDao.findByPatientPatientId(patientId);
+
+        appointments.sort((app1, app2)
+                -> app1.getDate().compareTo(
+                app2.getDate()));
 
         log.info(appointments.toString());
         log.info(userId.toString());

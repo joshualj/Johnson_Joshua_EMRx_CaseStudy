@@ -2,6 +2,12 @@
 <jsp:include page="../include/header.jsp"/>
 <jsp:include page="../include/navbar.jsp"/>
 <link href="../../../pub/css/my_schedule.css" rel="stylesheet">
+<style>
+    h1{
+        text-align: center;
+        padding-bottom: 20px;
+    }
+</style>
 <body id="appointments">
 <section class="vh-120 gradient-custom">
 <%--    <div class="row justify-content-center align-items-center">--%>

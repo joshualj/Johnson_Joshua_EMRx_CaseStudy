@@ -31,7 +31,7 @@ public class LoginController {
             User user = userDao.findByEmail(currentPrincipalName);
             response.addObject(user);
             if(StringUtils.equals("PATIENT", user.getUserRole())){
-                response.setViewName("redirect:/user/my_schedule/" + user.getUserId());
+                response.setViewName("redirect:/user/my_schedule");
             } else {
                 response.setViewName("redirect:/clinician/my_clinician_schedule");
             }

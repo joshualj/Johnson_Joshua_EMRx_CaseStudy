@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
 import teksystems.casestudy.validation.EmailUnique;
+import teksystems.casestudy.validation.PasswordConfirm;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @ToString
+@PasswordConfirm(password = "password", passwordConfirm = "confirmPassword")
 public class RegisterFormBean {
 //    private Integer id;
 
@@ -49,5 +51,6 @@ public class RegisterFormBean {
     @NotBlank(message="Confirming password is required")
     private String confirmPassword;
 
-    private String userRole; //might delete
+    @NotBlank
+    private String confirmRemove; //might delete
 }
