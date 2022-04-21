@@ -258,6 +258,14 @@ public class AppointmentController {
         return response;
     }
 
+//    @RequestMapping(value = "/getTrainers", method = RequestMethod.GET)
+//    public ResponseEntity<String> ajaxRequest() throws Exception {
+//        List<Trainer> trainers = trainerDao.findAll();
+//
+//        String payload = GSON.toJson(trainers);
+//        return new ResponseEntity(payload, HttpStatus.OK);
+//    }
+
     //submit edits
     @PreAuthorize("hasAuthority('CLINICIAN')")
     @RequestMapping(value = "/clinician/my_clinician_scheduleSubmit/{appointmentId}", method = RequestMethod.POST)

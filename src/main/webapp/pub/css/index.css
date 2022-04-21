@@ -4,7 +4,7 @@
     rgb(245, 213, 106))
 }
 
-body {
+.body {
     /* background: url('../html/hand_medicalcross_logo.jpg') no-repeat center center fixed;
     background-color: seashell;
     -webkit-background-size: cover;
@@ -13,11 +13,15 @@ body {
     background-size: cover; */
 
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    /* justify-content: center; */
+    justify-content: center;
     background-color: seashell;
-    height: 100vh;
+    height: 120vh;
+}
+
+#logo-login {
+    width: 100%;
 }
 
 header {
@@ -25,7 +29,7 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: left;
-    /*padding-left: 25px;*/
+    padding-left: 25px;
     /* align-items: center; */
 }
 
@@ -38,8 +42,10 @@ header {
 
 #video {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: left;
+    padding-bottom: 150px;
 }
 
 .btn {
@@ -59,7 +65,6 @@ header {
     padding-bottom: 50px;
     padding-top: 40px;
     height: 75vh;
-
 
     display: flex;
     align-items: center;

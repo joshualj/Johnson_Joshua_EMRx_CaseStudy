@@ -45,15 +45,15 @@
     /*rgb(245, 213, 106));*/
 }
 
-section {
+.my-sched {
     min-height: 100vh;
 }
 
-/*footer {*/
-/*    background: linear-gradient(to bottom left,*/
-/*    rgb(125, 225, 243),*/
-/*    rgb(245, 213, 106))*/
-/*}*/
+footer {
+    background: linear-gradient(to bottom left,
+    rgb(125, 225, 243),
+    rgb(245, 213, 106))
+}
 
 .navbar {
     background: linear-gradient(to bottom left,

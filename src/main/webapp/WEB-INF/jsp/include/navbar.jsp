@@ -11,11 +11,11 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/login/login">| Home</a>
                 </li>
-                <sec:authorize access="!isAuthenticated()">
-                <li class="nav-item">
-                    <a class="nav-link" href="/user/register">| Register</a>
-                </li>
-                </sec:authorize>
+<%--                <sec:authorize access="!isAuthenticated()">--%>
+<%--                <li class="nav-item">--%>
+<%--                    <a class="nav-link" href="/user/register">| Register</a>--%>
+<%--                </li>--%>
+<%--                </sec:authorize>--%>
                 <sec:authorize access="isAuthenticated()">
                 <sec:authorize access="hasAuthority('CLINICIAN')">
                     <li class="nav-item">
