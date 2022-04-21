@@ -11,6 +11,10 @@
     rgb(245, 213, 106))
 }
 
+.clinRegisterSection {
+    padding-bottom: 60px;
+}
+
 form {
     font-family: "Raleway", sans-serif;
 }

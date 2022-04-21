@@ -9,7 +9,7 @@
     }
 </style>
 <body id="appointments">
-    <section class="my-sched vh-120 gradient-custom">
+    <section class="myPatientSched vh-120 gradient-custom">
     <%--    <div class="row justify-content-center align-items-center">--%>
     <%--    <form class="appointmentDaySelect" action="/user/my_schedule">--%>
     <%--        <input type="text" id="userId" class="form-control form-control-lg" name="userId" value="${form.userId}">--%>

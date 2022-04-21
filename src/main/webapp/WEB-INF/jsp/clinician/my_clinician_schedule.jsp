@@ -3,7 +3,7 @@
 <jsp:include page="../include/navbar.jsp"/>
 <link href="../../../pub/css/my_schedule.css" rel="stylesheet">
 <body>
-<section class="vh-120 gradient-custom">
+<section class="myClinSchedSection vh-120 gradient-custom">
 <%--    <div class="row justify-content-center align-items-center">--%>
 <%--    <form class="appointmentDaySelect" action="/user/my_schedule">--%>
 <%--        <input type="text" id="userId" class="form-control form-control-lg" name="userId" value="${form.userId}">--%>
@@ -133,4 +133,4 @@
     </div>
 </section>
 </body>
-<%--<script src= "../../../pub/js/schedule_appointment.js"></script>--%>
+<jsp:include page="../include/footer.jsp"/>

@@ -7,7 +7,7 @@
 <link href="../../../pub/css/register.css" rel="stylesheet">
 
 <body>
-<section class="vh-140 gradient-custom">
+<section class="registrationSection vh-140 gradient-custom">
     <div class="container py-3 h-120">
         <div class="row justify-content-center align-items-center h-120">
             <div class="col-5">
@@ -90,8 +90,8 @@
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="pronouns"
-                                           id="other" value="other"/>
-                                    <label class="form-check-label" for="other">Other</label>
+                                           id="oth" value="other"/>
+                                    <label class="form-check-label" for="oth">Other</label>
                                 </div>
                                 <c:forEach items="${bindingResult.getFieldErrors('pronouns')}" var="error">
                                     <div style="color: red;">
@@ -162,8 +162,8 @@
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="gender"
-                                               id="other" value="other"/>
-                                        <label class="form-check-label" for="other">other</label>
+                                               id="othe" value="other"/>
+                                        <label class="form-check-label" for="othe">other</label>
                                     </div>
                             </div>
 

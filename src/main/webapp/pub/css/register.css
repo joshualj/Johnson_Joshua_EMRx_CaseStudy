@@ -15,6 +15,10 @@ form {
     font-family: "Raleway", sans-serif;
 }
 
+.registrationSection {
+    padding-bottom: 60px;
+}
+
 footer {
     background: linear-gradient(to bottom left,
     rgb(125, 225, 243),

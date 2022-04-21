@@ -3,7 +3,7 @@
 <jsp:include page="../include/navbar.jsp"/>
 <link href="../../../pub/css/search.css" rel="stylesheet">
 
-<section class="vh-140 gradient-custom">
+<section class="searchSection vh-140 gradient-custom">
 
 <h1><b>Clinician Search</b></h1>
 
@@ -38,7 +38,7 @@
         <th><strong>Action</strong></th>
     </tr>
     <c:forEach items="${clinicians}" var="clinician" varStatus="status">
-        <tr scope="row">
+        <tr>
             <td>${users[status.index].firstName}</td>
             <td>${users[status.index].lastName}</td>
             <td>${clinician.title}</td>

@@ -5,11 +5,11 @@
     padding-bottom: 20px;
 }
 
-/*footer {*/
-/*    background: linear-gradient(to bottom left,*/
-/*    rgb(125, 225, 243),*/
-/*    rgb(245, 213, 106))*/
-/*}*/
+footer {
+    background: linear-gradient(to bottom left,
+    rgb(125, 225, 243),
+    rgb(245, 213, 106))
+}
 
 .navbar {
     background: linear-gradient(to bottom left,
@@ -21,7 +21,7 @@
     font-size: 20px;
 }
 
-section {
+.appointment-cont {
     /* background: url('../html/hand_medicalcross_logo.jpg') no-repeat center center fixed;
     background-color: seashell;
     -webkit-background-size: cover;
@@ -35,6 +35,7 @@ section {
     grid-template-areas:
         "physDate"
         "schedule";
+    padding-bottom: 100px;
 
     /*display: flex;*/
     /*flex-direction: column;*/

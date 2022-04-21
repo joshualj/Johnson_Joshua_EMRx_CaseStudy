@@ -4,17 +4,17 @@
     rgb(245, 213, 106))
 }
 
-section {
+.searchSection {
     font-family: "Raleway", sans-serif;
     min-height: 100vh;
     text-align: center;
 }
 
-/*.formDiv {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-content: center;*/
-/*}*/
+footer {
+    background: linear-gradient(to bottom left,
+    rgb(125, 225, 243),
+    rgb(245, 213, 106))
+}
 
 form {
     display: flex;

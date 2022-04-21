@@ -7,7 +7,7 @@
 <link href="../../../pub/css/register_clinician.css" rel="stylesheet">
 
 <body>
-<section class="vh-140 gradient-custom">
+<section class="clinRegisterSection vh-140 gradient-custom">
     <div class="container py-3 h-120">
         <div class="row justify-content-center align-items-center h-120">
             <div class="col-5">
