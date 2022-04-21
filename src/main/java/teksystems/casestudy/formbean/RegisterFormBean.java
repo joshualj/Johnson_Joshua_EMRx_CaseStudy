@@ -38,8 +38,12 @@ public class RegisterFormBean {
 
     private String pronouns;
 
+//    private String cis;
+//    private String trans;
+//    private String other;
     private String gender;
 
+    @NotBlank(message="Please enter your biological sex")
     private String sex;
 
     private String primaryLanguage;
@@ -52,5 +56,5 @@ public class RegisterFormBean {
     private String confirmPassword;
 
     @NotBlank
-    private String confirmRemove; //might delete
+    private String confirmRemove;
 }

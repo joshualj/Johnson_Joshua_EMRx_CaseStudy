@@ -70,57 +70,116 @@
 <%--                                </div>--%>
                             </div>
 
+
                             <div class="col-md-12 mb-4">
-                                <input type="text" id="pronouns" class="form-control form-control-lg" name="pronouns" value="${form.pronouns}"/>
+                                <h6 class="mb-2 pb-1">Pronouns:</h6>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="pronouns"
+                                           id="sheher" value="she/her"/>
+                                    <label class="form-check-label" for="sheher">she/her</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="pronouns"
+                                           id="hehim" value="he/him"/>
+                                    <label class="form-check-label" for="hehim">he/him</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="pronouns"
+                                           id="theythem" value="they/them"/>
+                                    <label class="form-check-label" for="theythem">they/them</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="pronouns"
+                                           id="other" value="other"/>
+                                    <label class="form-check-label" for="other">Other</label>
+                                </div>
                                 <c:forEach items="${bindingResult.getFieldErrors('pronouns')}" var="error">
                                     <div style="color: red;">
                                             ${error.getDefaultMessage()}
                                     </div>
                                 </c:forEach>
-                                <label class="form-label" for="pronouns">Pronouns</label>
-<%--                                <div class="invalid-feedback">--%>
-<%--                                </div>--%>
                             </div>
 
-                            <div class="col-md-12 mb-4">
-                                <input type="text" id="gender" class="form-control form-control-lg" name="gender" value="${form.gender}"/>
-                                <c:forEach items="${bindingResult.getFieldErrors('gender')}" var="error">
-                                    <div style="color: red;">
-                                            ${error.getDefaultMessage()}
-                                    </div>
-                                </c:forEach>
-                                <label class="form-label" for="gender">Gender</label>
-                            </div>
 <%--                            <div class="col-md-12 mb-4">--%>
-<%--                                    <h6 class="mb-2 pb-1">Gender:</h6>--%>
-<%--                                    <div class="form-check form-check-inline">--%>
-<%--                                        <input class="form-check-input" type="radio" name="gender"--%>
-<%--                                               id="cis" value="cis"/>--%>
-<%--                                        <label class="form-check-label" for="cis">cis</label>--%>
+<%--                                <input type="text" id="pronouns" class="form-control form-control-lg" name="pronouns" value="${form.pronouns}"/>--%>
+<%--                                <c:forEach items="${bindingResult.getFieldErrors('pronouns')}" var="error">--%>
+<%--                                    <div style="color: red;">--%>
+<%--                                            ${error.getDefaultMessage()}--%>
 <%--                                    </div>--%>
-<%--                                    <div class="form-check form-check-inline">--%>
-<%--                                        <input class="form-check-input" type="radio" name="gender"--%>
-<%--                                               id="trans" value="trans"/>--%>
-<%--                                        <label class="form-check-label" for="trans">trans</label>--%>
+<%--                                </c:forEach>--%>
+<%--                                <label class="form-label" for="pronouns">Pronouns</label>--%>
+<%--                            </div>--%>
+
+<%--                            <div class="col-md-12 mb-4">--%>
+<%--                                <input type="text" id="gender" class="form-control form-control-lg" name="gender" value="${form.gender}"/>--%>
+<%--                                <c:forEach items="${bindingResult.getFieldErrors('gender')}" var="error">--%>
+<%--                                    <div style="color: red;">--%>
+<%--                                            ${error.getDefaultMessage()}--%>
 <%--                                    </div>--%>
-<%--                                    <div class="form-check form-check-inline">--%>
-<%--                                        <input class="form-check-input" type="radio" name="gender"--%>
-<%--                                               id="other" value="other"/>--%>
-<%--                                        <label class="form-check-label" for="other">other</label>--%>
-<%--                                    </div>--%>
+<%--                                </c:forEach>--%>
+<%--                                <label class="form-label" for="gender">Gender</label>--%>
 <%--                            </div>--%>
 
                             <div class="col-md-12 mb-4">
-                                <input type="text" id="sex" class="form-control form-control-lg" name="sex" value="${form.sex}" required/>
+                                <h6 class="mb-2 pb-1">Sex:</h6>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="sex"
+                                           id="F" value="F"/>
+                                    <label class="form-check-label" for="F">Female</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="sex"
+                                           id="M" value="M"/>
+                                    <label class="form-check-label" for="M">Male</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="sex"
+                                           id="I" value="I"/>
+                                    <label class="form-check-label" for="I">Intersex</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="sex"
+                                           id="O" value="O"/>
+                                    <label class="form-check-label" for="O">Other</label>
+                                </div>
                                 <c:forEach items="${bindingResult.getFieldErrors('sex')}" var="error">
                                     <div style="color: red;">
                                             ${error.getDefaultMessage()}
                                     </div>
                                 </c:forEach>
-                                <label class="form-label" for="sex">Sex</label>
-                                <div class="invalid-feedback">
-                                </div>
                             </div>
+                            <div class="col-md-12 mb-4">
+                                    <h6 class="mb-2 pb-1">Gender:</h6>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender"
+                                               id="cis" value="cis"/>
+                                        <label class="form-check-label" for="cis">cis</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender"
+                                               id="trans" value="trans"/>
+                                        <label class="form-check-label" for="trans">trans</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender"
+                                               id="other" value="other"/>
+                                        <label class="form-check-label" for="other">other</label>
+                                    </div>
+                            </div>
+
+
+
+<%--                            <div class="col-md-12 mb-4">--%>
+<%--                                <input type="text" id="sex" class="form-control form-control-lg" name="sex" value="${form.sex}" required/>--%>
+<%--                                <c:forEach items="${bindingResult.getFieldErrors('sex')}" var="error">--%>
+<%--                                    <div style="color: red;">--%>
+<%--                                            ${error.getDefaultMessage()}--%>
+<%--                                    </div>--%>
+<%--                                </c:forEach>--%>
+<%--                                <label class="form-label" for="sex">Sex</label>--%>
+<%--                                <div class="invalid-feedback">--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
 
                             <div class="col-md-12 mb-4">
                                 <input type="text" id="primaryLanguage" class="form-control form-control-lg" name="primaryLanguage" value="${form.primaryLanguage}"/>

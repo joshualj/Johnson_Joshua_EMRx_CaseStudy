@@ -122,10 +122,6 @@ public class UserController{
         patient.setMedicalRecordNumber(mrn);
         patient.setUserId(user.getUserId());
 
-        patientDao.save(patient);
-
-        log.info(form.toString());
-
         patient.setPreferredName(form.getPreferredName());
 
         //converting String birthDate to a LocalDate object
