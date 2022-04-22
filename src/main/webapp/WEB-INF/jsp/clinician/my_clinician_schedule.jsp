@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../include/header.jsp"/>
 <jsp:include page="../include/navbar.jsp"/>
-<link href="../../../pub/css/my_schedule.css" rel="stylesheet">
+<link href="../../../pub/css/my_clinician_schedule.css" rel="stylesheet">
 <body>
 <section class="myClinSchedSection vh-120 gradient-custom">
 <%--    <div class="row justify-content-center align-items-center">--%>

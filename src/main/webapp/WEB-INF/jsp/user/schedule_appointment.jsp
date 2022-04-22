@@ -23,19 +23,7 @@
                 <input class="btn btn-outline-primary btn-md" type="submit" value="Submit">
             </form>
         </div>
-    <%--    <div class="row justify-content-center align-items-center">--%>
-    <%--        <form class="appointmentDaySelect" action="/user/schedule_appointment">--%>
-    <%--            <select class="selectYear form-control-md" name="userId" value="${form.userId}"required>--%>
-    <%--                <option value="0" disabled></option>--%>
-    <%--                <c:forEach var="clinician" items="${clinicianUsers}">--%>
-    <%--                    <option value="${clinician.userId}">${clinician.firstName} ${clinician.lastName}</option>--%>
-    <%--                </c:forEach>--%>
-    <%--            </select>--%>
-    <%--            <input type="date" name="date" placeholder="Date" class="form-control form-control-lg mb-3" value="${form.date}">--%>
-    <%--        &lt;%&ndash;            <select class="selectYear form-control-md" name="year" value="${form.year}" required>&ndash;%&gt;--%>
-    <%--            <input class="btn btn-outline-primary btn-md" type="submit" value="Submit">--%>
-    <%--        </form>--%>
-    <%--    <hr>--%>
+
         <div id="schedule" class="row justify-content-center align-items-center h-100">
             <div id="scheduleHeader">
             <h1 name="date" value="${localDate}">${dayOfWeek}, ${monthName} ${dayDate}, ${yearDate}</h1>

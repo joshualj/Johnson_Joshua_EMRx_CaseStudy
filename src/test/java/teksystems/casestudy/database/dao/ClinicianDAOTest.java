@@ -48,9 +48,6 @@ public class ClinicianDAOTest {
                 "Orthopedics",
                 "English, Spanish");
 
-//        clinicianTwo = new Clinician(cUserTwo.getUserId(), "Physician",
-//                "Pediatrics",
-//                "English, Spanish");
     }
 
     @Test

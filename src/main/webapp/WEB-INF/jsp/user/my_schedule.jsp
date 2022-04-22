@@ -8,19 +8,25 @@
         padding-bottom: 20px;
     }
 </style>
-<body id="appointments">
-    <section class="myPatientSched vh-120 gradient-custom">
-    <%--    <div class="row justify-content-center align-items-center">--%>
-    <%--    <form class="appointmentDaySelect" action="/user/my_schedule">--%>
-    <%--        <input type="text" id="userId" class="form-control form-control-lg" name="userId" value="${form.userId}">--%>
-    <%--        <input class="btn btn-outline-primary btn-md" type="submit" value="Submit" />--%>
-    <%--    </form>--%>
+
+<div id="appointments" class="vh-120 gradient-custom">
+    <div id="myPersonalDetails">
+        <div id="imageContainer">
+            <img id="profilePicture" src="../../../pub/images/EMRx_default_photo_female.jpeg" alt="Profile Photo">
+        </div>
+        <div id="myInfo">
+            <h2><b>${user.firstName} ${user.lastName}</b></h2>
+            <h2><c:if test="${!empty patient.preferredName}">"${patient.preferredName}"</c:if></h2>
+            <h5>${patient.birthDate}</h5>
+        </div>
+    </div>
+    <section class="myPatientSched">
         <div class="row justify-content-center align-items-center">
             <h1 id="name" name="user" value="${user}">
-                <c:if test="${!empty user.firstName}">${user.firstName}'s Appointments</c:if>
-                <c:if test="${empty user.firstName}">My Appointments</c:if>
+                <c:if test="${!empty user.firstName}">Appointments</c:if>
+                <c:if test="${empty user.firstName}">Appointments</c:if>
             </h1>
-            <div class="col-5">
+            <div class="col-12">
                 <div class="card shadow-2-strong" style="border-radius: 15px">
                     <div style="line-height: 2.0">
                         <table id="appointmentsTable" class="table table-striped">
@@ -63,9 +69,10 @@
             </div>
         </div>
     </section>
-</body>
-<%--</body>--%>
+    <div id="otherDetails">
+
+    </div>
+</div>
+
+
 <jsp:include page="../include/footer.jsp"/>
-
-
-<%--<script src= "../../../pub/js/schedule_appointment.js"></script>--%>

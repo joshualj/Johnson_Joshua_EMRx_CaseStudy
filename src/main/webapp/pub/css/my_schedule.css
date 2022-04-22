@@ -7,10 +7,43 @@
 }
 
 .btn {
-    /*width: 80px;*/
     border-color: rgb(125, 225, 243);
     color: #fffbfb;
     background-color: rgb(125, 225, 243);
+}
+
+
+#profilePicture {
+    /*border: 2px solid #555;*/
+    /*padding-top: 5%;*/
+    width: 70%;
+    border-radius: 100%;
+
+    /*padding-bottom: 2%;*/
+    /*border-color: black;*/
+    /*border-width: 10px;*/
+}
+
+#imageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 2%;
+}
+
+#myPersonalDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#myInfo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(63, 62, 60, 0.20);
+    border-radius: 10%;
+    padding: 10px;
 }
 
 .edit {
@@ -44,24 +77,16 @@
     text-align: center;
 }
 
-.physDateForm {
-    width: 50%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    align-content: center;
-
-    gap: 10px;
-    background-color: rgba(63, 62, 60, 0.20);
-    padding-left: 30px;
-    padding-right: 30px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-radius: 30px;
-}
-
 #appointments {
+    min-height: 100vh;
+    font-family: "Raleway", sans-serif;
+    display: grid;
+    grid-template-columns: 2fr 3fr 2fr;
+    grid-template-areas:
+        "myPersonalDetails"
+        "myPatientSched"
+        "otherDetails";
+    padding-bottom: 100px;
     /*min-height: 150vh;*/
     /*background: linear-gradient(to top left,*/
     /*rgb(125, 225, 243),*/
@@ -69,7 +94,6 @@
 }
 
 .myPatientSched {
-    min-height: 100vh;
 }
 
 .myClinSchedSection {
@@ -94,12 +118,4 @@ footer {
 
 body {
     font-family: "Raleway", sans-serif;
-}
-
-#date {
-    padding-left: 25px;
-}
-
-#clinicianName {
-    padding-left: 25px;
 }

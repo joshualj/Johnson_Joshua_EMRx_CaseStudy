@@ -99,8 +99,6 @@ public class AppointmentDAOTest {
     @Order(1)
     @Rollback(value = false)
     public void saveAppointment(){
-//        clinicianDao.save(clinicianOne);
-//        patientDao.save(patientOne);
         appointmentDao.save(appointmentOne);
 
         Assertions.assertThat(appointmentOne.getClinician()).isEqualTo(clinicianOne);
@@ -111,7 +109,6 @@ public class AppointmentDAOTest {
     @Order(2)
     @Rollback(value = false)
     public void findByAppointmentIdTest(){
-//        appointmentDao.save(appointmentTwo);
         Appointment appointment = appointmentDao.findByAppointmentId(appointmentTwo.getAppointmentId());
         Assertions.assertThat(appointment).isEqualTo(appointmentTwo);
 

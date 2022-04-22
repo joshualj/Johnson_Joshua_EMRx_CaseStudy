@@ -59,9 +59,6 @@ public class AppointmentController {
     @RequestMapping(value = "/user/schedule_appointment", method = RequestMethod.GET)
     public ModelAndView viewClinicianScheduleAsPatient(@RequestParam(required = false) Integer userId,
                                                        @RequestParam(required = false) String date) throws Exception {
-//                                 @RequestParam(required = false) Integer year,
-//                                 @RequestParam(required = false) Integer month,
-//                                 @RequestParam(required = false) Integer day)
 
         ModelAndView response = new ModelAndView();
         response.setViewName("user/schedule_appointment");
@@ -121,13 +118,7 @@ public class AppointmentController {
         response.addObject("dayDate", dayDate);
         response.addObject("yearDate", yearDate);
         response.addObject("clinicianId", clinicianId);
-//        response.addObject("user", user);
         response.addObject("appointmentTimes", appointmentTimes);
-
-//        SelectAppointmentScheduleFormBean form = new SelectAppointmentScheduleFormBean();
-//        response.addObject("form", form);
-
-        //attributeName is object inside of jsp, and scheduledTime is the object that is being passed to that name
 
         return response;
     }
@@ -199,7 +190,6 @@ public class AppointmentController {
         response.setViewName("user/my_schedule");
 
         Integer patientId = patientDao.findByUserId(userId).getPatientId();
-
         List<Appointment> appointments = appointmentDao.findByPatientPatientId(patientId);
 
         appointments.sort((app1, app2)
@@ -211,10 +201,12 @@ public class AppointmentController {
 
         User user = userDao.findByUserId(userId);
 
+        Patient patient = patientDao.findByUserId(userId);
+
         response.addObject("appointments", appointments);
         response.addObject("user", user);
+        response.addObject("patient", patient);
 
-//        response.setViewName("redirect:/user/paq/" + user.getUserId());
         return response;
     }
 
@@ -318,11 +310,6 @@ public class AppointmentController {
 
         Integer parsedClinicianId = Integer.parseInt(form.getClinicianId());
         Integer patientId = appointment.getPatient().getPatientId();
-
-//        if(!StringUtils.equals("", form.getPaqId()) && form.getPaqId() != null){
-//            Integer parsedPaqId = Integer.parseInt(form.getPaqId());
-//            appointment.setPaqId(parsedPaqId);
-//        }
 
         //Retrieving a clinician based on the clinicianId entered in the form
         Clinician clinician = clinicianDao.findByClinicianId(parsedClinicianId);
