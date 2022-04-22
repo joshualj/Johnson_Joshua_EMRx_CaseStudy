@@ -7,7 +7,7 @@
 }
 
 .btn {
-    width: 80px;
+    /*width: 80px;*/
     border-color: rgb(125, 225, 243);
     color: #fffbfb;
     background-color: rgb(125, 225, 243);
@@ -17,6 +17,12 @@
     border-color: rgb(223, 107, 252);
     color: #fffbfb;
     background-color: rgb(223, 107, 252);
+}
+
+.cancelBtn {
+    border-color: rgb(255, 0, 0);
+    color: #fffbfb;
+    background-color: rgb(255, 0, 0);
 }
 
 .btn:hover {

@@ -63,13 +63,12 @@
             </b>
         </h5>
         </div>
-        <div class="col-8">
+        <div class="col-10">
             <div class="card shadow-2-strong" style="border-radius: 15px">
                 <div style="line-height: 2.0">
                     <table id="appointmentsTable" class="table table-striped">
                         <thead class="table-dark">
                         <tr>
-<%--                            <th style="border-top-left-radius: 15px"><b>Date</b></th>--%>
                             <th style="border-top-left-radius: 15px"><b>Time</b></th>
                             <th><b>Patient</b></th>
                             <th><b>Birthdate</b></th>
@@ -95,7 +94,7 @@
                                             <input type="hidden" name="date" value="${appointments[scheduledTime.indexOf(appt)].date}">
                                             <input type="hidden" name="time" value="${appointments[scheduledTime.indexOf(appt)].time}">
                                             <input type="hidden" name="clinicianId" value="${appointments[scheduledTime.indexOf(appt)].clinician.clinicianId}">
-                                            <button type="submit">View</button>
+                                            <button type="submit" class="btn btn-outline-primary btn-md">View</button>
                                         </form>
                                         </td>
                                     </c:if>
@@ -105,13 +104,13 @@
                                     <td>
                                         <form action="/clinician/my_clinician_schedule/edit/${appointments[scheduledTime.indexOf(appt)].appointmentId}" method="GET">
                                             <input type="hidden" name="apptId" value="${appointments[scheduledTime.indexOf(appt)].appointmentId}">
-                                            <button type="submit">Edit</button>
+                                            <button type="submit" class="edit btn btn-outline-primary btn-md">Edit</button>
                                         </form>
                                     </td>
                                     <td>
                                         <form action="/clinician/my_clinician_schedule/cancel/${appointments[scheduledTime.indexOf(appt)].appointmentId}" method="POST">
                                             <input type="hidden" name="apptId" value="${appointments[scheduledTime.indexOf(appt)].appointmentId}">
-                                            <button type="submit">Cancel</button>
+                                            <button type="submit" class="cancelBtn btn btn-outline-primary btn-md">Cancel</button>
                                         </form>
                                     </td>
                                 </c:if>

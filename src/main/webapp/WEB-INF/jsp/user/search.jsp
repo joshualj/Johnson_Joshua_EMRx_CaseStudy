@@ -12,7 +12,7 @@
 
     <div>
     <label for="clinician">Search</label>
-    <input type="text" name="searchEntry" id="clinician" class="form-control form-control-md mb-3" placeholder="Name, Dept, or Lang" value="${searchEntry}">
+    <input type="text" name="searchEntry" id="clinician" class="form-control form-control-md mb-3" placeholder="Name, Dept, or Language" value="${searchEntry}">
     </div>
 
     <div id="identifier">

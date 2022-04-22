@@ -15,6 +15,17 @@ form {
     font-family: "Raleway", sans-serif;
 }
 
+.btn {
+    border-color: rgb(125, 225, 243);
+    color: #fffbfb;
+    background-color: rgb(125, 225, 243);
+}
+
+.btn:hover {
+    background-color: #46ff4a;
+    border-color: #46ff4a;
+}
+
 .registrationSection {
     padding-bottom: 60px;
 }

@@ -117,6 +117,7 @@ public class PreAppointmentQuestionsController {
         paq.setSymptoms(form.getSymptoms());
         paq.setOnset(form.getOnset());
         paq.setTemporalPatterns(form.getTemporalPatterns());
+        appointment.setChiefComplaint(paq.getComplaint());
 
         log.info(paq.toString());
 
