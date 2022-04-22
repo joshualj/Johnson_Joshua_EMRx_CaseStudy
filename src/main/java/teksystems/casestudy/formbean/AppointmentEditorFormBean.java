@@ -30,7 +30,7 @@ public class AppointmentEditorFormBean {
     @NotBlank(message="Please enter a clinician id")
     private String clinicianId;
 
-    @NotBlank(message="Please enter a patient id")
+//    @NotBlank(message="Please enter a patient id")
     private String patientId;
 
     private String chiefComplaint;

@@ -1,5 +1,6 @@
 package teksystems.casestudy.database.dao;
 
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import java.time.LocalTime;
 import java.util.Optional;
 
 @DataJpaTest
+@Slf4j
 @ActiveProfiles({"test", "default"})
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class AppointmentDAOTest {
@@ -91,15 +93,14 @@ public class AppointmentDAOTest {
         appointmentTwo.setClinician(clinicianOne);
         appointmentTwo.setPatient(patientOne);
         appointmentDao.save(appointmentTwo);
-
     }
 
     @Test
     @Order(1)
     @Rollback(value = false)
     public void saveAppointment(){
-        clinicianDao.save(clinicianOne);
-        patientDao.save(patientOne);
+//        clinicianDao.save(clinicianOne);
+//        patientDao.save(patientOne);
         appointmentDao.save(appointmentOne);
 
         Assertions.assertThat(appointmentOne.getClinician()).isEqualTo(clinicianOne);
@@ -110,10 +111,10 @@ public class AppointmentDAOTest {
     @Order(2)
     @Rollback(value = false)
     public void findByAppointmentIdTest(){
-        appointmentDao.save(appointmentTwo);
+//        appointmentDao.save(appointmentTwo);
         Appointment appointment = appointmentDao.findByAppointmentId(appointmentTwo.getAppointmentId());
         Assertions.assertThat(appointment).isEqualTo(appointmentTwo);
-//        Assertions.assertThat(appointmentOne).isEqualTo(appointment);
+
     }
 
     @Test

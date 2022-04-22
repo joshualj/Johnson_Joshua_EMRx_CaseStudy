@@ -254,6 +254,8 @@ public class AppointmentController {
 
         response.addObject("form", form);
         response.addObject("appointmentId", appointment.getAppointmentId());
+        response.addObject("appointmentTimes", appointmentTimes);
+
 
         return response;
     }
@@ -273,8 +275,8 @@ public class AppointmentController {
                                           @Valid AppointmentEditorFormBean form,
                                            BindingResult bindingResult) {
         ModelAndView response = new ModelAndView();
-        //TODO FIX
 
+        //check for errors in form
         if (bindingResult.hasErrors()) {
             List<String> errorMessages = new ArrayList<>();
 
@@ -291,9 +293,10 @@ public class AppointmentController {
             return response;
         }
 
+        //find appointment by id
         Appointment appointment = appointmentDao.findByAppointmentId(appointmentId);
 
-        //converting date from String date to LocalDate date
+        //convert date from String date to LocalDate date
         String[] dateArray = form.getDate().split("-");
 
         Integer year = Integer.parseInt(dateArray[0]);
@@ -304,7 +307,7 @@ public class AppointmentController {
 
         appointment.setDate(dateFormatted);
 
-        //converting time from String to LocalTime time
+        //convert time from String to LocalTime time
         String[] timeArray = form.getTime().split(":");
 
         Integer hour = Integer.parseInt(timeArray[0]);
@@ -314,22 +317,23 @@ public class AppointmentController {
         appointment.setTime(timeFormatted);
 
         Integer parsedClinicianId = Integer.parseInt(form.getClinicianId());
-        Integer parsedPatientId = Integer.parseInt(form.getPatientId());
+        Integer patientId = appointment.getPatient().getPatientId();
 
-        if(!StringUtils.equals("", form.getPaqId()) && form.getPaqId() != null){
-            Integer parsedPaqId = Integer.parseInt(form.getPaqId());
-            appointment.setPaqId(parsedPaqId);
-        }
+//        if(!StringUtils.equals("", form.getPaqId()) && form.getPaqId() != null){
+//            Integer parsedPaqId = Integer.parseInt(form.getPaqId());
+//            appointment.setPaqId(parsedPaqId);
+//        }
 
         //Retrieving a clinician based on the clinicianId entered in the form
         Clinician clinician = clinicianDao.findByClinicianId(parsedClinicianId);
         appointment.setClinician(clinician);
 
-        //Retrieving a patient based on the patientId entered in the form
-        Patient patient = patientDao.findByPatientId(parsedPatientId);
+        //Retrieving a patient based on the patientId from the form
+        Patient patient = patientDao.findByPatientId(patientId);
         appointment.setPatient(patient);
+        log.info(patient.toString());
 
-        appointment.setChiefComplaint(form.getChiefComplaint());
+//        appointment.setChiefComplaint(form.getChiefComplaint());
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();

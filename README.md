@@ -4,7 +4,7 @@ In the demanding, appointment-filled day, medical clinicians are required to acc
 
 EMRxpress seeks to streamline the medical documentation process by allowing patients to submit a Pre-Appointment Questionairre (PAQ). The PAQ allows a patient to answer relevant questions about their medical concern -- including the complaint itself (i.e. headache), the time they first experienced the complaint (i.e. 2 weeks), and the character of the complaint (i.e. sharp) -- prior to the visit. The clinician can view their patient's PAQ prior to an appointment, allowing the clinician to efficiently tailor questions to the complaint during the visit.
 
-Similar to a traditional Electronic Medical Record program, EMRxpress also allows clinicians to view/edit/cancel their appointments. It has additional functionality -- as it allows patients to schedule and view upcoming appointments.
+Similar to a traditional Electronic Medical Record program, EMRxpress gives a clinician the options to view/edit/cancel their appointments. In addition, patient users can schedule and view upcoming appointments.
 
 ## Usage
 A patient may register using the following form. 

@@ -45,6 +45,36 @@
                             </div>
 
                             <div class="col-md-12 mb-4">
+                                <input type="text" id="title" class="form-control form-control-lg" name="title" value="${form.title}"/>
+                                <c:forEach items="${bindingResult.getFieldErrors('title')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
+                                <label class="form-label" for="title">Title</label>
+                            </div>
+
+                            <div class="col-md-12 mb-4">
+                                <input type="text" id="department" class="form-control form-control-lg" name="department" value="${form.department}"/>
+                                <c:forEach items="${bindingResult.getFieldErrors('department')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
+                                <label class="form-label" for="department">Department</label>
+                            </div>
+
+                            <div class="col-md-12 mb-4">
+                                <input type="text" id="languages" class="form-control form-control-lg" name="languages" value="${form.languages}"/>
+                                <label class="form-label" for="languages">Languages</label>
+                                <c:forEach items="${bindingResult.getFieldErrors('languages')}" var="error">
+                                    <div style="color: red;">
+                                            ${error.getDefaultMessage()}
+                                    </div>
+                                </c:forEach>
+                            </div>
+
+                            <div class="col-md-12 mb-4">
                                 <input type="text" id="email" class="form-control form-control-lg" name="email" value="${form.email}"/>
                                 <c:forEach items="${bindingResult.getFieldErrors('email')}" var="error">
                                     <div style="color: red;">
@@ -81,61 +111,6 @@
                                 </c:forEach>
                             </div>
 
-                            <div class="col-md-12 mb-4">
-                                <input type="text" id="title" class="form-control form-control-lg" name="title" value="${form.title}"/>
-                                <c:forEach items="${bindingResult.getFieldErrors('title')}" var="error">
-                                    <div style="color: red;">
-                                            ${error.getDefaultMessage()}
-                                    </div>
-                                </c:forEach>
-                                <label class="form-label" for="title">Title</label>
-                            </div>
-
-                            <div class="col-md-12 mb-4">
-                                <input type="text" id="department" class="form-control form-control-lg" name="department" value="${form.department}"/>
-                                <c:forEach items="${bindingResult.getFieldErrors('department')}" var="error">
-                                    <div style="color: red;">
-                                            ${error.getDefaultMessage()}
-                                    </div>
-                                </c:forEach>
-                                <label class="form-label" for="department">Department</label>
-                            </div>
-
-                            <div class="col-md-12 mb-4">
-                                <input type="text" id="languages" class="form-control form-control-lg" name="languages" value="${form.languages}"/>
-                                <label class="form-label" for="languages">Languages</label>
-                                <c:forEach items="${bindingResult.getFieldErrors('languages')}" var="error">
-                                    <div style="color: red;">
-                                            ${error.getDefaultMessage()}
-                                    </div>
-                                </c:forEach>
-                            </div>
-
-<%--                            <div class="col-md-12 mb-4">--%>
-<%--                                <h6 class="mb-2 pb-1">User Type:</h6>--%>
-<%--                                <div class="form-check form-check-inline">--%>
-<%--                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"--%>
-<%--                                           id="admin" value="option1"/>--%>
-<%--                                    <label class="form-check-label" for="admin">Admin</label>--%>
-<%--                                </div>--%>
-
-<%--                                <div class="form-check form-check-inline">--%>
-<%--                                    <input--%>
-<%--                                            class="form-check-input" type="radio" name="inlineRadioOptions"--%>
-<%--                                            id="user" value="option2" checked />--%>
-<%--                                    <label class="form-check-label" for="user">User</label>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-<%--                            <div class="col-6">--%>
-<%--                                <select class="select form-control-md">--%>
-<%--                                    <option value="1" disabled>Choose option</option>--%>
-<%--                                    <option value="2">Patient</option>--%>
-<%--                                    <option value="3">Clinician</option>--%>
-<%--                                    <option value="4">Administrator</option>--%>
-<%--                                </select>--%>
-<%--                                <label class="form-label select-label">Choose User Type</label>--%>
-<%--                            </div>--%>
                             <div class="row">
                                 <div class="col-md-3 mt-4 pt-2">
                                     <input class="btn btn-outline-primary btn-md" type="submit" value="Submit" />
