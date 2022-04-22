@@ -58,7 +58,7 @@ public class PreAppointmentQuestionsController {
             form.setOnset(paq.getOnset());
             form.setLocation(paq.getLocation());
             form.setDuration(paq.getDuration());
-            form.setDescription(paq.getDuration());
+            form.setDescription(paq.getDescription());
             form.setAlleviating(paq.getAlleviating());
             form.setRadiation(paq.getRadiation());
             form.setTemporalPatterns(paq.getTemporalPatterns());

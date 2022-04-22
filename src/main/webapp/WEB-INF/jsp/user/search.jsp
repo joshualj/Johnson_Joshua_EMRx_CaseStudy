@@ -45,7 +45,7 @@
         <th><strong>Title</strong></th>
         <th><strong>Department</strong></th>
         <th><strong>Language</strong></th>
-        <th><strong>Action</strong></th>
+<%--        <th><strong>Action</strong></th>--%>
     </tr>
     <c:forEach items="${clinicians}" var="clinician" varStatus="status">
         <tr>
@@ -54,7 +54,7 @@
             <td>${clinician.title}</td>
             <td>${clinician.department}</td>
             <td>${clinician.languages}</td>
-            <td><a href="/user/schedule_appointment">View Schedule</a></td>
+<%--            <td><a href="/user/schedule_appointment">View Schedule</a></td>--%>
         </tr>
     </c:forEach>
 </table>

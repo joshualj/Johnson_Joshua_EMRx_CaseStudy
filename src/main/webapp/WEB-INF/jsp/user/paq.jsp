@@ -67,7 +67,7 @@
                                             ${error.getDefaultMessage()}
                                     </div>
                                 </c:forEach>
-                                <label class="form-label" for="description">Enter characteristics of your concern.<br>(examples: dull, sharp)</label>
+                                <label class="form-label" for="alleviating">Enter characteristics of your concern.<br>(examples: dull, sharp)</label>
                             </div>
                             <div class="col-md-12 mb-4">
                                 <input type="text" id="alleviating" class="form-control form-control-lg" name="alleviating" value="${form.alleviating}" required/>
