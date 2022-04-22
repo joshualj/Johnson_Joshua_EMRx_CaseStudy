@@ -43,7 +43,7 @@
                                                 <input type="hidden" name="date" value="${appt.date}">
                                                 <input type="hidden" name="time" value="${appt.time}">
                                                 <input type="hidden" name="clinicianId" value="${appt.clinician.clinicianId}">
-                                                <button type="submit">Edit</button>
+                                                <button type="submit" class="edit btn btn-outline-primary btn-md">Edit</button>
                                             </form>
                                         </c:if>
                                         <c:if test="${empty appt.paqId}">
@@ -51,7 +51,7 @@
                                                 <input type="hidden" name="date" value="${appt.date}">
                                                 <input type="hidden" name="time" value="${appt.time}">
                                                 <input type="hidden" name="clinicianId" value="${appt.clinician.clinicianId}">
-                                                <button type="submit">Start</button>
+                                                <button type="submit" class="btn btn-outline-primary btn-md">Start</button>
                                             </form>
                                         </c:if>
                                     </td>

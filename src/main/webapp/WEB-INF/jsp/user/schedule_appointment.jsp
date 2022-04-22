@@ -62,7 +62,7 @@
                                                 <input type="hidden" name="date" value="${localDate}">
                                                 <input type="hidden" name="time" value="${apptTime}">
                                                 <input type="hidden" name="userId" value="${clinUser.userId}">
-                                                <button type="submit">Schedule</button>
+                                                <button type="submit" class="btn btn-outline-primary btn-md">Schedule</button>
                                             </form>
                                         </c:if>
                                     </td>

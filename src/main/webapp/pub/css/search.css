@@ -16,6 +16,18 @@ footer {
     rgb(245, 213, 106))
 }
 
+.btn {
+    width: 80px;
+    border-color: rgb(125, 225, 243);
+    color: #fffbfb;
+    background-color: rgb(125, 225, 243);
+}
+
+.btn:hover {
+    background-color: #46ff4a;
+    border-color: #46ff4a;
+}
+
 form {
     display: flex;
     justify-content: center;

@@ -11,19 +11,29 @@
 <form action="/user/search" method="get">
 
     <div>
-    <label for="clinician">Clinician:</label>
-    <input type="text" name="searchEntry" id="clinician" placeholder = "Name, Dept, or Lang" value="${searchEntry}">
+    <label for="clinician">Search</label>
+    <input type="text" name="searchEntry" id="clinician" class="form-control form-control-md mb-3" placeholder="Name, Dept, or Lang" value="${searchEntry}">
     </div>
-    <div>
-    <label for="identifier">Search by:</label>
-    <select name="searchType" id="identifier" value="${searchType}">
-        <option value="lastName">Last Name</option>
-        <option value="department">Department</option>
-        <option value="language">Language</option>
-    </select>
+
+    <div id="identifier">
+        <label for="searchType">By</label>
+        <select class="form-select mb-3" id="searchType" name="searchType" value="${searchType}">
+            <option value="lastName">Last Name</option>
+            <option value="department">Department</option>
+            <option value="language">Language</option>
+        </select>
     </div>
+
+<%--    <div>--%>
+<%--    <label for="identifier">Search by:</label>--%>
+<%--    <select name="searchType" id="identifier" value="${searchType}">--%>
+<%--        <option value="lastName">Last Name</option>--%>
+<%--        <option value="department">Department</option>--%>
+<%--        <option value="language">Language</option>--%>
+<%--    </select>--%>
+<%--    </div>--%>
     <div>
-    <button id ="searchId" type="submit">Submit</button>
+    <button id ="searchId" class="btn btn-outline-primary btn-md" type="submit">Submit</button>
     </div>
 </form>
 </div>

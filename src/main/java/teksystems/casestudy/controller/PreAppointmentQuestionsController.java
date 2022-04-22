@@ -67,7 +67,6 @@ public class PreAppointmentQuestionsController {
 
         response.addObject("form", form);
         response.addObject("appointmentId", appointmentId);
-        log.info("This will print");
         log.info(response.toString());
 
         return response;
@@ -81,8 +80,7 @@ public class PreAppointmentQuestionsController {
         ModelAndView response = new ModelAndView();
         log.info("This will not print");
 
-        //TODO: FIX BINDINGRESULT
-
+        //check for errors, prompt user with error message and form if error results
         if (bindingResult.hasErrors()) {
             List<String> errorMessages = new ArrayList<>();
 
@@ -101,19 +99,15 @@ public class PreAppointmentQuestionsController {
 
         response.addObject("appointmentId", appointmentId);
 
-//        log.info(form.getApptId());
-
+        //retrieve the appointment with the provided id, so that the PAQ can be added to that appointment
         Appointment appointment = appointmentDao.findByAppointmentId(appointmentId);
 
-//        Appointment appointment = appointmentDao.findByAppointmentId(Integer.parseInt(form.getApptId()));
-        log.info("============");
-
-        //erroring out here
         PreAppointmentQuestions paq = (appointment.getPaqId() != null) ?
                 paqDao.getById(appointment.getPaqId()) : new PreAppointmentQuestions();
 
         log.info(paq.toString());
 
+        //set paq values to the form values
         paq.setAlleviating(form.getAlleviating());
         paq.setDescription(form.getDescription());
         paq.setComplaint(form.getComplaint());
@@ -124,13 +118,16 @@ public class PreAppointmentQuestionsController {
         paq.setOnset(form.getOnset());
         paq.setTemporalPatterns(form.getTemporalPatterns());
 
-        log.info("did it make it this this far?");
         log.info(paq.toString());
 
+        //make sure user is authenticated, before saving changes
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
 
         if(!StringUtils.equals("anonymousUser", currentPrincipalName)){
+            paqDao.save(paq);
+            appointment.setPaqId(paq.getId());
+            appointmentDao.save(appointment);
             User user = userDao.findByEmail(currentPrincipalName);
             response.addObject(user);
             if(StringUtils.equals("PATIENT", user.getUserRole())){

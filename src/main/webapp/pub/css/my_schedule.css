@@ -6,6 +6,24 @@
     /*min-height: 100vh;*/
 }
 
+.btn {
+    width: 80px;
+    border-color: rgb(125, 225, 243);
+    color: #fffbfb;
+    background-color: rgb(125, 225, 243);
+}
+
+.edit {
+    border-color: rgb(223, 107, 252);
+    color: #fffbfb;
+    background-color: rgb(223, 107, 252);
+}
+
+.btn:hover {
+    background-color: #46ff4a;
+    border-color: #46ff4a;
+}
+
 .physDate {
     display: flex;
     flex-direction: column;
