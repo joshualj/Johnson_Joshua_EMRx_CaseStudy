@@ -8,7 +8,7 @@
 <h1><b>Clinician Search</b></h1>
 
 <div class="formDiv">
-<form action="/user/search" method="get">
+<form class= "searchForm" action="/user/search" method="get">
 
     <div>
     <label for="clinician">Search</label>
@@ -38,7 +38,7 @@
 </form>
 </div>
 
-<table class = "table">
+<table class = "results table">
     <tr>
         <th><strong>First Name</strong></th>
         <th><strong>Last Name</strong></th>

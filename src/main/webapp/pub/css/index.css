@@ -1,6 +1,6 @@
 :root {  --base-color: #475C7A;
     --secondary-color: #A1460E;
-    --action-color: #CC6D3D;
+    --action-color: #FCBB6D;
     --layover-color: #d2e1f36c;
 }
 
@@ -62,14 +62,14 @@ header {
 
 .btn {
     width: 80px;
-    border-color: rgb(125, 225, 243);
+    border-color: #FCBB6D;
     color: #fffbfb;
-    background-color: rgb(125, 225, 243);
+    background-color: #FCBB6D;
 }
 
 .btn:hover {
-    background-color: #46ff4a;
-    border-color: #46ff4a;
+    background-color: #ff9e1b;
+    border-color: #ff9e1b;
 }
 
 #form {
@@ -91,7 +91,7 @@ form {
     justify-content: center;
     gap: 10px;
     background: linear-gradient(to top left,
-    #A1460E, #6185b2, #273a4f);
+    #d2e1f36c, #6185b2, #273a4f);
     width: 200px;
     border-radius: 50px;
     padding-left: 10px;

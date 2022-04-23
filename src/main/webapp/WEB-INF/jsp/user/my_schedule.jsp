@@ -2,6 +2,7 @@
 <jsp:include page="../include/header.jsp"/>
 <jsp:include page="../include/navbar.jsp"/>
 <link href="../../../pub/css/my_schedule.css" rel="stylesheet">
+<body>
 <style>
     h1{
         text-align: center;
@@ -9,7 +10,7 @@
     }
 </style>
 
-<div id="appointments" class="vh-120 gradient-custom">
+<div id="appointments" class="gradient-custom">
     <div id="myPersonalDetails">
         <div id="imageContainer">
             <img id="profilePicture" src="../../../pub/images/EMRx_default_photo_female.jpeg" alt="Profile Photo">
@@ -73,6 +74,5 @@
 
     </div>
 </div>
-
-
+</body>
 <jsp:include page="../include/footer.jsp"/>

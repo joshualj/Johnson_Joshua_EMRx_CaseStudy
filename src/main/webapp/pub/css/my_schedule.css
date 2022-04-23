@@ -1,10 +1,16 @@
 .gradient-custom {
-    background: linear-gradient(to top left,
-    rgb(125, 225, 243),
-    rgb(245, 213, 106));
+    background: linear-gradient(to bottom,
+    #FCBB6D, #D8737F, #AB6C82, #685D79);
     padding-bottom: 20px;
     /*min-height: 100vh;*/
 }
+
+/*FCBB6D D8737F AB6C82 685D79 475C7A*/
+
+/*body{*/
+/*    background: linear-gradient(to top left,*/
+/*    #475C7A, #D8737F, #FCBB6D);*/
+/*}*/
 
 .btn {
     border-color: rgb(125, 225, 243);
@@ -18,6 +24,7 @@
     /*padding-top: 5%;*/
     width: 70%;
     border-radius: 100%;
+    border: 2px solid seashell;
 
     /*padding-bottom: 2%;*/
     /*border-color: black;*/
@@ -44,6 +51,7 @@
     background-color: rgba(63, 62, 60, 0.20);
     border-radius: 10%;
     padding: 10px;
+    color: seashell;
 }
 
 .edit {
@@ -101,15 +109,21 @@
 }
 
 footer {
-    background: linear-gradient(to bottom left,
-    rgb(125, 225, 243),
-    rgb(245, 213, 106))
+    background: linear-gradient(to top,
+    #FCBB6D, #D8737F, #AB6C82, #685D79);
+    /*background: linear-gradient(to bottom
+    */
+    /*#475C7A, #D8737F, #FCBB6D);*/
+    /*background-blend-mode: color;*/
 }
 
 .navbar {
-    background: linear-gradient(to bottom left,
-    rgb(125, 225, 243),
-    rgb(245, 213, 106))
+    /*background: #475C7A;*/
+    /*background-blend-mode: color;*/
+    background: #FCBB6D;
+    /*background: linear-gradient(to top right,*/
+    /*#475C7A, #D8737F, #FCBB6D);*/
+    color: black;
 }
 
 #appointmentsTable {
