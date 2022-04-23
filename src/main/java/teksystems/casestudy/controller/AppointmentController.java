@@ -192,6 +192,47 @@ public class AppointmentController {
         Integer patientId = patientDao.findByUserId(userId).getPatientId();
         List<Appointment> appointments = appointmentDao.findByPatientPatientId(patientId);
 
+        List<LocalDate> localDates = new ArrayList<>();
+
+//        create a list of dates included in appointments
+        for(Appointment appointment : appointments) {
+            if(!localDates.contains(appointment.getDate())) {
+                localDates.add(appointment.getDate());
+            }
+        }
+
+        log.info(localDates.toString() + "==============");
+
+        List<Appointment> appointmentsOrdered = new ArrayList<>();
+
+        List<Appointment> morningAppointments;
+        List<Appointment> afternoonAppointments;
+
+        //for each date within appointments, obtain one list for morning appointments and one list for afternoon appointments
+        //findByDateAndTimeLessThanEqualAndTimeGreaterThanEqualAndPatientPatientId
+//        for(LocalDate date : localDates) {
+//            morningAppointments = appointmentDao.findByDateAndTimeLessThanEqualAndTimeGreaterThanEqualAndPatientPatientId(date,
+//                    LocalTime.of(12, 30), LocalTime.of(8,00), patientId);
+//            log.info(morningAppointments.toString() + "========MORNING APPOINTMENTS======");
+//            log.info("========MORNING APPOINTMENTS======");
+
+
+//            afternoonAppointments = appointmentDao.findByDateAndTimeLessThanEqualAndTimeGreaterThanEqualAndPatientPatientId(date,
+//                    LocalTime.of(4, 00), LocalTime.of(1,00), patientId);
+//
+//            for(Appointment mornApt : morningAppointments) {
+//                appointmentsOrdered.add(mornApt);
+//            }
+//            for(Appointment aftApt : afternoonAppointments) {
+//                appointmentsOrdered.add(aftApt);
+//            }
+//        }
+
+        log.info("=========== APPOINTMENTS ORDERED ===========");
+        log.info(appointmentsOrdered.toString() + "========");
+        log.info("=========== APPOINTMENTS ORDERED END ===========");
+
+
         appointments.sort((app1, app2)
                 -> app1.getDate().compareTo(
                 app2.getDate()));

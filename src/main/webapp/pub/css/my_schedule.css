@@ -1,6 +1,8 @@
 .gradient-custom {
     background: linear-gradient(to bottom,
-    #FCBB6D, #D8737F, #AB6C82, #685D79);
+    #FCBB6D, #D8737F, #AB6C82);
+    /*background: linear-gradient(to bottom,*/
+    /*#a3d9fa, #abcff5, #D8737F, #FCBB6D);*/
     padding-bottom: 20px;
     /*min-height: 100vh;*/
 }
@@ -13,9 +15,16 @@
 /*}*/
 
 .btn {
-    border-color: rgb(125, 225, 243);
+    /*border-color: rgb(125, 225, 243);*/
+    /*color: #fffbfb;*/
+    /*background-color: rgb(125, 225, 243);*/
+    /*border-color: rgb(125, 225, 243);*/
+    /*color: #fffbfb;*/
+    /*background-color: rgb(125, 225, 243);*/
+    border-color: #518043;
     color: #fffbfb;
-    background-color: rgb(125, 225, 243);
+    background-color: #518043;
+
 }
 
 
@@ -55,9 +64,12 @@
 }
 
 .edit {
-    border-color: rgb(223, 107, 252);
+    /*border-color: rgb(223, 107, 252);*/
+    /*color: #fffbfb;*/
+    /*background-color: rgb(223, 107, 252);*/
+    border-color: #FCBB6D;
     color: #fffbfb;
-    background-color: rgb(223, 107, 252);
+    background-color: #FCBB6D;
 }
 
 .cancelBtn {
@@ -67,8 +79,10 @@
 }
 
 .btn:hover {
-    background-color: #46ff4a;
-    border-color: #46ff4a;
+    /*background-color: #46ff4a;*/
+    /*border-color: #46ff4a;*/
+    background-color: #ff9e1b;
+    border-color: #ff9e1b;
 }
 
 .physDate {
@@ -110,7 +124,7 @@
 
 footer {
     background: linear-gradient(to top,
-    #FCBB6D, #D8737F, #AB6C82, #685D79);
+    #FCBB6D, #D8737F, #AB6C82);
     /*background: linear-gradient(to bottom
     */
     /*#475C7A, #D8737F, #FCBB6D);*/

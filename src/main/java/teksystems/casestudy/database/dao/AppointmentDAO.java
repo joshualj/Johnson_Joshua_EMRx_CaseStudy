@@ -23,18 +23,28 @@ public interface AppointmentDAO extends JpaRepository<Appointment, Integer> {
 
     public void deleteById(Integer appointmentId);
 
-    public List<Appointment> findByDate(@Param("date") LocalDate date);
-
     @Query(value = "select a.appointmentId from Appointment a where a.clinician.clinicianId = :clinicianId")
     public List<Appointment> findByClinicianId(@Param("clinicianId") Integer clinicianId);
 
     public List<Appointment> findByPatientPatientId(@Param("patientId") Integer patientId);
 
-    public List<Appointment> findByClinicianClinicianId(@Param("clinicianId") Integer clinicianId);
-    //Don't need @Param
-
     public List<Appointment> findByClinicianClinicianIdAndDate(@Param("clinicianId") Integer clinicianId,
                                                                  @Param("date") LocalDate date);
+
+    //NativeQuery
+//    @Query(value = "SELECT * FROM appointments WHERE date=:date AND time>=:startTime AND " +
+//            "time<=:endTime AND patient_id=:patientId", nativeQuery = true)
+//    public List<Appointment> findByPatientIdAndDateAndTime(
+//                                              @Param("date") LocalDate date,
+//                                              @Param("startTime") LocalTime startTime,
+//                                              @Param("endTime") LocalTime endTime,
+//                                              @Param("patientId") Integer patientId);
+
+//    List<Appointment> findByDateAndTimeLessThanEqualAndTimeGreaterThanEqualAndPatientPatientId(
+//                                              @Param("date") LocalDate date,
+//                                              @Param("endTime") LocalTime endTime,
+//                                              @Param("startTime") LocalTime startTime,
+//                                              @Param("patientId") Integer patientId);
 
     @Query(value = "select a from Appointment a where a.patient.patientId = :patientId")
     public List<Appointment> getByPatientId(@Param("patientId") Integer patientId);
@@ -62,6 +72,5 @@ public interface AppointmentDAO extends JpaRepository<Appointment, Integer> {
                                                        @Param("date") LocalDate date,
                                                        @Param("time") LocalTime time);
 }
-//    @Query(value = "select u from User u where u.password = :password", nativeQuery = true)
-//    public List<User> getByPassword(@Param("password") String password);
+
 
