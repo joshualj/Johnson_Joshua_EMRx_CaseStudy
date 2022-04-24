@@ -27,11 +27,11 @@ public class Appointment {
     private Integer appointmentId;
 
     @NonNull
-    @Column(name = "date")
+    @Column(name = "date", nullable=false)
     private LocalDate date;
 
     @NonNull
-    @Column(name = "time")
+    @Column(name = "time", nullable=false)
     private LocalTime time;
 
 //    @Column(name = "clinician_id")
@@ -43,13 +43,13 @@ public class Appointment {
 //    @NonNull
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "clinician_id", nullable = false)
+    @JoinColumn(name = "clinician_id")
     private Clinician clinician;
 
 //    @NonNull
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "patient_id", nullable = false)
+    @JoinColumn(name = "patient_id")
     private Patient patient;
     //we need to be able to get a patient's id, not a patient
 
