@@ -5,6 +5,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.repository.query.Param;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import teksystems.casestudy.database.entity.Appointment;
@@ -14,6 +15,9 @@ import teksystems.casestudy.database.entity.User;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @DataJpaTest
@@ -83,13 +87,13 @@ public class AppointmentDAOTest {
                 "English, Spanish");
 
         //Appointment Object Used for testing, not saved
-        LocalDate today = LocalDate.of(2022,4,19);
+        LocalDate today = LocalDate.of(2022,4,27);
         LocalTime time = LocalTime.of(12,30);
         appointmentOne = new Appointment(today, time);
         appointmentOne.setClinician(clinicianOne);
         appointmentOne.setPatient(patientOne);
 
-        appointmentTwo = new Appointment(today, time);
+        appointmentTwo = new Appointment(today, LocalTime.of(10,0));
         appointmentTwo.setClinician(clinicianOne);
         appointmentTwo.setPatient(patientOne);
         appointmentDao.save(appointmentTwo);
@@ -117,6 +121,34 @@ public class AppointmentDAOTest {
     @Test
     @Order(3)
     @Rollback(value = false)
+    public void findByDateAndTimeLessThanEqualAndTimeGreaterThanEqualAndPatientPatientId(){
+        appointmentDao.save(appointmentOne);
+
+        Appointment appointmentThree =
+                new Appointment(LocalDate.of(2022,4,27),
+                    LocalTime.of(9,59));
+
+        appointmentThree.setClinician(clinicianOne);
+        appointmentThree.setPatient(patientOne);
+        appointmentDao.save(appointmentThree);
+
+        List<Appointment> appointments = appointmentDao.
+                findByDateAndTimeLessThanEqualAndTimeGreaterThanEqualAndPatientPatientId(
+                LocalDate.of(2022,4,27),
+                LocalTime.of(12,30),
+                LocalTime.of(10,0),
+                patientOne.getPatientId());
+
+        List<Appointment> expected = new ArrayList<>();
+        expected.add(appointmentTwo);
+        expected.add(appointmentOne);
+
+        Assertions.assertThat(appointments.toString()).isEqualTo(expected.toString());
+    }
+
+    @Test
+    @Order(4)
+    @Rollback(value = false)
     public void editAppointmentTest(){
         appointmentDao.save(appointmentOne);
         Appointment appointment = appointmentDao.findByAppointmentId(appointmentOne.getAppointmentId());
@@ -129,7 +161,7 @@ public class AppointmentDAOTest {
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     @Rollback(value = false)
     public void deleteByAppointmentIdTest(){
 
@@ -145,5 +177,4 @@ public class AppointmentDAOTest {
 
         Assertions.assertThat(nullApt).isNull();
     }
-
 }
