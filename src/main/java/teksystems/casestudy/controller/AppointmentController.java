@@ -201,7 +201,7 @@ public class AppointmentController {
             }
         }
 
-        log.info(localDates.toString() + "==============");
+//        log.info(localDates.toString() + "==============");
 
         List<Appointment> appointmentsOrdered = new ArrayList<>();
 
@@ -209,44 +209,60 @@ public class AppointmentController {
         List<Appointment> afternoonAppointments;
 
         //for each date within appointments, obtain one list for morning appointments and one list for afternoon appointments
-        //findByDateAndTimeLessThanEqualAndTimeGreaterThanEqualAndPatientPatientId
-//        for(LocalDate date : localDates) {
-//            morningAppointments = appointmentDao.findByDateAndTimeLessThanEqualAndTimeGreaterThanEqualAndPatientPatientId(date,
-//                    LocalTime.of(12, 30), LocalTime.of(8,00), patientId);
-//            log.info(morningAppointments.toString() + "========MORNING APPOINTMENTS======");
-//            log.info("========MORNING APPOINTMENTS======");
+//        findByDateAndTimeLessThanEqualAndTimeGreaterThanEqualAndPatientPatientId
+        for(LocalDate date : localDates) {
+            morningAppointments = appointmentDao.findByDateAndTimeLessThanEqualAndTimeGreaterThanEqualAndPatientPatientId(date,
+                    LocalTime.of(12, 30), LocalTime.of(8,00), patientId);
+            log.info(morningAppointments.toString() + "========MORNING APPOINTMENTS======");
+            log.info("========MORNING APPOINTMENTS======");
 
 
-//            afternoonAppointments = appointmentDao.findByDateAndTimeLessThanEqualAndTimeGreaterThanEqualAndPatientPatientId(date,
-//                    LocalTime.of(4, 00), LocalTime.of(1,00), patientId);
-//
-//            for(Appointment mornApt : morningAppointments) {
-//                appointmentsOrdered.add(mornApt);
-//            }
-//            for(Appointment aftApt : afternoonAppointments) {
-//                appointmentsOrdered.add(aftApt);
-//            }
-//        }
+            afternoonAppointments = appointmentDao.findByDateAndTimeLessThanEqualAndTimeGreaterThanEqualAndPatientPatientId(date,
+                    LocalTime.of(4, 00), LocalTime.of(1,00), patientId);
+
+            for(Appointment mornApt : morningAppointments) {
+                appointmentsOrdered.add(mornApt);
+            }
+            for(Appointment aftApt : afternoonAppointments) {
+                appointmentsOrdered.add(aftApt);
+            }
+        }
+
+        List<Integer> daysOfMonth = new ArrayList<>();
+        List<String> months = new ArrayList<>();
+        List<Integer> years = new ArrayList<>();
+        List<User> clinUsers = new ArrayList<>();
+        for(Appointment appointment : appointmentsOrdered) {
+            daysOfMonth.add(appointment.getDate().getDayOfMonth());
+            months.add(appointment.getDate().getMonth().toString().substring(0, 1).toUpperCase() + appointment.getDate().getMonth().toString().substring(1).toLowerCase());
+            years.add(appointment.getDate().getYear());
+            User clinUser = userDao.findByUserId(appointment.getClinician().getUserId());
+            clinUsers.add(clinUser);
+        }
+
 
         log.info("=========== APPOINTMENTS ORDERED ===========");
         log.info(appointmentsOrdered.toString() + "========");
         log.info("=========== APPOINTMENTS ORDERED END ===========");
 
-
         appointments.sort((app1, app2)
                 -> app1.getDate().compareTo(
                 app2.getDate()));
 
-        log.info(appointments.toString());
-        log.info(userId.toString());
+//        log.info(appointments.toString());
+//        log.info(userId.toString());
 
         User user = userDao.findByUserId(userId);
 
         Patient patient = patientDao.findByUserId(userId);
 
-        response.addObject("appointments", appointments);
+        response.addObject("appointments", appointmentsOrdered);
         response.addObject("user", user);
         response.addObject("patient", patient);
+        response.addObject("daysOfMonth", daysOfMonth);
+        response.addObject("months", months);
+        response.addObject("years", years);
+        response.addObject("clinUsers", clinUsers);
 
         return response;
     }

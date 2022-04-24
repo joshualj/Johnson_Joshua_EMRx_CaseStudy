@@ -41,9 +41,9 @@
                             </thead>
                             <c:forEach var="appt" items="${appointments}">
                                 <tr>
-                                    <td><b>${appt.date}</b></td>
+                                    <td><b>${months[appointments.indexOf(appt)]} ${daysOfMonth[appointments.indexOf(appt)]}, ${years[appointments.indexOf(appt)]}</b></td>
                                     <td><b>${appt.time}</b></td>
-                                    <td><b>${appt.clinician.clinicianId}</b></td>
+                                    <td><b>${clinUsers[appointments.indexOf(appt)].firstName} ${clinUsers[appointments.indexOf(appt)].lastName}</b></td>
                                     <td>
                                         <c:if test="${!empty appt.paqId}">
                                             <form action="/user/paq/${appt.appointmentId}" method="GET">
