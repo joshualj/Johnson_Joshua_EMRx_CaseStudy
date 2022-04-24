@@ -1,0 +1,111 @@
+.gradient-custom {
+    background: linear-gradient(to bottom,
+    #FCBB6D, #D8737F, #AB6C82, #685D79);
+    padding-bottom: 20px;
+    /*background: linear-gradient(to top left,*/
+    /*rgb(125, 225, 243),*/
+    /*rgb(245, 213, 106));*/
+    /*padding-bottom: 20px;*/
+    /*min-height: 100vh;*/
+}
+
+.btn {
+    /*width: 80px;*/
+    border-color: rgb(125, 225, 243);
+    color: #fffbfb;
+    background-color: rgb(125, 225, 243);
+}
+
+.edit {
+    border-color: rgb(223, 107, 252);
+    color: #fffbfb;
+    background-color: rgb(223, 107, 252);
+}
+
+.cancelBtn {
+    border-color: rgb(255, 0, 0);
+    color: #fffbfb;
+    background-color: rgb(255, 0, 0);
+}
+
+.btn:hover {
+    background-color: #46ff4a;
+    border-color: #46ff4a;
+}
+
+.physDate {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.col {
+    display: grid;
+}
+
+#scheduleHeader {
+    text-align: center;
+}
+
+.physDateForm {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+
+    gap: 10px;
+    background-color: rgba(63, 62, 60, 0.20);
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 30px;
+}
+
+#appointments {
+    /*min-height: 150vh;*/
+    /*background: linear-gradient(to top left,*/
+    /*rgb(125, 225, 243),*/
+    /*rgb(245, 213, 106));*/
+}
+
+.myPatientSched {
+    min-height: 100vh;
+}
+
+.myClinSchedSection {
+    padding-bottom: 60px;
+}
+
+footer {
+    /*background: linear-gradient(to bottom left,*/
+    /*rgb(125, 225, 243),*/
+    /*rgb(245, 213, 106));*/
+    background: linear-gradient(to top,
+    #FCBB6D, #D8737F, #AB6C82, #685D79);
+}
+
+.navbar {
+    /*background: linear-gradient(to bottom left,*/
+    /*rgb(125, 225, 243),*/
+    /*rgb(245, 213, 106))*/
+    background: #FCBB6D;
+}
+
+#appointmentsTable {
+    font-size: 20px;
+}
+
+body {
+    font-family: "Raleway", sans-serif;
+}
+
+#date {
+    padding-left: 25px;
+}
+
+#clinicianName {
+    padding-left: 25px;
+}
