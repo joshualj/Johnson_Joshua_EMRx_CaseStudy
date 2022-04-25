@@ -1,6 +1,6 @@
 .gradient-custom {
     background: linear-gradient(to bottom,
-    #FCBB6D, #D8737F, #AB6C82, #685D79);
+    #FCBB6D, #D8737F, #AB6C82);
     padding-bottom: 20px;
     /*background: linear-gradient(to top left,*/
     /*rgb(125, 225, 243),*/
@@ -85,7 +85,7 @@ footer {
     /*rgb(125, 225, 243),*/
     /*rgb(245, 213, 106));*/
     background: linear-gradient(to top,
-    #FCBB6D, #D8737F, #AB6C82, #685D79);
+    #FCBB6D, #D8737F, #AB6C82);
 }
 
 .navbar {

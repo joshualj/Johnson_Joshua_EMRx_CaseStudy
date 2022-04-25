@@ -1,14 +1,17 @@
 .gradient-custom {
-    background: linear-gradient(to top left,
-    rgb(125, 225, 243),
-    rgb(245, 213, 106))
+    /*background: linear-gradient(to top left,*/
+    /*rgb(125, 225, 243),*/
+    /*rgb(245, 213, 106));*/
+    background: linear-gradient(to bottom,
+    #FCBB6D, #D8737F, #AB6C82, #685D79);
 }
 
 .navbar {
     font-family: "Raleway", sans-serif;
-    background: linear-gradient(to bottom left,
-    rgb(125, 225, 243),
-    rgb(245, 213, 106))
+    /*background: linear-gradient(to bottom left,*/
+    /*rgb(125, 225, 243),*/
+    /*rgb(245, 213, 106));*/
+    background: #FCBB6D;
 }
 
 form {
@@ -16,9 +19,11 @@ form {
 }
 
 footer {
-    background: linear-gradient(to bottom left,
-    rgb(125, 225, 243),
-    rgb(245, 213, 106))
+    /*background: linear-gradient(to bottom left,*/
+    /*rgb(125, 225, 243),*/
+    /*rgb(245, 213, 106));*/
+    background: linear-gradient(to top,
+    #FCBB6D, #D8737F, #AB6C82, #685D79);
 }
 
 .card-registration .select-input.form-control[readonly]:not([disabled]) {
