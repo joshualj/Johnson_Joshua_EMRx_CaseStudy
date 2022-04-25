@@ -31,9 +31,11 @@
 #profilePicture {
     /*border: 2px solid #555;*/
     /*padding-top: 5%;*/
+    clip-path: circle();
     width: 70%;
     border-radius: 100%;
     border: 2px solid seashell;
+    object-position: 0 0;
 
     /*padding-bottom: 2%;*/
     /*border-color: black;*/
@@ -43,6 +45,7 @@
 #imageContainer {
     display: flex;
     flex-direction: column;
+    /*border-radius: 50%;*/
     align-items: center;
     padding-bottom: 2%;
 }

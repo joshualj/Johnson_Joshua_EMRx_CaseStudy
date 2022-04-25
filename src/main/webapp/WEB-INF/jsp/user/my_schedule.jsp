@@ -13,7 +13,12 @@
 <div id="appointments" class="gradient-custom">
     <div id="myPersonalDetails">
         <div id="imageContainer">
-            <img id="profilePicture" src="../../../pub/images/EMRx_default_photo_female.jpeg" alt="Profile Photo">
+            <c:if test="${patient.sex == 'M'}">
+                <img id="profilePicture" src="../../../pub/images/EMRx_default_photo_male.jpeg" alt="Profile Photo Male">
+            </c:if>
+            <c:if test="${patient.sex != 'M'}">
+                <img id="profilePicture" src="../../../pub/images/EMRx_default_photo_female.jpeg" alt="Profile Photo Female">
+            </c:if>
         </div>
         <div id="myInfo">
             <h2><b>${user.firstName} ${user.lastName}</b></h2>
