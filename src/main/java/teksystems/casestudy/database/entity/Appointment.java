@@ -34,12 +34,6 @@ public class Appointment {
     @Column(name = "time", nullable=false)
     private LocalTime time;
 
-//    @Column(name = "clinician_id")
-//    private Integer clinicianId;
-//
-//    @Column(name = "patient_id")
-//    private Integer patientId;
-
 //    @NonNull
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

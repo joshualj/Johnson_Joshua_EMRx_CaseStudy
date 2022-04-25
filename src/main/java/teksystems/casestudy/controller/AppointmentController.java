@@ -63,20 +63,19 @@ public class AppointmentController {
         ModelAndView response = new ModelAndView();
         response.setViewName("user/schedule_appointment");
 
-        if (userId != null) {
-            log.info(userId.toString() + " THIS IS THE userID");
-        } else {
-            log.info("User Id is null");
-        }
-
+        //pass Clinician object to .jsp page to show a specific clinician's schedule
         Clinician clinician = (userId != null) ? clinicianDao.findByUserId(userId)
                 : clinicianDao.findByClinicianId(4);
 
+        //pass User object to .jsp page to show the clinician's user information (firstName, lastName)
         User user = userDao.findByUserId(clinician.getUserId());
 
-        Integer clinicianId = (userId != null) ? clinician.getClinicianId() : 4;
+        //pass clinicianId so that user can select a drop-down option that has a clinicianId value
+        Integer clinicianId = clinician.getClinicianId();
+        response.addObject("clinicianId", clinicianId);
 
-        //Date Formatting
+
+        //date Formatting
         LocalDate currentDate = LocalDate.now();
 
         //if the inputted date is null, set the date to today's date
@@ -93,31 +92,41 @@ public class AppointmentController {
         String yearDate = year.toString();
         Integer dayDate = Integer.parseInt(dateFormatted.toString().split("-")[2]);
 
-        List<Appointment> appointments = appointmentDao.findByClinicianClinicianIdAndDate(clinicianId, dateFormatted);
-
-        Set<String> scheduledTime = new HashSet<>();
-
-        for (Appointment appointment : appointments) {
-            scheduledTime.add(appointment.getTime().toString());
-        }
-
-        List<Clinician> clins = clinicianDao.findAll();
-        List<User> clinicianUsers = new ArrayList<>();
-
-        for (Clinician clin : clins) {
-            User clinUser = userDao.findByUserId(clin.getUserId());
-            clinicianUsers.add(clinUser);
-        }
-
-        response.addObject("clinicianUsers", clinicianUsers);
-        response.addObject("clinUser", user);
-        response.addObject("scheduledTime", scheduledTime);
         response.addObject("localDate", dateFormatted);
         response.addObject("dayOfWeek", dayOfWeek);
         response.addObject("monthName", monthName);
         response.addObject("dayDate", dayDate);
         response.addObject("yearDate", yearDate);
-        response.addObject("clinicianId", clinicianId);
+        //end of date formatting
+
+
+        //Initialize a list of appointments on a date with a specific clinician
+        List<Appointment> appointments = appointmentDao.findByClinicianClinicianIdAndDate(clinicianId, dateFormatted);
+
+        Set<String> scheduledTime = new HashSet<>();
+
+        //pass each appointment time in appointments to .jsp page to determine
+        //appointment times that open
+        for (Appointment appointment : appointments) {
+            scheduledTime.add(appointment.getTime().toString());
+        }
+        response.addObject("scheduledTime", scheduledTime);
+
+        //obtain a list of all clinicians that a user can select from to view
+        //a specific clinician's schedule.
+        List<Clinician> clins = clinicianDao.findAll();
+
+        List<User> clinicianUsers = new ArrayList<>();
+
+        //obtain a list of the user objects for each clinician so that
+        //a clinician's firstName and lastName can be viewed in the dropdown
+        for (Clinician clin : clins) {
+            User clinUser = userDao.findByUserId(clin.getUserId());
+            clinicianUsers.add(clinUser);
+        }
+        response.addObject("clinicianUsers", clinicianUsers);
+        response.addObject("clinUser", user);
+
         response.addObject("appointmentTimes", appointmentTimes);
 
         return response;
@@ -131,7 +140,7 @@ public class AppointmentController {
         Clinician clinician = clinicianDao.findByUserId(form.getUserId());
         appointment.setClinician(clinician);
 
-        //converting String date and String time to Date, Time objects
+        //convert String date and String time to Date, Time objects
         appointment.setDate(LocalDate.parse(form.getDate()));
         appointment.setTime(LocalTime.parse(form.getTime()));
 
@@ -200,8 +209,6 @@ public class AppointmentController {
                 localDates.add(appointment.getDate());
             }
         }
-
-//        log.info(localDates.toString() + "==============");
 
         List<Appointment> appointmentsOrdered = new ArrayList<>();
 
@@ -319,14 +326,6 @@ public class AppointmentController {
 
         return response;
     }
-
-//    @RequestMapping(value = "/getTrainers", method = RequestMethod.GET)
-//    public ResponseEntity<String> ajaxRequest() throws Exception {
-//        List<Trainer> trainers = trainerDao.findAll();
-//
-//        String payload = GSON.toJson(trainers);
-//        return new ResponseEntity(payload, HttpStatus.OK);
-//    }
 
     //submit edits
     @PreAuthorize("hasAuthority('CLINICIAN')")

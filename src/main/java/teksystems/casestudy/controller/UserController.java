@@ -48,12 +48,6 @@ public class UserController{
         ModelAndView response = new ModelAndView();
         response.setViewName("user/register");
 
-
-        /* all these 2 lines of code are doing is seeding teh mdoel with an
-        // empty form bean so JSP page substitutions will not error out
-        // in this case spring is being nice enough not to throw errors but
-        // these 2 lines are safety
-        */
         RegisterFormBean form = new RegisterFormBean();
         response.addObject("form", form);
 
