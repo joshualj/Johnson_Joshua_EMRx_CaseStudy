@@ -34,6 +34,10 @@ public class ClinicianController {
             "10:30", "11:00", "11:30", "12:00", "01:00", "01:30",
             "02:00", "02:30", "03:00", "03:30", "04:00"};
 
+    private final String[] departments = {"Anesthesiology", "Cardiology", "Ear, Nose, Throat", "Geriatrics",
+            "Gastroenterology", "General Surgery", "Hematology", "Neonatal", "Neurology", "Nutrition", "Oncology",
+            "Obsetetrics & Gynecology", "Orthopedics", "Physical Therapy", "Renal", "Psychiatry", "Urology"};
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -103,6 +107,7 @@ public class ClinicianController {
         response.setViewName("clinician/register_clinician");
 
         ClinicianRegisterFormBean form = new ClinicianRegisterFormBean();
+        response.addObject("departments", departments);
         response.addObject("form", form);
 
         return response;

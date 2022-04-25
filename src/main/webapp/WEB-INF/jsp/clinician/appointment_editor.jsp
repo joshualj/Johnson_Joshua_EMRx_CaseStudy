@@ -25,7 +25,7 @@
                                 <label class="form-label" for="date">Date</label>
                             </div>
                             <div class="col-md-12 mb-4">
-                                <select id="time" class="form-control-md mb-3" name="time" value="${form.time}" required>
+                                <select id="time" class="form-select mb-3" name="time" value="${form.time}" required>
                                     <option value="${form.time}">${form.time}</option>
                                     <c:forEach var="time" items="${appointmentTimes}">
                                         <c:if test="${form.time != time}">
@@ -43,14 +43,30 @@
                             </div>
 
                             <div class="col-md-12 mb-4">
-                                <input type="text" id="clinicianId" class="form-control form-control-lg" name="clinicianId" value="${form.clinicianId}"/>
+                                <select id="clinicianId" class="form-select mb-3" name="clinicianId" value="${thisClinicianUser.firstName} ${thisClinicianUser.lastName}" required>
+                                    <option value="${form.clinicianId}">${thisClinicianUser.firstName} ${thisClinicianUser.lastName}</option>
+                                    <c:forEach var="clinicianUser" items="${allClinUsers}">
+                                        <c:if test="${thisClinicianUser != clinicianUser}">
+                                            <option value="${allClinicians[allClinUsers.indexOf(clinicianUser)].clinicianId}">${clinicianUser.firstName} ${clinicianUser.lastName}</option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
                                 <c:forEach items="${bindingResult.getFieldErrors('clinicianId')}" var="error">
                                     <div style="color: red;">
                                             ${error.getDefaultMessage()}
                                     </div>
                                 </c:forEach>
-                                <label class="form-label" for="clinicianId">Clinician Id</label>
                             </div>
+
+<%--                            <div class="col-md-12 mb-4">--%>
+<%--                                <input type="text" id="clinicianId" class="form-control form-control-lg" name="clinicianId" value="${form.clinicianId}"/>--%>
+<%--                                <c:forEach items="${bindingResult.getFieldErrors('clinicianId')}" var="error">--%>
+<%--                                    <div style="color: red;">--%>
+<%--                                            ${error.getDefaultMessage()}--%>
+<%--                                    </div>--%>
+<%--                                </c:forEach>--%>
+<%--                                <label class="form-label" for="clinicianId">Clinician Id</label>--%>
+<%--                            </div>--%>
 
 <%--                            <div class="col-md-12 mb-4">--%>
 <%--                                <input type="text" id="chiefComplaint" class="form-control form-control-lg" name="chiefComplaint" value="${form.chiefComplaint}"/>--%>

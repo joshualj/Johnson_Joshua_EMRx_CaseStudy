@@ -301,6 +301,17 @@ public class AppointmentController {
         Integer userId = appointment.getPatient().getUserId();
         form.setUserId(userId);
 
+        User thisClinicianUser = userDao.findByUserId(appointment.getClinician().getUserId());
+
+        List<Clinician> allClinicians = clinicianDao.findAll();
+        List<User> allClinUsers = new ArrayList<>();
+        for (Clinician clinician : allClinicians){
+            allClinUsers.add(userDao.findByUserId(clinician.getUserId()));
+        }
+        response.addObject("allClinicians", allClinicians);
+        response.addObject("allClinUsers", allClinUsers);
+        response.addObject("thisClinicianUser", thisClinicianUser);
+
         response.addObject("form", form);
         response.addObject("appointmentId", appointment.getAppointmentId());
         response.addObject("appointmentTimes", appointmentTimes);

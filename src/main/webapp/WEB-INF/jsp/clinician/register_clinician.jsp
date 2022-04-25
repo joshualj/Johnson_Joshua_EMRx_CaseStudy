@@ -15,14 +15,6 @@
                     <div class="card-body p-4 p-md-5">
                         <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Clinician Registration</h3>
                         <form id="registerForm" action="/clinician/register_clinicianSubmit" class="needs-validation" novalidate>
-<%--                            <input type="hidden" name="id" value="${form.id}">--%>
-<%--                            <div class="col-md-12 mb-4">--%>
-<%--                                <input type="text" id="userId" class="form-control form-control-lg" name="userId" value="${form.userId}" required/>--%>
-<%--                                <label class="form-label" for="userId">User Id</label>--%>
-<%--                                <div class="invalid-feedback">--%>
-<%--                                    Please provide a valid User Id.--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
 
                             <div class="col-md-12 mb-4">
                                 <input type="text" id="firstName" class="form-control form-control-lg" name="firstName" value="${form.firstName}"/>
@@ -55,13 +47,20 @@
                             </div>
 
                             <div class="col-md-12 mb-4">
-                                <input type="text" id="department" class="form-control form-control-lg" name="department" value="${form.department}"/>
+                                <label for="department">Department</label>
+                                <select class="form-select mb-3" id="department" name="department" value="${form.department}">
+                                    <option value="${form.department}">${form.department}</option>
+                                    <c:forEach var="department" items="${departments}">
+                                        <c:if test="${form.department != department}">
+                                            <option value="${department}">${department}</option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
                                 <c:forEach items="${bindingResult.getFieldErrors('department')}" var="error">
                                     <div style="color: red;">
                                             ${error.getDefaultMessage()}
                                     </div>
                                 </c:forEach>
-                                <label class="form-label" for="department">Department</label>
                             </div>
 
                             <div class="col-md-12 mb-4">
