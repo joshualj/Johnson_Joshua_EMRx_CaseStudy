@@ -13,6 +13,10 @@
     color: seashell;
 }
 
+.button {
+    padding-top: 8px;
+}
+
 footer {
     background: linear-gradient(to top,
     #FCBB6D, #D8737F, #AB6C82, #685D79);

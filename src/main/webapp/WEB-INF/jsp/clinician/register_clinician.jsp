@@ -17,33 +17,41 @@
                         <form id="registerForm" action="/clinician/register_clinicianSubmit" class="needs-validation" novalidate>
 
                             <div class="col-md-12 mb-4">
+                                <label class="form-label" for="firstName">First Name</label>
                                 <input type="text" id="firstName" class="form-control form-control-lg" name="firstName" value="${form.firstName}"/>
                                 <c:forEach items="${bindingResult.getFieldErrors('firstName')}" var="error">
                                     <div style="color: red;">
                                             ${error.getDefaultMessage()}
                                     </div>
                                 </c:forEach>
-                                <label class="form-label" for="firstName">First Name</label>
+
                             </div>
 
                             <div class="col-md-12 mb-4">
+                                <label class="form-label" for="lastName">Last Name</label>
                                 <input type="text" id="lastName" class="form-control form-control-lg" name="lastName" value="${form.lastName}"/>
                                 <c:forEach items="${bindingResult.getFieldErrors('lastName')}" var="error">
                                     <div style="color: red;">
                                             ${error.getDefaultMessage()}
                                     </div>
                                 </c:forEach>
-                                <label class="form-label" for="lastName">Last Name</label>
                             </div>
 
                             <div class="col-md-12 mb-4">
-                                <input type="text" id="title" class="form-control form-control-lg" name="title" value="${form.title}"/>
+                                <label for="title">Title</label>
+                                <select class="form-select mb-3" id="title" name="title" value="${form.title}">
+                                    <option value="${form.title}">${form.title}</option>
+                                    <c:forEach var="title" items="${titles}">
+                                        <c:if test="${form.title != title}">
+                                            <option value="${title}">${title}</option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
                                 <c:forEach items="${bindingResult.getFieldErrors('title')}" var="error">
                                     <div style="color: red;">
                                             ${error.getDefaultMessage()}
                                     </div>
                                 </c:forEach>
-                                <label class="form-label" for="title">Title</label>
                             </div>
 
                             <div class="col-md-12 mb-4">
@@ -64,8 +72,8 @@
                             </div>
 
                             <div class="col-md-12 mb-4">
-                                <input type="text" id="languages" class="form-control form-control-lg" name="languages" value="${form.languages}"/>
                                 <label class="form-label" for="languages">Languages</label>
+                                <input type="text" id="languages" class="form-control form-control-lg" name="languages" value="${form.languages}"/>
                                 <c:forEach items="${bindingResult.getFieldErrors('languages')}" var="error">
                                     <div style="color: red;">
                                             ${error.getDefaultMessage()}
@@ -74,21 +82,18 @@
                             </div>
 
                             <div class="col-md-12 mb-4">
+                                <label class="email" for="email">Email</label>
                                 <input type="text" id="email" class="form-control form-control-lg" name="email" value="${form.email}"/>
                                 <c:forEach items="${bindingResult.getFieldErrors('email')}" var="error">
                                     <div style="color: red;">
                                             ${error.getDefaultMessage()}
                                     </div>
                                 </c:forEach>
-                                <label class="email" for="email">Email</label>
                             </div>
 
                             <div class="col-md-12 mb-4">
-                                <input type="password" id="password" class="form-control form-control-lg" name="password" value="${form.password}"/>
                                 <label class="form-label" for="password">Password</label>
-                                <div class="invalid-feedback">
-                                    Please provide a valid password.
-                                </div>
+                                <input type="password" id="password" class="form-control form-control-lg" name="password" value="${form.password}"/>
                                 <c:forEach items="${bindingResult.getFieldErrors('password')}" var="error">
                                     <div style="color: red;">
                                             ${error.getDefaultMessage()}
@@ -97,9 +102,9 @@
                             </div>
 
                             <div class="col-md-12 mb-4">
+                                <label class="form-label" for="confirmPassword">Confirm Password</label>
                                 <input type="password" id="confirmPassword" class="form-control form-control-lg"
                                        onkeyup='check();' name="confirmPassword" value="${form.confirmPassword}"/>
-                                <label class="form-label" for="confirmPassword">Confirm Password</label>
                                 <div class="invalid-feedback">
                                     Please provide a valid password.
                                 </div>

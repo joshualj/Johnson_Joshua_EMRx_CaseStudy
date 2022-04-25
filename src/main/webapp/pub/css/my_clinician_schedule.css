@@ -39,14 +39,6 @@
     align-items: center;
 }
 
-.col {
-    display: grid;
-}
-
-#scheduleHeader {
-    text-align: center;
-}
-
 .physDateForm {
     width: 50%;
     display: flex;
@@ -63,6 +55,15 @@
     padding-bottom: 10px;
     border-radius: 30px;
 }
+
+.col {
+    display: grid;
+}
+
+#scheduleHeader {
+    text-align: center;
+}
+
 
 #appointments {
     /*min-height: 150vh;*/
@@ -98,7 +99,7 @@ footer {
     font-size: 20px;
 }
 
-body {
+.myClinSchedSection {
     font-family: "Raleway", sans-serif;
 }
 
@@ -107,5 +108,5 @@ body {
 }
 
 #clinicianName {
-    padding-left: 25px;
+    /*padding-left: 25px;*/
 }

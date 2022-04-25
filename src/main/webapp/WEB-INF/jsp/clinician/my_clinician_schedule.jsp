@@ -2,39 +2,13 @@
 <jsp:include page="../include/header.jsp"/>
 <jsp:include page="../include/navbar.jsp"/>
 <link href="../../../pub/css/my_clinician_schedule.css" rel="stylesheet">
-<body>
+<%--<body>--%>
 <section class="myClinSchedSection vh-120 gradient-custom">
-<%--    <div class="row justify-content-center align-items-center">--%>
-<%--    <form class="appointmentDaySelect" action="/user/my_schedule">--%>
-<%--        <input type="text" id="userId" class="form-control form-control-lg" name="userId" value="${form.userId}">--%>
-<%--        <input class="btn btn-outline-primary btn-md" type="submit" value="Submit" />--%>
-<%--    </form>--%>
     <div class="physDate">
-<%--        <form class="form-inline"" action="/user/schedule_appointment">--%>
-<%--            <div class="form-row align-items-center">--%>
-<%--                <div class="col-sm-3 my-1">--%>
-<%--                    <label for="clinician">Select a Clinician</label>--%>
-<%--                    <select id="clinician" class="form-control-md mb-3" name="userId" value="${form.userId}"required>--%>
-<%--                        <option value="0" disabled></option>--%>
-<%--                        <c:forEach var="clinician" items="${clinicianUsers}">--%>
-<%--                            <option value="${clinician.userId}">${clinician.firstName} ${clinician.lastName}</option>--%>
-<%--                        </c:forEach>--%>
-<%--                    </select>--%>
-<%--                </div>--%>
-<%--                <div class="col-sm-3 my-1">--%>
-<%--                    <label for="date">Select a Date</label>--%>
-<%--                    <input type="date" id="date" name="date" placeholder="Date" class="form-control-md mb-3" value="${form.date}">--%>
-<%--                </div>--%>
-<%--                <div class="col-auto my-1">--%>
-<%--                    <button type="submit" class="btn btn-primary">Submit</button>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </form>--%>
         <form class="physDateForm form-inline" action="/clinician/my_clinician_schedule">
-<%--            <div class="form-inline">--%>
                 <div class="col">
-                <label for="userId">Clinician</label>
-                    <select id="userId" class="form-control-md mb-3" name="userId" value="${clinUser.userId}" required>
+                    <label for="userId"><center>Clinician</center></label>
+                    <select id="userId" class="form-select mb-3" name="userId" value="${clinUser.userId}" required>
                         <option value="${clinUser.userId}">${clinUser.firstName} ${clinUser.lastName}</option>
                         <c:forEach var="clinician" items="${clinicianUsers}">
                             <c:if test="${clinUser.userId != clinician.userId}">
@@ -44,13 +18,12 @@
                     </select>
                 </div>
                 <div class="col">
-                    <label for="date">Date</label>
-                    <input type="date" id="date" name="date" placeholder="Date" class="form-control-md mb-4" value="${localDate}">
+                    <label for="date"><center>Date</center></label>
+                    <input type="date" id="date" name="date" placeholder="Date" class="form-control mb-3" value="${localDate}">
                 </div>
                 <div class="col">
                     <input class="btn btn-outline-primary btn-sm" type="submit" value="Submit">
                 </div>
-<%--            </div>--%>
         </form>
     </div>
     <hr>
@@ -131,5 +104,5 @@
         </div>
     </div>
 </section>
-</body>
+<%--</body>--%>
 <jsp:include page="../include/footer.jsp"/>

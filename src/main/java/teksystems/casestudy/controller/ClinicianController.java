@@ -38,6 +38,9 @@ public class ClinicianController {
             "Gastroenterology", "General Surgery", "Hematology", "Neonatal", "Neurology", "Nutrition", "Oncology",
             "Obsetetrics & Gynecology", "Orthopedics", "Physical Therapy", "Renal", "Psychiatry", "Urology"};
 
+    private final String[] titles = {"Physician", "Advance-Practice Registered Nurse",
+            "Physician's Assistant", "Registered Nurse"};
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -108,6 +111,7 @@ public class ClinicianController {
 
         ClinicianRegisterFormBean form = new ClinicianRegisterFormBean();
         response.addObject("departments", departments);
+        response.addObject("titles", titles);
         response.addObject("form", form);
 
         return response;
