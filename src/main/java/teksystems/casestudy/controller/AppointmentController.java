@@ -54,8 +54,6 @@ public class AppointmentController {
     @Autowired
     private UserDAO userDao;
 
-
-
     @RequestMapping(value = "/user/schedule_appointment", method = RequestMethod.GET)
     public ModelAndView viewClinicianScheduleAsPatient(@RequestParam(required = false) Integer userId,
                                                        @RequestParam(required = false) String date) throws Exception {
@@ -65,10 +63,11 @@ public class AppointmentController {
 
         //pass Clinician object to .jsp page to show a specific clinician's schedule
         Clinician clinician = (userId != null) ? clinicianDao.findByUserId(userId)
-                : clinicianDao.findByClinicianId(4);
+                : clinicianDao.findByClinicianId(10);
 
         //pass User object to .jsp page to show the clinician's user information (firstName, lastName)
         User user = userDao.findByUserId(clinician.getUserId());
+        response.addObject("clinUser", user);
 
         //pass clinicianId so that user can select a drop-down option that has a clinicianId value
         Integer clinicianId = clinician.getClinicianId();
@@ -125,7 +124,6 @@ public class AppointmentController {
             clinicianUsers.add(clinUser);
         }
         response.addObject("clinicianUsers", clinicianUsers);
-        response.addObject("clinUser", user);
 
         response.addObject("appointmentTimes", appointmentTimes);
 
@@ -160,6 +158,7 @@ public class AppointmentController {
         return response;
     }
 
+    //Reserving this commented-out code for later building
 //    @PreAuthorize("hasAuthority('CLINICIAN')")
 //    @RequestMapping(value = "/clinician/my_clinician_schedule", method = RequestMethod.GET)
 //    public ModelAndView navToMyClinicianSchedule() {
@@ -176,6 +175,7 @@ public class AppointmentController {
 //        return response;
 //    }
 
+    //Navigate to user schedule based on userId
     @PreAuthorize("hasAnyAuthority('CLINICIAN','PATIENT')")
     @RequestMapping(value = "/user/my_schedule", method = RequestMethod.GET)
     public ModelAndView navToMyAppointmentsAsPatient() {
@@ -192,9 +192,10 @@ public class AppointmentController {
         return response;
     }
 
+    //This method displays the user's appointment profile page, based on the userId obtained in the URL
     @PreAuthorize("hasAnyAuthority('CLINICIAN','PATIENT')")
     @RequestMapping(value = "/user/my_schedule/{userId}", method = RequestMethod.GET)
-    public ModelAndView viewMyAppointments(@PathVariable("userId") Integer userId) {
+    public ModelAndView viewMyAppointmentsAsPatient(@PathVariable("userId") Integer userId) {
         ModelAndView response = new ModelAndView();
         response.setViewName("user/my_schedule");
 
@@ -203,7 +204,7 @@ public class AppointmentController {
 
         List<LocalDate> localDates = new ArrayList<>();
 
-//        create a list of dates included in appointments
+        //create a list of dates included in appointments
         for(Appointment appointment : appointments) {
             if(!localDates.contains(appointment.getDate())) {
                 localDates.add(appointment.getDate());
@@ -216,16 +217,20 @@ public class AppointmentController {
         List<Appointment> afternoonAppointments;
 
         //for each date within appointments, obtain one list for morning appointments and one list for afternoon appointments
-//        findByDateAndTimeLessThanEqualAndTimeGreaterThanEqualAndPatientPatientId
+        //findByDateAndTimeLessThanEqualAndTimeGreaterThanEqualAndPatientPatientId
         for(LocalDate date : localDates) {
             morningAppointments = appointmentDao.findByDateAndTimeLessThanEqualAndTimeGreaterThanEqualAndPatientPatientId(date,
-                    LocalTime.of(12, 30), LocalTime.of(8,00), patientId);
+                    LocalTime.of(12, 59), LocalTime.of(8,00), patientId);
             log.info(morningAppointments.toString() + "========MORNING APPOINTMENTS======");
             log.info("========MORNING APPOINTMENTS======");
+            morningAppointments.sort((app1, app2)
+                    -> app1.getTime().compareTo(app2.getTime()));
 
 
             afternoonAppointments = appointmentDao.findByDateAndTimeLessThanEqualAndTimeGreaterThanEqualAndPatientPatientId(date,
                     LocalTime.of(4, 00), LocalTime.of(1,00), patientId);
+            afternoonAppointments.sort((app1, app2)
+                    -> app1.getTime().compareTo(app2.getTime()));
 
             for(Appointment mornApt : morningAppointments) {
                 appointmentsOrdered.add(mornApt);
@@ -235,10 +240,13 @@ public class AppointmentController {
             }
         }
 
+        //to cleanly display each appointment's date on profile page,
+        // it is necessary to get each appointment's day of month, month, and year
         List<Integer> daysOfMonth = new ArrayList<>();
         List<String> months = new ArrayList<>();
         List<Integer> years = new ArrayList<>();
         List<User> clinUsers = new ArrayList<>();
+
         for(Appointment appointment : appointmentsOrdered) {
             daysOfMonth.add(appointment.getDate().getDayOfMonth());
             months.add(appointment.getDate().getMonth().toString().substring(0, 1).toUpperCase() + appointment.getDate().getMonth().toString().substring(1).toLowerCase());
@@ -247,17 +255,6 @@ public class AppointmentController {
             clinUsers.add(clinUser);
         }
 
-
-        log.info("=========== APPOINTMENTS ORDERED ===========");
-        log.info(appointmentsOrdered.toString() + "========");
-        log.info("=========== APPOINTMENTS ORDERED END ===========");
-
-        appointments.sort((app1, app2)
-                -> app1.getDate().compareTo(
-                app2.getDate()));
-
-//        log.info(appointments.toString());
-//        log.info(userId.toString());
 
         User user = userDao.findByUserId(userId);
 
@@ -274,6 +271,7 @@ public class AppointmentController {
         return response;
     }
 
+    //this method is called when user presses "Start"/"Edit" button under "Questionnaire", on their profile page
     @PreAuthorize("hasAnyAuthority('CLINICIAN','PATIENT')")
     @RequestMapping(value = "/user/paq", method = RequestMethod.GET)
     public ModelAndView navigateToPaq(@RequestParam(required = false) Integer userId) {
@@ -293,6 +291,7 @@ public class AppointmentController {
 
         AppointmentEditorFormBean form = new AppointmentEditorFormBean();
 
+        //populate fields of already scheduled appointment
         Appointment appointment = appointmentDao.getById(appointmentId);
         form.setDate(appointment.getDate().toString());
         form.setTime(appointment.getTime().toString());
@@ -315,6 +314,7 @@ public class AppointmentController {
         for (Clinician clinician : allClinicians){
             allClinUsers.add(userDao.findByUserId(clinician.getUserId()));
         }
+        //passing variables to .jsp page
         response.addObject("allClinicians", allClinicians);
         response.addObject("allClinUsers", allClinUsers);
         response.addObject("thisClinicianUser", thisClinicianUser);
@@ -327,7 +327,7 @@ public class AppointmentController {
         return response;
     }
 
-    //submit edits
+    //submit appointment edits
     @PreAuthorize("hasAuthority('CLINICIAN')")
     @RequestMapping(value = "/clinician/my_clinician_scheduleSubmit/{appointmentId}", method = RequestMethod.POST)
     public ModelAndView submitAppointmentEdits(@PathVariable("appointmentId") Integer appointmentId,
@@ -401,6 +401,7 @@ public class AppointmentController {
         return response;
     }
 
+    //a pseudo-delete method for appointments
     @PreAuthorize("hasAuthority('CLINICIAN')")
     @RequestMapping(value = "/clinician/my_clinician_schedule/cancel/{appointmentId}", method = RequestMethod.POST)
     public ModelAndView clearAppointmentFields(@PathVariable("appointmentId") Integer appointmentId) {

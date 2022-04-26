@@ -35,9 +35,6 @@ public class UserController{
     private UserDAO userDao;
 
     @Autowired
-    private ClinicianDAO clinicianDao;
-
-    @Autowired
     private PatientDAO patientDao;
 
     @Autowired
@@ -75,12 +72,6 @@ public class UserController{
             return response;
         }
 
-
-        //we first assume we are going to do an edit by loading the user by loading the user from
-        // the database using the incoming id on the form
-
-        //now check if the id in the register in the form bean is not null, then query it
-        //from the database
         User user = userDao.findByEmail(form.getEmail());
 
         if (user == null) {

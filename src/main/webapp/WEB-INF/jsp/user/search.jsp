@@ -8,6 +8,7 @@
     <h1><b>Clinician Search</b></h1>
 
     <div class="formDiv">
+        <%--Form that allows user to enter a search entry and a search type (Last Name, Department, Language)--%>
         <form class= "searchForm" action="/user/search" method="get">
 
             <div>
@@ -26,11 +27,12 @@
             </div>
 
             <div class="button">
-                <button id ="searchId" class="btn btn-outline-primary btn-md" type="submit">Submit</button>
+                <button id ="searchId" class="btn btn-outline-primary btn-md" type="submit">Search</button>
             </div>
         </form>
     </div>
 
+    <%--Table that displays users that match the above search parameters--%>
     <table class = "results table">
         <tr>
             <th><strong>First Name</strong></th>

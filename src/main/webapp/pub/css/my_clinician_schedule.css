@@ -16,16 +16,22 @@
     background-color: rgb(125, 225, 243);
 }
 
-.edit {
-    border-color: rgb(223, 107, 252);
+.view {
+    border-color: #518043;
     color: #fffbfb;
-    background-color: rgb(223, 107, 252);
+    background-color: #518043;
+}
+
+.edit {
+    border-color: #FCBB6D;
+    color: #fffbfb;
+    background-color: #FCBB6D;
 }
 
 .cancelBtn {
-    border-color: rgb(255, 0, 0);
+    border-color: #ef4158;
     color: #fffbfb;
-    background-color: rgb(255, 0, 0);
+    background-color: #ef4158;
 }
 
 .btn:hover {

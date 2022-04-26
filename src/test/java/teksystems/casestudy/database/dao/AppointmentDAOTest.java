@@ -115,7 +115,6 @@ public class AppointmentDAOTest {
     public void findByAppointmentIdTest(){
         Appointment appointment = appointmentDao.findByAppointmentId(appointmentTwo.getAppointmentId());
         Assertions.assertThat(appointment).isEqualTo(appointmentTwo);
-
     }
 
     @Test

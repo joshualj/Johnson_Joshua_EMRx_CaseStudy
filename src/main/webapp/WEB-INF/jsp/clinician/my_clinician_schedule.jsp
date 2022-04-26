@@ -2,7 +2,7 @@
 <jsp:include page="../include/header.jsp"/>
 <jsp:include page="../include/navbar.jsp"/>
 <link href="../../../pub/css/my_clinician_schedule.css" rel="stylesheet">
-<%--<body>--%>
+
 <section class="myClinSchedSection vh-120 gradient-custom">
     <div class="physDate">
         <form class="physDateForm form-inline" action="/clinician/my_clinician_schedule">
@@ -54,7 +54,6 @@
                         </thead>
                         <c:forEach var="appt" items="${appointmentTimes}"> <%-- varStatus="status"> --%>
                             <tr>
-<%--                                <td><b>${localDate}</b></td>--%>
                                 <td><b>${appt}</b></td>
                                 <c:if test="${scheduledTime.contains(appt)}">
                                     <td><b>${users[scheduledTime.indexOf(appt)].firstName} ${users[scheduledTime.indexOf(appt)].lastName}</b></td>
@@ -67,7 +66,7 @@
                                             <input type="hidden" name="date" value="${appointments[scheduledTime.indexOf(appt)].date}">
                                             <input type="hidden" name="time" value="${appointments[scheduledTime.indexOf(appt)].time}">
                                             <input type="hidden" name="clinicianId" value="${appointments[scheduledTime.indexOf(appt)].clinician.clinicianId}">
-                                            <button type="submit" class="btn btn-outline-primary btn-md">View</button>
+                                            <button type="submit" class="btn view btn-outline-primary btn-md">View</button>
                                         </form>
                                         </td>
                                     </c:if>
@@ -104,5 +103,5 @@
         </div>
     </div>
 </section>
-<%--</body>--%>
+
 <jsp:include page="../include/footer.jsp"/>

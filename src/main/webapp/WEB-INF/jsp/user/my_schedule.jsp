@@ -2,7 +2,6 @@
 <jsp:include page="../include/header.jsp"/>
 <jsp:include page="../include/navbar.jsp"/>
 <link href="../../../pub/css/my_schedule.css" rel="stylesheet">
-<body>
 <style>
     h1{
         text-align: center;
@@ -11,6 +10,7 @@
 </style>
 
 <div id="appointments" class="gradient-custom">
+    <%-- The left side of a patient profile page includes an image based on patient's sex, and info based on patient info--%>
     <div id="myPersonalDetails">
         <div id="imageContainer">
             <c:if test="${patient.sex == 'M'}">
@@ -26,6 +26,7 @@
             <h5>${patient.birthDate}</h5>
         </div>
     </div>
+    <%-- The central section of a patient profile page includes a table of the user's appointments--%>
     <section class="myPatientSched">
         <div class="row justify-content-center align-items-center">
             <h1 id="name" name="user" value="${user}">
@@ -49,6 +50,7 @@
                                     <td><b>${months[appointments.indexOf(appt)]} ${daysOfMonth[appointments.indexOf(appt)]}, ${years[appointments.indexOf(appt)]}</b></td>
                                     <td><b>${appt.time}</b></td>
                                     <td><b>${clinUsers[appointments.indexOf(appt)].firstName} ${clinUsers[appointments.indexOf(appt)].lastName}</b></td>
+                                    <%-- Each row has either a "Start" or "Edit" button that redirects to a specific Pre-Appointment Questionnaire --%>
                                     <td>
                                         <c:if test="${!empty appt.paqId}">
                                             <form action="/user/paq/${appt.appointmentId}" method="GET">
@@ -75,9 +77,12 @@
             </div>
         </div>
     </section>
+
+    <%-- The right section of a patient profile is currently blank,
+    but it will be used for displaying a patient's medications & diagnoses--%>
     <div id="otherDetails">
 
     </div>
 </div>
-</body>
+
 <jsp:include page="../include/footer.jsp"/>

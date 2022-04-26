@@ -6,6 +6,9 @@
 <title>Patient Registration</title>
 <link href="../../../pub/css/register.css" rel="stylesheet">
 
+<%--User registration form that populates already-saved values, if form has been previously submitted by user--%>
+<%--Binding result displays error messages from form bean, corresponding to each field--%>
+
 <section class="registrationSection vh-140 gradient-custom">
     <div class="container py-3 h-120">
         <div class="row justify-content-center align-items-center h-120">
@@ -69,8 +72,10 @@
                             <div class="col-md-12 mb-4">
                                 <h6 class="mb-2 pb-1">Pronouns:</h6>
                                 <div class="form-check form-check-inline">
+                                    <%--If a radio button option has previously been selected, and an error occurs after form submission, --%>
+                                    <%--radio button appear as checked (as indicated by 'checked':'')--%>
                                     <input class="form-check-input" type="radio" name="pronouns"
-                                           id="sheher" value="she/her" ${form.pronouns=='she/her'?'checked':''}/>
+                                       id="sheher" value="she/her" ${form.pronouns=='she/her'?'checked':''}/>
                                     <label class="form-check-label" for="sheher">she/her</label>
                                 </div>
                                 <div class="form-check form-check-inline">
@@ -85,7 +90,7 @@
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="pronouns"
-                                           id="oth" value="other"/>
+                                           id="oth" value="other" ${form.pronouns=='other'?'checked':''}/>
                                     <label class="form-check-label" for="oth">Other</label>
                                 </div>
                                 <c:forEach items="${bindingResult.getFieldErrors('pronouns')}" var="error">

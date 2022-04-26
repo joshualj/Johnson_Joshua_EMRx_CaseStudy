@@ -34,18 +34,15 @@ public class Appointment {
     @Column(name = "time", nullable=false)
     private LocalTime time;
 
-//    @NonNull
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "clinician_id")
     private Clinician clinician;
 
-//    @NonNull
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "patient_id")
     private Patient patient;
-    //we need to be able to get a patient's id, not a patient
 
     @Column(name = "chief_complaint")
     private String chiefComplaint;
