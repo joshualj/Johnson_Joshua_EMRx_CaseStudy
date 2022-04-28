@@ -7,11 +7,32 @@ EMRxpress seeks to streamline the medical documentation process by allowing pati
 Similar to a traditional Electronic Medical Record program, EMRxpress gives a clinician the options to view/edit/cancel their appointments. In addition, patient users can schedule and view upcoming appointments.
 
 ## Usage
+Login
+![patientRegistration.png](src/main/webapp/pub/images/login.png)
+
 A patient may register using the following form. 
 ![patientRegistration.png](src/main/webapp/pub/images/patientRegistration.png)
 
 A patient may schedule an appointment as follows:
 ![scheduleAppointment.png](src/main/webapp/pub/images/scheduleAppointment.png)
+
+A patient may view their profile, which includes their appointments, as follows:
+![scheduleAppointment.png](src/main/webapp/pub/images/patientProfile.png)
+
+A patient may click the "start/edit" button displayed in the appointment table to be taken to a Pre-Appointment Questionnaire:
+![scheduleAppointment.png](src/main/webapp/pub/images/paq.png)
+
+A clinician may view their patient schedule for a specific day. From this page, they may click "View" to view their patient's PAQ, "Edit" to edit an appointment's time, date, or clinician, or "Cancel" to cancel the appointment.
+![scheduleAppointment.png](src/main/webapp/pub/images/clinicianScheduleViewer.png)
+
+A clinician may edit an appointment's date, time, or clinician.
+![scheduleAppointment.png](src/main/webapp/pub/images/appointmentEditor.png)
+
+A clinician may register another clinician user
+![scheduleAppointment.png](src/main/webapp/pub/images/clinicianRegistration.png)
+
+Any user may search a clinician via Language, Department, or Last Name
+![scheduleAppointment.png](src/main/webapp/pub/images/clinicianSearch.png)
 
 ## Database
 Database structure, via ER diagram:
