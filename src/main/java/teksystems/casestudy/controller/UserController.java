@@ -41,7 +41,7 @@ public class UserController{
     private PasswordEncoder passwordEncoder;
 
     @RequestMapping(value="/user/register", method = RequestMethod.GET)
-    public ModelAndView register() throws Exception {
+    public ModelAndView registerPatientUser() throws Exception {
         ModelAndView response = new ModelAndView();
         response.setViewName("user/register");
 
@@ -58,11 +58,11 @@ public class UserController{
         log.info(form.toString());
 
         if (bindingResult.hasErrors()) {
-//            List<String> errorMessages = new ArrayList<>();
-//
-//            for(ObjectError error : bindingResult.getAllErrors()) {
-//                errorMessages.add(error.getDefaultMessage());
-//            }
+            List<String> errorMessages = new ArrayList<>();
+
+            for(ObjectError error : bindingResult.getAllErrors()) {
+                errorMessages.add(error.getDefaultMessage());
+            }
 
             response.addObject("form", form);
 
@@ -72,6 +72,7 @@ public class UserController{
             return response;
         }
 
+        //find user based off email. If null, create new user object
         User user = userDao.findByEmail(form.getEmail());
 
         if (user == null) {

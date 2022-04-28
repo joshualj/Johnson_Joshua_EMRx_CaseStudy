@@ -21,26 +21,15 @@ public interface ClinicianDAO extends JpaRepository<Clinician, Integer> {
 
     public List<Clinician> findByLanguagesIgnoreCaseContaining(@Param("languages") String languages);
 
-//    public Clinician findByEmail(@Param("email") String email);
-//
-//    public List<Clinician> findByPassword(@Param("password") String password);
+    public List<Clinician> findByDepartment(@Param("department") String department);
 
-//    public List<Clinician> findByFirstName(@Param("firstName") String firstName);
-//
-//    public List<Clinician> findByLastName(@Param("lastName") String lastName);
 
+
+    //To be used for later search depth
 //    public List<Clinician> findByFirstNameIgnoreCaseContaining(@Param("firstName") String firstName);
 //
 //    public List<Clinician> findByLastNameIgnoreCaseContaining(@Param("lastName") String lastName);
 
     public List<Clinician> findByTitle(@Param("title") String title);
 
-    public List<Clinician> findByDepartment(@Param("department") String department);
-
-    public List<Clinician> findByLanguagesContaining(@Param("languages") String languages);
-
-//    public List<Clinician> findByFirstNameAndLastName(@Param("firstName") String firstName, @Param("lastName") String lastName);
-
-//    @Query(value = "select u from User u where u.password = :password", nativeQuery = true)
-//    public List<User> getByPassword(@Param("password") String password);
 }

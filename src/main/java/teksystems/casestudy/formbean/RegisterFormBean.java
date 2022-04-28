@@ -16,7 +16,6 @@ import java.time.LocalDate;
 @ToString
 @PasswordConfirm(password = "password", passwordConfirm = "confirmPassword")
 public class RegisterFormBean {
-//    private Integer id;
 
     private Integer userId;
 
@@ -38,9 +37,6 @@ public class RegisterFormBean {
 
     private String pronouns;
 
-//    private String cis;
-//    private String trans;
-//    private String other;
     private String gender;
 
     @NotBlank(message="Please enter your biological sex")

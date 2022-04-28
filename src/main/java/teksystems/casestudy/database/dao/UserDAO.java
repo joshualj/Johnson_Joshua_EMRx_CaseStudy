@@ -13,17 +13,11 @@ import java.util.List;
 @Repository
 public interface UserDAO extends JpaRepository<User, Integer> {
 
-    //this is a native query which is SQL like you would execute in workbench
-//    @Query(value= "select * from users where user_id = :user_id", nativeQuery = true)
-
     //there are 3 ways to execute a query
     // 1) via @Query with JPA / JQL / HQL
     // 2) via @Query with a native query
     // 3) by using a function for spring to do the query with no query
 
-
-    // this is a JPA Query like hibernate JQL or HQL query
-    // @Query("select u from User u where u.email = :email")
     public List<User>findAll();
 
     public List<User> findByFirstName(@Param("firstName") String firstName);

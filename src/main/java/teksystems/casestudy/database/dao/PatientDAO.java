@@ -22,6 +22,9 @@ public interface PatientDAO extends JpaRepository<Patient, Integer> {
 
     public Patient findByMedicalRecordNumber(@Param("medicalRecordNumber") Integer medicalRecordNumber);
 
+
+
+    //The below queries will be used for later implementation in a Patient Search, used by Clinicians
 //    public List<Patient> findByFirstName(@Param("firstName") String firstName);
 //
 //    public List<Patient> findByLastName(@Param("lastName") String lastName);
@@ -33,7 +36,4 @@ public interface PatientDAO extends JpaRepository<Patient, Integer> {
     public List<Patient> findByPrimaryLanguage(@Param("primaryLanguage") String primaryLanguage);
 
 //    public List<Patient> findByFirstNameAndLastName(@Param("firstName") String firstName, @Param("lastName") String lastName);
-
-//    @Query(value = "select u from User u where u.password = :password", nativeQuery = true)
-//    public List<Patient> getByPassword(@Param("password") String password);
 }

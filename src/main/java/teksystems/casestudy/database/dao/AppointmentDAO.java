@@ -21,7 +21,7 @@ public interface AppointmentDAO extends JpaRepository<Appointment, Integer> {
 
     public Appointment findByAppointmentId(Integer appointmentId);
 
-    public void deleteById(Integer appointmentId);
+    public void deleteByAppointmentId(Integer appointmentId);
 
     @Query(value = "select a.appointmentId from Appointment a where a.clinician.clinicianId = :clinicianId")
     public List<Appointment> findByClinicianId(@Param("clinicianId") Integer clinicianId);
@@ -31,14 +31,6 @@ public interface AppointmentDAO extends JpaRepository<Appointment, Integer> {
     public List<Appointment> findByClinicianClinicianIdAndDate(@Param("clinicianId") Integer clinicianId,
                                                                  @Param("date") LocalDate date);
 
-    //NativeQuery
-//    @Query(value = "SELECT * FROM appointments WHERE date=:date AND time>=:startTime AND " +
-//            "time<=:endTime AND patient_id=:patientId", nativeQuery = true)
-//    public List<Appointment> findByPatientIdAndDateAndTime(
-//                                              @Param("date") LocalDate date,
-//                                              @Param("startTime") LocalTime startTime,
-//                                              @Param("endTime") LocalTime endTime,
-//                                              @Param("patientId") Integer patientId);
 
     List<Appointment> findByDateAndTimeLessThanEqualAndTimeGreaterThanEqualAndPatientPatientId(
                                               @Param("date") LocalDate date,
@@ -46,31 +38,13 @@ public interface AppointmentDAO extends JpaRepository<Appointment, Integer> {
                                               @Param("startTime") LocalTime startTime,
                                               @Param("patientId") Integer patientId);
 
-    @Query(value = "select a from Appointment a where a.patient.patientId = :patientId")
-    public List<Appointment> getByPatientId(@Param("patientId") Integer patientId);
 
     public Appointment findByPaqId(@Param("paqId") Integer paqId);
 
+    //findByDateAndTime will be used for downstream Ajax implementation,
+    // to restrict Appointment editor clinician selectors based on date and time
     public List<Appointment> findByDateAndTime(@Param("date") LocalDate date,
                                                @Param("time") LocalTime time);
-
-    @Query(value = "select a.appointmentId from Appointment a where a.patient.patientId = :patientId AND a.date = :date")
-    public List<Appointment> findByPatientIdAndDate(@Param("patientId") Integer patientId,
-                                                      @Param("date") LocalDate date);
-
-    @Query(value = "select a.appointmentId from Appointment a where a.patient.patientId = :patientId AND a.date = :date AND a.time = :time")
-    public Appointment findByPatientIdAndDateAndTime(@Param("patientId") Integer patientId,
-                                                       @Param("date") LocalDate date,
-                                                       @Param("time") LocalTime time);
-
-    @Query(value = "select a.appointmentId from Appointment a where a.clinician.clinicianId = :clinicianId AND a.date = :date")
-    public List<Appointment> findByClinicianIdAndDate(@Param("clinicianId") Integer clinicianId,
-                                                      @Param("date") LocalDate date);
-
-    @Query(value = "select a.appointmentId from Appointment a where a.clinician.clinicianId = :clinicianId AND a.date = :date AND a.time = :time")
-    public Appointment findByClinicianIdAndDateAndTime(@Param("clinicianId") Integer clinicianId,
-                                                       @Param("date") LocalDate date,
-                                                       @Param("time") LocalTime time);
 }
 
 
