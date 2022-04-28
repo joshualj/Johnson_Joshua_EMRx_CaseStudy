@@ -22,7 +22,7 @@ A patient may view their profile, which includes their appointments, as follows:
 A patient may click the "start/edit" button displayed in the appointment table to be taken to a Pre-Appointment Questionnaire:
 ![scheduleAppointment.png](src/main/webapp/pub/images/paq.png)
 
-A clinician may view their patient schedule for a specific day. From this page, they may click "View" to view their patient's PAQ, "Edit" to edit an appointment's time, date, or clinician, or "Cancel" to cancel the appointment.
+A clinician may view their patient schedule for a specific day. From this page, they may click "View" to view a patient's PAQ, "Edit" to edit an appointment's time, date, or clinician, or "Cancel" to cancel the appointment.
 ![scheduleAppointment.png](src/main/webapp/pub/images/clinicianScheduleViewer.png)
 
 A clinician may edit an appointment's date, time, or clinician.
@@ -31,13 +31,13 @@ A clinician may edit an appointment's date, time, or clinician.
 A clinician may register another clinician user
 ![scheduleAppointment.png](src/main/webapp/pub/images/clinicianRegistration.png)
 
-Any user may search a clinician via Language, Department, or Last Name
+Any user may search a clinician by Language, Department, or Last Name
 ![scheduleAppointment.png](src/main/webapp/pub/images/clinicianSearch.png)
 
 ## Database
 Database structure, via ER diagram:
 
-![EMRx_April21.png](src/main/webapp/pub/images/EMRx_April21.png)
+![EMRx_April21.png](src/main/webapp/pub/images/dataTables.png)
 
 ## Technology
 HTML, CSS, Bootstrap, JavaScript, Java, 
