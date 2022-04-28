@@ -19,7 +19,7 @@ A patient may schedule an appointment as follows:
 A patient may view their profile, which includes their appointments, as follows:
 ![scheduleAppointment.png](src/main/webapp/pub/images/patientProfile.png)
 
-A patient may click the "start/edit" button displayed in the appointment table to be taken to a Pre-Appointment Questionnaire:
+A patient may click the "start/edit" button displayed in the appointments table above to be taken to a Pre-Appointment Questionnaire:
 ![scheduleAppointment.png](src/main/webapp/pub/images/paq.png)
 
 A clinician may view their patient schedule for a specific day. From this page, they may click "View" to view a patient's PAQ, "Edit" to edit an appointment's time, date, or clinician, or "Cancel" to cancel the appointment.
