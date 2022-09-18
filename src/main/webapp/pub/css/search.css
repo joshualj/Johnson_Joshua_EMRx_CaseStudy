@@ -1,6 +1,6 @@
 .gradient-custom {
-    background: linear-gradient(to bottom,
-    #FCBB6D, #D8737F, #AB6C82, #685D79);
+    background: linear-gradient(to bottom, #fed9b7,
+    #fdfcdc, #00afb9, #0081a7);
 }
 
 .searchSection {
@@ -10,24 +10,23 @@
 }
 
 .results {
-    color: seashell;
+    color: black;
 }
 
 footer {
-    background: linear-gradient(to top,
-    #FCBB6D, #D8737F, #AB6C82, #685D79);
+    background: linear-gradient(to top, #00afb9, #0081a7);
 }
 
 .btn {
     width: 80px;
-    border-color: rgb(125, 225, 243);
+    border-color: #518043;
     color: #fffbfb;
-    background-color: rgb(125, 225, 243);
+    background-color: #518043;
 }
 
 .btn:hover {
-    background-color: #46ff4a;
-    border-color: #46ff4a;
+    background-color: #0081a7;
+    border-color: #0081a7;
 }
 
 form {
@@ -43,6 +42,6 @@ form {
 
 .navbar {
     font-family: "Raleway", sans-serif;
-    background: #FCBB6D;
+    background: linear-gradient(to bottom, #fed9b7, #fed9b7);
     color: black;
 }

@@ -25,7 +25,7 @@
                                 <label class="form-label" for="date">Date</label>
                             </div>
                             <div class="col-md-12 mb-4">
-                                <select id="time" class="form-control-md mb-3" name="time" value="${form.time}" required>
+                                <select id="time" class="form-select mb-3" name="time" value="${form.time}" required>
                                     <option value="${form.time}">${form.time}</option>
                                     <c:forEach var="time" items="${appointmentTimes}">
                                         <c:if test="${form.time != time}">
@@ -34,22 +34,30 @@
                                     </c:forEach>
                                 </select>
 <%--                                <input type="time" id="time" class="form-control form-control-lg" step="1800" name="time" value="${form.time}"/>--%>
-<%--                                <label class="form-label" for="time">Time</label>--%>
                                 <c:forEach items="${bindingResult.getFieldErrors('time')}" var="error">
                                     <div style="color: red;">
                                             ${error.getDefaultMessage()}
                                     </div>
                                 </c:forEach>
+                                <label class="form-label" for="time">Time</label>
                             </div>
 
                             <div class="col-md-12 mb-4">
-                                <input type="text" id="clinicianId" class="form-control form-control-lg" name="clinicianId" value="${form.clinicianId}"/>
+                                <select id="clinicianId" class="form-select mb-3" name="clinicianId" value="${thisClinicianUser.firstName} ${thisClinicianUser.lastName}">
+                                    <option value="${form.clinicianId}">${thisClinicianUser.firstName} ${thisClinicianUser.lastName}</option>
+                                    <c:forEach var="clinicianUser" items="${allClinUsers}">
+                                        <c:if test="${thisClinicianUser != clinicianUser}">
+                                            <option value="${clinicianUser.userId}">${clinicianUser.firstName} ${clinicianUser.lastName}</option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
                                 <c:forEach items="${bindingResult.getFieldErrors('clinicianId')}" var="error">
                                     <div style="color: red;">
                                             ${error.getDefaultMessage()}
                                     </div>
                                 </c:forEach>
-                                <label class="form-label" for="clinicianId">Clinician Id</label>
+                                <label class="form-label" for="date">Clinician</label>
+                                <!-- <label class="form-label" for="clinicianId">Clinician Id</label> -->
                             </div>
 
 <%--                            <div class="col-md-12 mb-4">--%>
@@ -93,6 +101,7 @@
 <%--</script>--%>
 
 <script src= "../../../pub/js/register.js"></script>
+<script src= "../../../pub/js/ajax.js"></script>
 
 <%--Old template code--%>
 <%--<form action="/user/registerSubmit" method="post">--%>

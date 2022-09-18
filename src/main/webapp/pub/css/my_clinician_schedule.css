@@ -1,6 +1,6 @@
 .gradient-custom {
-    background: linear-gradient(to bottom,
-    #FCBB6D, #D8737F, #AB6C82, #685D79);
+    background: linear-gradient(to bottom, #fed9b7,
+    #fdfcdc, #00afb9, #0081a7);
     padding-bottom: 20px;
     /*background: linear-gradient(to top left,*/
     /*rgb(125, 225, 243),*/
@@ -10,27 +10,26 @@
 }
 
 .btn {
-    /*width: 80px;*/
-    border-color: rgb(125, 225, 243);
+    border-color: #518043;
     color: #fffbfb;
-    background-color: rgb(125, 225, 243);
+    background-color: #518043;
 }
 
 .edit {
-    border-color: rgb(223, 107, 252);
+    border-color: #FCBB6D;
     color: #fffbfb;
-    background-color: rgb(223, 107, 252);
+    background-color: #FCBB6D;
 }
 
 .cancelBtn {
-    border-color: rgb(255, 0, 0);
+    border-color: #f07167;
     color: #fffbfb;
-    background-color: rgb(255, 0, 0);
+    background-color: #f07167;
 }
 
 .btn:hover {
-    background-color: #46ff4a;
-    border-color: #46ff4a;
+    background-color: #0081a7;
+    border-color: #0081a7;
 }
 
 .physDate {
@@ -83,15 +82,16 @@ footer {
     /*background: linear-gradient(to bottom left,*/
     /*rgb(125, 225, 243),*/
     /*rgb(245, 213, 106));*/
-    background: linear-gradient(to top,
-    #FCBB6D, #D8737F, #AB6C82, #685D79);
+    background: linear-gradient(to top, #00afb9, #0081a7);
 }
 
 .navbar {
     /*background: linear-gradient(to bottom left,*/
     /*rgb(125, 225, 243),*/
     /*rgb(245, 213, 106))*/
-    background: #FCBB6D;
+    /* background: #FCBB6D; */
+    background: linear-gradient(to bottom, #fed9b7, #fed9b7);
+
 }
 
 #appointmentsTable {

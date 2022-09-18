@@ -40,11 +40,11 @@ public interface AppointmentDAO extends JpaRepository<Appointment, Integer> {
 //                                              @Param("endTime") LocalTime endTime,
 //                                              @Param("patientId") Integer patientId);
 
-//    List<Appointment> findByDateAndTimeLessThanEqualAndTimeGreaterThanEqualAndPatientPatientId(
-//                                              @Param("date") LocalDate date,
-//                                              @Param("endTime") LocalTime endTime,
-//                                              @Param("startTime") LocalTime startTime,
-//                                              @Param("patientId") Integer patientId);
+   List<Appointment> findByDateAndTimeLessThanEqualAndTimeGreaterThanEqualAndPatientPatientId(
+                                             @Param("date") LocalDate date,
+                                             @Param("endTime") LocalTime endTime,
+                                             @Param("startTime") LocalTime startTime,
+                                             @Param("patientId") Integer patientId);
 
     @Query(value = "select a from Appointment a where a.patient.patientId = :patientId")
     public List<Appointment> getByPatientId(@Param("patientId") Integer patientId);

@@ -1,9 +1,12 @@
 package teksystems.casestudy.controller;
-
+ 
+import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -190,65 +193,71 @@ public class AppointmentController {
         response.setViewName("user/my_schedule");
 
         Integer patientId = patientDao.findByUserId(userId).getPatientId();
-        List<Appointment> appointments = appointmentDao.findByPatientPatientId(patientId);
+        List<Appointment> unsortedAppointments = appointmentDao.findByPatientPatientId(patientId);
+        List<Appointment> timeSortedAppointments = timeSortAppointments(unsortedAppointments, patientId);
 
+        // List<Appointment> appointmentsOrdered = new ArrayList<>();
+        // log.info("=========== APPOINTMENTS ORDERED ===========");
+        // log.info(appointmentsOrdered.toString() + "========");
+        // log.info("=========== APPOINTMENTS ORDERED END ===========");
+        timeSortedAppointments.sort((app1, app2)
+                -> app1.getDate().compareTo(
+                app2.getDate()));
+        // log.info(appointments.toString());
+        // log.info(userId.toString());
+
+        List<Integer> daysOfMonth = new ArrayList<>();
+        List<String> months = new ArrayList<>();
+        List<Integer> years = new ArrayList<>();
+        List<User> clinUsers = new ArrayList<>();
+
+        for(Appointment appointment : timeSortedAppointments) {
+            daysOfMonth.add(appointment.getDate().getDayOfMonth());
+            months.add(appointment.getDate().getMonth().toString().substring(0,1).toUpperCase() + appointment.getDate().getMonth().toString().substring(1).toLowerCase());
+            years.add(appointment.getDate().getYear());
+            User clinUser = userDao.findByUserId(appointment.getClinician().getUserId());
+            clinUsers.add(clinUser);
+        }
+
+        User user = userDao.findByUserId(userId);
+        Patient patient = patientDao.findByUserId(userId);
+        response.addObject("appointments", timeSortedAppointments);
+        response.addObject("user", user);
+        response.addObject("patient", patient);
+        response.addObject("daysOfMonth", daysOfMonth);
+        response.addObject("months", months);
+        response.addObject("years", years);
+        response.addObject("clinUsers", clinUsers);
+        return response;
+    }
+
+    public List<Appointment> timeSortAppointments(List<Appointment> unsortedAppointments, Integer patientId) {
+        List<Appointment> morningAppointments;
+        List<Appointment> afternoonAppointments;
         List<LocalDate> localDates = new ArrayList<>();
 
-//        create a list of dates included in appointments
-        for(Appointment appointment : appointments) {
+        // create a list of dates included in appointments
+        for(Appointment appointment : unsortedAppointments) {
             if(!localDates.contains(appointment.getDate())) {
                 localDates.add(appointment.getDate());
             }
         }
 
-        log.info(localDates.toString() + "==============");
+        List<Appointment> sortedAppointments = new ArrayList<>();;
+        for(LocalDate date : localDates) {
+            morningAppointments = appointmentDao.findByDateAndTimeLessThanEqualAndTimeGreaterThanEqualAndPatientPatientId(date, LocalTime.of(12, 59), LocalTime.of(8,00), patientId);
+            morningAppointments.sort((app1, app2) -> app1.getTime().compareTo(app2.getTime()));
+            afternoonAppointments = appointmentDao.findByDateAndTimeLessThanEqualAndTimeGreaterThanEqualAndPatientPatientId(date, LocalTime.of(4, 00), LocalTime.of(1,00), patientId);
+            afternoonAppointments.sort((app1, app2) -> app1.getTime().compareTo(app2.getTime()));
 
-        List<Appointment> appointmentsOrdered = new ArrayList<>();
-
-        List<Appointment> morningAppointments;
-        List<Appointment> afternoonAppointments;
-
-        //for each date within appointments, obtain one list for morning appointments and one list for afternoon appointments
-        //findByDateAndTimeLessThanEqualAndTimeGreaterThanEqualAndPatientPatientId
-//        for(LocalDate date : localDates) {
-//            morningAppointments = appointmentDao.findByDateAndTimeLessThanEqualAndTimeGreaterThanEqualAndPatientPatientId(date,
-//                    LocalTime.of(12, 30), LocalTime.of(8,00), patientId);
-//            log.info(morningAppointments.toString() + "========MORNING APPOINTMENTS======");
-//            log.info("========MORNING APPOINTMENTS======");
-
-
-//            afternoonAppointments = appointmentDao.findByDateAndTimeLessThanEqualAndTimeGreaterThanEqualAndPatientPatientId(date,
-//                    LocalTime.of(4, 00), LocalTime.of(1,00), patientId);
-//
-//            for(Appointment mornApt : morningAppointments) {
-//                appointmentsOrdered.add(mornApt);
-//            }
-//            for(Appointment aftApt : afternoonAppointments) {
-//                appointmentsOrdered.add(aftApt);
-//            }
-//        }
-
-        log.info("=========== APPOINTMENTS ORDERED ===========");
-        log.info(appointmentsOrdered.toString() + "========");
-        log.info("=========== APPOINTMENTS ORDERED END ===========");
-
-
-        appointments.sort((app1, app2)
-                -> app1.getDate().compareTo(
-                app2.getDate()));
-
-        log.info(appointments.toString());
-        log.info(userId.toString());
-
-        User user = userDao.findByUserId(userId);
-
-        Patient patient = patientDao.findByUserId(userId);
-
-        response.addObject("appointments", appointments);
-        response.addObject("user", user);
-        response.addObject("patient", patient);
-
-        return response;
+            for(Appointment mornApt : morningAppointments) {
+                sortedAppointments.add(mornApt);
+            }
+            for(Appointment aftApt : afternoonAppointments) {
+                sortedAppointments.add(aftApt);
+            }
+        }
+        return sortedAppointments;
     }
 
     @PreAuthorize("hasAnyAuthority('CLINICIAN','PATIENT')")
@@ -285,19 +294,42 @@ public class AppointmentController {
         Integer userId = appointment.getPatient().getUserId();
         form.setUserId(userId);
 
+        User thisClinicianUser = userDao.findByUserId(appointment.getClinician().getUserId());
+
+        List<Clinician> allClinicians = clinicianDao.findAll();
+        List<User> allClinUsers = new ArrayList<>();
+        for (Clinician clinician : allClinicians) {
+            allClinUsers.add(userDao.findByUserId(clinician.getUserId()));
+        }
+
+        // response.addObject("allClinicians", allClinicians);
+        response.addObject("allClinUsers", allClinUsers);
+        response.addObject("thisClinicianUser", thisClinicianUser);
         response.addObject("form", form);
         response.addObject("appointmentId", appointment.getAppointmentId());
         response.addObject("appointmentTimes", appointmentTimes);
 
-
         return response;
     }
 
-//    @RequestMapping(value = "/getTrainers", method = RequestMethod.GET)
-//    public ResponseEntity<String> ajaxRequest() throws Exception {
-//        List<Trainer> trainers = trainerDao.findAll();
-//
-//        String payload = GSON.toJson(trainers);
+//    @RequestMapping(value = "/ajaxAppointment", method = RequestMethod.GET)
+//    public ResponseEntity<String> ajaxRequest(String timeDate) throws Exception {
+//        String[] timeDateArray = timeDate.split("&");
+//        String time = timeDateArray[0];
+//        String date = timeDateArray[1];
+//        LocalTime timeFormatted = LocalTime.parse(time); 
+//        LocalDate dateFormatted = LocalDate.parse(date); 
+//        List<Appointment> appointments = appointmentDao.findByDateAndTime(dateFormatted, timeFormatted);
+//        appointments.stream().filter(apt -> apt.getPatient() == null);
+
+//        List<Integer> availableClinicianIds = new ArrayList<>();
+//        for (Appointment appt : appointments) {
+//             if(!availableClinicianIds.contains(appt.getClinician().getClinicianId())){
+//                 availableClinicianIds.add(appt.getClinician().getClinicianId());
+//             }
+//        }
+
+//        String payload = new Gson().toJson(availableClinicianIds);
 //        return new ResponseEntity(payload, HttpStatus.OK);
 //    }
 
@@ -349,11 +381,12 @@ public class AppointmentController {
         LocalTime timeFormatted = LocalTime.of(hour, minute);
         appointment.setTime(timeFormatted);
 
-        Integer parsedClinicianId = Integer.parseInt(form.getClinicianId());
+        Integer parsedClinicianUserId = form.getUserId();
+        // Integer parsedClinicianUserId = Integer.parseInt(form.getUserId());
         Integer patientId = appointment.getPatient().getPatientId();
 
         //Retrieving a clinician based on the clinicianId entered in the form
-        Clinician clinician = clinicianDao.findByClinicianId(parsedClinicianId);
+        Clinician clinician = clinicianDao.findByUserId(parsedClinicianUserId);
         appointment.setClinician(clinician);
 
         //Retrieving a patient based on the patientId from the form

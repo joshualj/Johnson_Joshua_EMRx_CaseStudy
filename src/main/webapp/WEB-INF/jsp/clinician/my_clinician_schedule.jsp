@@ -10,7 +10,7 @@
 <%--        <input class="btn btn-outline-primary btn-md" type="submit" value="Submit" />--%>
 <%--    </form>--%>
     <div class="physDate">
-<%--        <form class="form-inline"" action="/user/schedule_appointment">--%>
+<%--        <form class="form-inline" action="/user/schedule_appointment">--%>
 <%--            <div class="form-row align-items-center">--%>
 <%--                <div class="col-sm-3 my-1">--%>
 <%--                    <label for="clinician">Select a Clinician</label>--%>
@@ -33,8 +33,8 @@
         <form class="physDateForm form-inline" action="/clinician/my_clinician_schedule">
 <%--            <div class="form-inline">--%>
                 <div class="col">
-                <label for="userId">Clinician</label>
-                    <select id="userId" class="form-control-md mb-3" name="userId" value="${clinUser.userId}" required>
+                <label for="userId"><center>Clinician</center></label>
+                    <select id="userId" class="form-select mb-3" name="userId" value="${clinUser.userId}" required>
                         <option value="${clinUser.userId}">${clinUser.firstName} ${clinUser.lastName}</option>
                         <c:forEach var="clinician" items="${clinicianUsers}">
                             <c:if test="${clinUser.userId != clinician.userId}">
@@ -44,11 +44,11 @@
                     </select>
                 </div>
                 <div class="col">
-                    <label for="date">Date</label>
-                    <input type="date" id="date" name="date" placeholder="Date" class="form-control-md mb-4" value="${localDate}">
+                    <label for="date"><center>Date</center></label>
+                    <input type="date" id="date" name="date" placeholder="Date" class="form-control mb-3" value="${localDate}">
                 </div>
                 <div class="col">
-                    <input class="btn btn-outline-primary btn-sm" type="submit" value="Submit">
+                    <input class="btn btn-outline-primary btn-md mt-2" type="submit" value="Submit">
                 </div>
 <%--            </div>--%>
         </form>

@@ -1,6 +1,6 @@
 .gradient-custom {
-    background: linear-gradient(to bottom,
-    #FCBB6D, #D8737F, #AB6C82);
+    background: linear-gradient(to bottom, #fed9b7,
+    #fdfcdc, #00afb9, #0081a7);
     /*background: linear-gradient(to bottom,*/
     /*#a3d9fa, #abcff5, #D8737F, #FCBB6D);*/
     padding-bottom: 20px;
@@ -73,16 +73,16 @@
 }
 
 .cancelBtn {
-    border-color: rgb(255, 0, 0);
+    border-color: #f07167;
     color: #fffbfb;
-    background-color: rgb(255, 0, 0);
+    background-color: #f07167;
 }
 
 .btn:hover {
     /*background-color: #46ff4a;*/
     /*border-color: #46ff4a;*/
-    background-color: #ff9e1b;
-    border-color: #ff9e1b;
+    background-color: #0081a7;
+    border-color: #0081a7;
 }
 
 .physDate {
@@ -123,8 +123,7 @@
 }
 
 footer {
-    background: linear-gradient(to top,
-    #FCBB6D, #D8737F, #AB6C82);
+    background: linear-gradient(to top, #00afb9, #0081a7);
     /*background: linear-gradient(to bottom
     */
     /*#475C7A, #D8737F, #FCBB6D);*/
@@ -134,9 +133,8 @@ footer {
 .navbar {
     /*background: #475C7A;*/
     /*background-blend-mode: color;*/
-    background: #FCBB6D;
-    /*background: linear-gradient(to top right,*/
-    /*#475C7A, #D8737F, #FCBB6D);*/
+    /* background: #f07167; */
+    background: linear-gradient(to bottom, #fed9b7, #fed9b7);
     color: black;
 }
 

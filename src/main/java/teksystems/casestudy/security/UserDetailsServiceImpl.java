@@ -12,9 +12,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import teksystems.casestudy.database.dao.UserDAO;
-import teksystems.casestudy.database.dao.UserRoleDAO;
+//import teksystems.casestudy.database.dao.UserRoleDAO;
 import teksystems.casestudy.database.entity.User;
-import teksystems.casestudy.database.entity.UserRole;
+//import teksystems.casestudy.database.entity.UserRole;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,8 +28,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserDAO userDao;
 
-    @Autowired
-    private UserRoleDAO userRoleDao;
+//    @Autowired
+//    private UserRoleDAO userRoleDao;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

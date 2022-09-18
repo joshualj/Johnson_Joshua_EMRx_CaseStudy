@@ -13,7 +13,7 @@
 <div id="appointments" class="gradient-custom">
     <div id="myPersonalDetails">
         <div id="imageContainer">
-            <img id="profilePicture" src="../../../pub/images/EMRx_default_photo_female.jpeg" alt="Profile Photo">
+            <img id="profilePicture" src="../../../pub/images/defaultProfilePhoto.png" alt="Profile Photo">
         </div>
         <div id="myInfo">
             <h2><b>${user.firstName} ${user.lastName}</b></h2>
@@ -41,9 +41,11 @@
                             </thead>
                             <c:forEach var="appt" items="${appointments}">
                                 <tr>
-                                    <td><b>${appt.date}</b></td>
+                                    <td><b>${months[appointments.indexOf(appt)]} ${daysOfMonth[appointments.indexOf(appt)]}, ${years[appointments.indexOf(appt)]} </b></td>
+                                    <!-- <td><b>${appt.date}</b></td> -->
                                     <td><b>${appt.time}</b></td>
-                                    <td><b>${appt.clinician.clinicianId}</b></td>
+                                    <td><b>${clinUsers[appointments.indexOf(appt)].firstName} ${clinUsers[appointments.indexOf(appt)].lastName}</b></td>
+                                    <!-- <td><b>${appt.clinician.clinicianId}</b></td> -->
                                     <td>
                                         <c:if test="${!empty appt.paqId}">
                                             <form action="/user/paq/${appt.appointmentId}" method="GET">
